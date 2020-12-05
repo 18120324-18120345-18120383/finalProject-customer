@@ -1,7 +1,7 @@
 <a class="scroll-top-arrow" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
 
 <!--slider sec strat-->
-<section id="slider-sec" class="slider-sec parallax" style="background: url('img/banner1.1.jpg');">
+<section id="slider-sec" class="slider-sec parallax" style="background: url('/book-shop/img/banner1.2.jpg');">
 </section>
 <!--slider sec end-->
 
@@ -17,12 +17,12 @@
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Categories</a></li>
                             <li class="breadcrumb-item" aria-current="page"><a href="javascript:void(0)">Books</a></li>
-                            <li class="breadcrumb-item"><a class="active" href="javascript:void(0)">The Road</a></li>
+                            <li class="breadcrumb-item"><a class="active" href="javascript:void(0)">{{book.name}}</a></li>
                         </ol>
                     </nav>
                     <div class="pro-detail-sec row">
                         <div class="col-12">
-                            <h4 class="pro-heading text-center text-lg-left">Books  Collections</h4>
+                            <h4 class="pro-heading text-center text-lg-left">{{book.name}}</h4>
                             <p class="pro-text text-center text-lg-left">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
                         </div>
                     </div>
@@ -32,16 +32,16 @@
                             <div class="wrapper">
                                 <div class="Gallery swiper-container img-magnifier-container" id="gallery">
                                     <div class="swiper-wrapper myimgs">
-                                        <div class="swiper-slide"> <a href="img\book-1-1.jpg" data-fancybox="1" title="Zoom In"><img class="myimage" src="img\book-1-1.jpg" alt="gallery"></a></div>
-                                        <div class="swiper-slide"> <a href="img\book-1.jpg" data-fancybox="2" title="Zoom In"><img class="myimage" src="img\book-1.jpg" alt="thumnails"></a></div>
-                                        <div class="swiper-slide"> <a href="img\book-1-2.jpg" data-fancybox="3" title="Zoom In"><img class="myimage" src="img\book-1-2.jpg" alt="thumnails"></a></div>
+                                        <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[0]}}" data-fancybox="1" title="Zoom In"><img class="myimage" src="/book-shop/{{book.cover.[0]}}" alt="gallery"></a></div>
+                                        <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[1]}}" data-fancybox="2" title="Zoom In"><img class="myimage" src="/book-shop/{{book.cover.[1]}}" alt="thumnails"></a></div>
+                                        <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[2]}}" data-fancybox="3" title="Zoom In"><img class="myimage" src="/book-shop/{{book.cover.[2]}}" alt="thumnails"></a></div>
                                     </div>
                                 </div>
                                 <div class="Thumbs swiper-container" id="thumbs">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide"> <img src="img\book-1-1.jpg" alt="thumnails"></div>
-                                        <div class="swiper-slide"> <img src="img\book-1.jpg" alt="thumnails"></div>
-                                        <div class="swiper-slide"> <img src="img\book-1-2.jpg" alt="thumnails"></div>
+                                        <div class="swiper-slide"> <img src="/book-shop/{{book.cover.[0]}}" alt="thumnails"></div>
+                                        <div class="swiper-slide"> <img src="/book-shop/{{book.cover.[1]}}" alt="thumnails"></div>
+                                        <div class="swiper-slide"> <img src="/book-shop/{{book.cover.[2]}}" alt="thumnails"></div>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
 
                         <div class="col-12 col-lg-6 text-center text-lg-left">
                             <div class="product-single-price">
-                                <h4><span class="real-price">$249</span> <span><del>$450</del></span></h4>
+                                <h4><span class="real-price">{{book.basePrice}} $</span> <span><del>{{orginalPrice}} $</del></span></h4>
                                 <p class="pro-description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
                             </div>
 
@@ -80,8 +80,17 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><p class="d-inline">SKU: <span>00012</span></p></li>
-                                        <li class="breadcrumb-item"><span class="d-inline">Categories: <a href="javascript:void(0)">Classic</a><span class="comma-separtor">,</span><a href="javascript:void(0)">Fantasy</a></span></li>
-                                        <li class="breadcrumb-item" aria-current="page"><p class="d-inline">Tags: <a href="javascript:void(0)">Fantasy</a><span class="comma-separtor">,</span><a href="javascript:void(0)">Classic</a></p></li>
+                                        <li class="breadcrumb-item"><span class="d-inline">Categories:
+                                            <a href="javascript:void(0)">{{book.categories.[0]}}</a>
+                                                <span class="comma-separtor">,</span>
+                                            <a href="javascript:void(0)">{{book.categories.[1]}}</a></span>
+                                        </li>
+                                        <li class="breadcrumb-item" aria-current="page"><p class="d-inline">Tags: 
+                                            <a href="javascript:void(0)">{{book.categories.[0]}}</a>
+                                            <span class="comma-separtor">,</span>
+                                            <a href="javascript:void(0)">{{book.categories.[1]}}</a>
+                                            </p>
+                                        </li>
                                     </ol>
                                 </nav>
                             </div>
@@ -113,8 +122,8 @@
                                 </ul>
                                 <div class="col-12 tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <p class="product-tab-description text-center text-lg-left">If you are a small business and you are interested in small rebranding then this is a perfect plan for you, having Five years experience in Blogging, photographing, Disgning and love to cycling,Writting,Singing and Traveling around the world</p>
-                                        <p class="product-tab-description text-center text-lg-left">If you are a small business and you are interested in small rebranding then this is a perfect plan for you, having Five years experience in Blogging, photographing, Disgning and love to cycling,Writting,Singing and Traveling around the world</p>
+                                        <p class="product-tab-description text-center text-lg-left">{{book.description}}</p>
+                                        <p class="product-tab-description text-center text-lg-left">{{book.description}}</p>
                                     </div>
                                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                         <div class="row">
@@ -166,7 +175,7 @@
 
                                                     <div class="row no-gutters">
                                                         <div class="col-12 d-flex  justify-content-center">
-                                                            <img src="img\user.jpg" alt="Generic placeholder image">
+                                                            <img src="/book-shop/img/user.jpg" alt="Generic placeholder image">
                                                         </div>
                                                         <div class="col-12 d-flex mt-2 justify-content-center">
                                                             <ul class="user-rating">
@@ -197,7 +206,7 @@
 
                                                     <div class="row no-gutters">
                                                         <div class="col-12 d-flex  justify-content-center">
-                                                            <img src="img\user2.jpg" alt="Generic placeholder image">
+                                                            <img src="/book-shop/img/user2.jpg" alt="Generic placeholder image">
                                                         </div>
                                                         <div class="col-12 d-flex mt-2 justify-content-center">
                                                             <ul class="user-rating">
@@ -302,8 +311,8 @@
                             <div class="card">
                                 <span class="product-type">NEW</span>
                                 <div class="image-holder">
-                                    <a href="img\l1.jpg" data-fancybox="lastest_product" data-title="Shirt Name">
-                                        <img src="img\l1.jpg" class="card-img-top" alt="Lastest Arrivals 1">
+                                    <a href="/book-shop/img/l1.jpg" data-fancybox="lastest_product" data-title="Shirt Name">
+                                        <img src="/book-shop/img/l1.jpg" class="card-img-top" alt="Lastest Arrivals 1">
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -323,8 +332,8 @@
                             <a href="product-detail" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
                             <div class="card">  <span class="product-type">NEW</span>
                                 <div class="image-holder">
-                                    <a href="img\l7.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="img\l7.jpg" class="card-img-top" alt="Lastest Arrivals 1">
+                                    <a href="/book-shop/img/l7.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
+                                        <img src="/book-shop/img/l7.jpg" class="card-img-top" alt="Lastest Arrivals 1">
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -345,8 +354,8 @@
                             <div class="card">
                                 <span class="product-type">NEW</span>
                                 <div class="image-holder">
-                                    <a href="img\l8.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="img\l8.jpg" class="card-img-top" alt="Lastest Arrivals 1">
+                                    <a href="/book-shop/img/l8.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
+                                        <img src="/book-shop/img/l8.jpg" class="card-img-top" alt="Lastest Arrivals 1">
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -367,8 +376,8 @@
                             <div class="card">
                                 <span class="product-type">NEW</span>
                                 <div class="image-holder">
-                                    <a href="img\l9.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="img\l9.jpg" class="card-img-top" alt="Lastest Arrivals 1">
+                                    <a href="/book-shopimg/l9.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
+                                        <img src="/book-shop/img/l9.jpg" class="card-img-top" alt="Lastest Arrivals 1">
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -389,8 +398,8 @@
                             <div class="card">
                                 <span class="product-type">NEW</span>
                                 <div class="image-holder">
-                                    <a href="img\l10.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="img\l10.jpg" class="card-img-top" alt="Lastest Arrivals 1">
+                                    <a href="/book-shop/img/l10.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
+                                        <img src="/book-shop/img/l10.jpg" class="card-img-top" alt="Lastest Arrivals 1">
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -411,8 +420,8 @@
                             <div class="card">
                                 <span class="product-type">NEW</span>
                                 <div class="image-holder">
-                                    <a href="img\l11.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="img\l11.jpg" class="card-img-top" alt="Lastest Arrivals 1">
+                                    <a href="/book-shop/img/l11.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
+                                        <img src="/book-shop/img/l11.jpg" class="card-img-top" alt="Lastest Arrivals 1">
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -433,8 +442,8 @@
                             <div class="card">
                                 <span class="product-type">NEW</span>
                                 <div class="image-holder">
-                                    <a href="img\l12.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="img\l12.jpg" class="card-img-top" alt="Lastest Arrivals 1">
+                                    <a href="/book-shop/img/l12.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
+                                        <img src="/book-shop/img/l12.jpg" class="card-img-top" alt="Lastest Arrivals 1">
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -455,8 +464,8 @@
                             <div class="card">
                                 <span class="product-type">NEW</span>
                                 <div class="image-holder">
-                                    <a href="img\l7.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="img\l13.jpg" class="card-img-top" alt="Lastest Arrivals 1">
+                                    <a href="/book-shop/img/l7.jpg" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
+                                        <img src="/book-shop/img/l13.jpg" class="card-img-top" alt="Lastest Arrivals 1">
                                     </a>
                                 </div>
                                 <div class="card-body">

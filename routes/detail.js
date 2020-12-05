@@ -6,9 +6,6 @@ const listBookController = require('../controllers/listBookControllers')
 router.use(express.static('public'));
 
 router.get('/', listBookController.index );
-router.get('/contact', listBookController.contact);
-router.get('/product-detail/:id', listBookController.productDetail);
-router.get('/product-listing', listBookController.productListing);
-router.get('/shop-cart', listBookController.shopCart);
+router.get(':id', listBookController.productDetail);
 // router.get('/add-product', listBookController.addBook);
 module.exports = router;

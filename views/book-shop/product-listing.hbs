@@ -58,11 +58,11 @@
 
                         <!-- START DISPLAY PRODUCT -->
                         <div class="product-list row">
-
+                            {{#each books}}
                             <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
                                 <div class="product-item owl-theme product-listing-carousel owl-carousel">
                                     <div class="item p-item-img">
-                                            <img src="img\book-1.jpg" alt="images">
+                                        <img src={{cover.[0]}} alt="images">
                                         <div class="text-center d-flex justify-content-center align-items-center">
                                             <a class="listing-cart-icon" href="shop-cart">
                                                 <i class="fa fa-shopping-cart"></i>
@@ -70,7 +70,7 @@
                                         </div>
                                     </div>
                                     <div class="item p-item-img">
-                                        <img src="img\book-1-1.jpg" alt="images">
+                                        <img src={{cover.[1]}} alt="images">
                                         <div class="text-center d-flex justify-content-center align-items-center">
                                             <a class="listing-cart-icon" href="shop-cart">
                                                 <i class="fa fa-shopping-cart"></i>
@@ -79,210 +79,25 @@
                                     </div>
                                 </div>
                                 <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail"> So Sad Today </a></h4>
-                                    <p class="text-center p-item-price">$100.00</p>
+                                    <h4 class="text-center p-item-name"><a href="product-detail/{{_id}}"> {{name}} </a></h4>
+                                    <p class="text-center p-item-price">{{basePrice}} $</p>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                            <img src="img\book-2-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item p-item-img">
-                                            <img src="img\book-2-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail"> The Last Stand </a></h4>
-                                    <p class="text-center p-item-price">$600.00</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                        <img src="img\book-3-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item p-item-img">
-                                        <img src="img\book-3.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail"> Love Does </a></h4>
-                                    <p class="text-center p-item-price">$150.00</p>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                        <img src="img\book-4.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item p-item-img">
-                                        <img src="img\book-4-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail">The Imortal Rules </a></h4>
-                                    <p class="text-center p-item-price">$400.00</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                        <img src="img\book-5-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item p-item-img">
-                                        <img src="img\book-5.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail">As I lay Dying </a></h4>
-                                    <p class="text-center p-item-price">$100.00</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                        <img src="img\book-6-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item p-item-img">
-                                        <img src="img\book-6.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail"> No One Belongs </a></h4>
-                                    <p class="text-center p-item-price">$500.00</p>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                        <img src="img\book-2.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item p-item-img">
-                                        <img src="img\book-2-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail"> Life Without Money </a></h4>
-                                    <p class="text-center p-item-price">$200.00</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                        <img src="img\book-6.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item p-item-img">
-                                        <img src="img\book-6-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail"> Brave New World </a></h4>
-                                    <p class="text-center p-item-price">$120.00</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                        <img src="img\book-1-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item p-item-img">
-                                        <img src="img\book-1.jpg" alt="images">
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <a class="listing-cart-icon" href="shop-cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-item-detail">
-                                    <h4 class="text-center p-item-name"><a href="product-detail">The Joke </a></h4>
-                                    <p class="text-center p-item-price">$150.00</p>
-                                </div>
-                            </div>
-
-
-
+                            {{/each}}
                         </div>
                         <!-- END DISPLAY PRODUCT -->
 
+                        {{!-- Pagination --}}
+                        <div class="center">
+                            <div class="pagination">
+                                <a href="#">&laquo;</a>
+                                <a href="#">1</a>
+                                <a href="#" class="active">2</a>
+                                <a href="#">3</a>
+                                <a href="#">&raquo;</a>
+                            </div>
+                        </div>
+                        
 
                     </div>
                     <!-- END PRODUCT LISTING SECTION -->
