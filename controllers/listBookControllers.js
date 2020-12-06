@@ -22,9 +22,14 @@ exports.productDetail = async (req, res, next) => {
 exports.productListing = async (req, res, next) => {
     const page = req.query.page || 1
     const categoryID = req.query.categoryID;
+    const nameBook = req.query.search;
+    console.log(nameBook);
     let filter = {};
     if (categoryID) {
         filter.categoryID = mongoose.Types.ObjectId(categoryID);
+    }
+    if (nameBook) {
+        filter.name = { "$regex": nameBook, "$options": "i" };
     }
     const paginate = await bookModels.listBook(filter, page, 9);
     const categories = await categoryModels.categories();

@@ -29,6 +29,10 @@ module.exports.getOneBook = async (id) => {
     return book;
 }
 
+module.exports.searchBook = async (nameBook) => {
+    const books = await Book.find({name : { "$regex": nameBook, "$options": "i" }}).exec();
+    return books;
+}
 module.exports.addManyBook = async () => {
     const books = await Book.insertMany([
         {
