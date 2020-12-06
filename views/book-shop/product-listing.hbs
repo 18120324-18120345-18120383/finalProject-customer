@@ -16,11 +16,10 @@
                     <div class="product-category">
                         <h5 class="filter-heading  text-center text-lg-left">Category</h5>
                         <ul>
-                            <li><a href="javascript:void(0)">June </a><span>(2)</span></li>
-                            <li><a href="javascript:void(0)">July </a><span>(4)</span></li>
-                            <li><a href="javascript:void(0)">Augest </a><span>(2)</span></li>
-                            <li><a href="javascript:void(0)">March </a><span>(7)</span></li>
-                            <li><a href="javascript:void(0)">May </a><span>(9)</span></li>
+                            {{#each categories}}
+                            <li><a href="?categoryID={{_id}}">{{name}} </a><span>({{numberOfBook}})</span></li>
+                            {{/each}}
+                          
                         </ul>
                     </div>
                     <div class="product-price mt-1">
@@ -47,8 +46,20 @@
                 <div class="row">
 
                     <!-- START LISTING HEADING -->
-                    <div class="col-12 product-listing-heading">
-                        <h1 class="heading text-left">Product Listing</h1>
+                    <div class="pr-0 col-12 row product-listing-heading">
+                        <h1 class="p-0 col-6 heading text-left">Product Listing</h1>
+                        <div class="p-0 col-6">
+                            <form method="GET">
+                                <div class="m-0 input-group search-box-form">
+                                <input type="text" class="form-control" placeholder="Search Here" aria-label="Search Here" name="search">
+                                    <div class="input-group-prepend">
+                                        <button class="btn input-group-text" type="submit" id="basic-addon1"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                        </div>
+                        
                         <p class="para_text text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. tellus lacus faucibus lectus, sed cursused eros ligula non odio.</p>
                     </div>
                     <!-- END LISTING HEADING -->
@@ -89,13 +100,39 @@
 
                         {{!-- Pagination --}}
                         <div class="center">
-                            <div class="pagination">
-                                <a href="#">&laquo;</a>
-                                <a href="#">1</a>
-                                <a href="#" class="active">2</a>
-                                <a href="#">3</a>
-                                <a href="#">&raquo;</a>
-                            </div>
+                            {{#unless hasPrevPage}}
+                                {{#unless hasNextPage}}
+                                    <div class="pagination">
+                                        <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
+                                    </div>     
+                                {{else}}
+                                    <div class="pagination">
+                                        {{!-- <a href="#">&laquo;</a> --}}
+                                        <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
+                                        <a href="product-listing?page={{nextPage}}" class="btn">{{nextPage}}</a>
+                                        <a href="product-listing?page={{nextPage}}">&raquo;</a>
+                                    </div>
+                                {{/unless}}
+                            {{else}}
+                                {{#unless hasNextPage}}
+                                    <div class="pagination">
+                                        <a href="product-listing?page={{prevPage}}">&laquo;</a>
+                                        <a href="product-listing?page={{prevPage}}" class="btn">{{prevPage}}</a>
+                                        <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
+                                        {{!-- <a href="#">&raquo;</a> --}}                                           
+                                    </div>                                   
+                                {{else}}                                   
+                                    <div class="pagination">
+                                        <a href="product-listing?page={{prevPage}}">&laquo;</a>
+                                        <a href="product-listing?page={{prevPage}}" class="btn">{{prevPage}}</a>
+                                        <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
+                                        <a href="product-listing?page={{nextPage}}" class="btn">{{nextPage}}</a>
+                                        <a href="product-listing?page={{nextPage}}">&raquo;</a>
+                                    </div>                          
+                                {{/unless}}
+                            
+                            {{/unless}}
+                            
                         </div>
                         
 
