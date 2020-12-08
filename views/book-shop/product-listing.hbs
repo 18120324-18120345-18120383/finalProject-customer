@@ -100,38 +100,74 @@
 
                         {{!-- Pagination --}}
                         <div class="center">
-                            {{#unless hasPrevPage}}
-                                {{#unless hasNextPage}}
-                                    <div class="pagination">
-                                        <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
-                                    </div>     
+                            {{#if flag}}
+                                {{#unless hasPrevPage}}
+                                    {{#unless hasNextPage}}
+                                        <div class="pagination">
+                                            <a href="product-listing?page={{page}}&categoryID={{categoryID}}&search={{nameBook}}" class="btn active">{{page}}</a>
+                                        </div>     
+                                    {{else}}
+                                        <div class="pagination">
+                                            {{!-- <a href="#">&laquo;</a> --}}
+                                            <a href="product-listing?page={{page}}&categoryID={{categoryID}}&search={{nameBook}}" class="btn active">{{page}}</a>
+                                            <a href="product-listing?page={{nextPage}}&categoryID={{categoryID}}&search={{nameBook}}" class="btn">{{nextPage}}</a>
+                                            <a href="product-listing?page={{nextPage}}&categoryID={{categoryID}}&search={{nameBook}}">&raquo;</a>
+                                        </div>
+                                    {{/unless}}
                                 {{else}}
-                                    <div class="pagination">
-                                        {{!-- <a href="#">&laquo;</a> --}}
-                                        <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
-                                        <a href="product-listing?page={{nextPage}}" class="btn">{{nextPage}}</a>
-                                        <a href="product-listing?page={{nextPage}}">&raquo;</a>
-                                    </div>
+                                    {{#unless hasNextPage}}
+                                        <div class="pagination">
+                                            <a href="product-listing?page={{prevPage}}&categoryID={{categoryID}}&search={{nameBook}}">&laquo;</a>
+                                            <a href="product-listing?page={{prevPage}}&categoryID={{categoryID}}&search={{nameBook}}" class="btn">{{prevPage}}</a>
+                                            <a href="product-listing?page={{page}}&categoryID={{categoryID}}&search={{nameBook}}" class="btn active">{{page}}</a>
+                                            {{!-- <a href="#">&raquo;</a> --}}                                           
+                                        </div>                                   
+                                    {{else}}                                   
+                                        <div class="pagination">
+                                            <a href="product-listing?page={{prevPage}}&categoryID={{categoryID}}&search={{nameBook}}">&laquo;</a>
+                                            <a href="product-listing?page={{prevPage}}&categoryID={{categoryID}}&search={{nameBook}}" class="btn">{{prevPage}}</a>
+                                            <a href="product-listing?page={{page}}&categoryID={{categoryID}}&search={{nameBook}}" class="btn active">{{page}}</a>
+                                            <a href="product-listing?page={{nextPage}}&categoryID={{categoryID}}&search={{nameBook}}" class="btn">{{nextPage}}</a>
+                                            <a href="product-listing?page={{nextPage}}&categoryID={{categoryID}}&search={{nameBook}}">&raquo;</a>
+                                        </div>                          
+                                    {{/unless}}
+                                
                                 {{/unless}}
                             {{else}}
-                                {{#unless hasNextPage}}
-                                    <div class="pagination">
-                                        <a href="product-listing?page={{prevPage}}">&laquo;</a>
-                                        <a href="product-listing?page={{prevPage}}" class="btn">{{prevPage}}</a>
-                                        <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
-                                        {{!-- <a href="#">&raquo;</a> --}}                                           
-                                    </div>                                   
-                                {{else}}                                   
-                                    <div class="pagination">
-                                        <a href="product-listing?page={{prevPage}}">&laquo;</a>
-                                        <a href="product-listing?page={{prevPage}}" class="btn">{{prevPage}}</a>
-                                        <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
-                                        <a href="product-listing?page={{nextPage}}" class="btn">{{nextPage}}</a>
-                                        <a href="product-listing?page={{nextPage}}">&raquo;</a>
-                                    </div>                          
+                                {{#unless hasPrevPage}}
+                                    {{#unless hasNextPage}}
+                                        <div class="pagination">
+                                            <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
+                                        </div>     
+                                    {{else}}
+                                        <div class="pagination">
+                                            {{!-- <a href="#">&laquo;</a> --}}
+                                            <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
+                                            <a href="product-listing?page={{nextPage}}" class="btn">{{nextPage}}</a>
+                                            <a href="product-listing?page={{nextPage}}">&raquo;</a>
+                                        </div>
+                                    {{/unless}}
+                                {{else}}
+                                    {{#unless hasNextPage}}
+                                        <div class="pagination">
+                                            <a href="product-listing?page={{prevPage}}">&laquo;</a>
+                                            <a href="product-listing?page={{prevPage}}" class="btn">{{prevPage}}</a>
+                                            <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
+                                            {{!-- <a href="#">&raquo;</a> --}}                                           
+                                        </div>                                   
+                                    {{else}}                                   
+                                        <div class="pagination">
+                                            <a href="product-listing?page={{prevPage}}">&laquo;</a>
+                                            <a href="product-listing?page={{prevPage}}" class="btn">{{prevPage}}</a>
+                                            <a href="product-listing?page={{page}}" class="btn active">{{page}}</a>
+                                            <a href="product-listing?page={{nextPage}}" class="btn">{{nextPage}}</a>
+                                            <a href="product-listing?page={{nextPage}}">&raquo;</a>
+                                        </div>                          
+                                    {{/unless}}
+                                
                                 {{/unless}}
+                            {{/if}}
                             
-                            {{/unless}}
                             
                         </div>
                         

@@ -32,3 +32,6 @@
     background-color: #ddd;
     border-radius: 5px;
   }
+  .image-upload>input {
+    display: none;
+  }

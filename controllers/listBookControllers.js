@@ -8,8 +8,8 @@ exports.index = (req, res, next) => {
 }
 
 exports.contact = async (req, res, next) => {
-    const books = await bookModels.addManyBook();
-    console.log('add');
+    // const books = await bookModels.addManyBook();
+    // console.log('add');
     res.render('book-shop/contact');
 }
 
@@ -23,13 +23,16 @@ exports.productListing = async (req, res, next) => {
     const page = req.query.page || 1
     const categoryID = req.query.categoryID;
     const nameBook = req.query.search;
+    let flag = false;
     console.log(nameBook);
     let filter = {};
     if (categoryID) {
         filter.categoryID = mongoose.Types.ObjectId(categoryID);
+        flag = true;
     }
     if (nameBook) {
         filter.name = { "$regex": nameBook, "$options": "i" };
+        flag = true;
     }
     const paginate = await bookModels.listBook(filter, page, 9);
     const categories = await categoryModels.categories();
@@ -42,7 +45,10 @@ exports.productListing = async (req, res, next) => {
         hasPrevPage: paginate.hasPrevPage,
         limit: paginate.limit,
         total: paginate.totalPages,
-        categories
+        categories,
+        flag,
+        nameBook,
+        categoryID 
     });
 }
 
