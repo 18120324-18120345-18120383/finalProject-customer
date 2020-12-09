@@ -47,23 +47,12 @@
                     <h4 class="small-heading">Account Infomation</h4>
 <!--                        <p class="small-text">Lorem ipsum is simply dummy text of the printing and typesetting industry. </p>-->
                     <form action="/book-shop/account-info" enctype="multipart/form-data" method="post">
-                        <div class="product-list row justify-content-md-center">
-                            <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-                                <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                    <div class="item p-item-img">
-                                        <img src={{avatar}} class="rounded-circle" alt="images"> 
-                                        <div class="text-center d-flex justify-content-center align-items-center">
-                                            <div class="image-upload">
-                                                <label class="listing-cart-icon" for="file-input">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </label>
-                                                <input type="file" id="file-input" name="avatar" multiple="multiple"/>
-
-                                            </div>
-                                        </div>                   
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mb-4">  
+                            <img src={{avatar}} id="myImg" alt="Avatar" class="avatar">
+                            <a id="my-editIcon" class="icon" title="User Profile">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <input type="file" name="avatar" id="my-file" onchange="loadFile(event)" multiple="multiple" hidden>
                         </div>
                         <div class="contact-form" id="contact-form-data">
                             <div class="row my-form">

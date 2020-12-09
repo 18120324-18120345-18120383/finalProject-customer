@@ -11,9 +11,19 @@
     Tags: one page, multi page, multipurpose, parallax, creative, html5
 
  ----------------------------------------------------------------------*/
+ $('#my-editIcon').click(function(){
+    $('#my-file').click();
+});
 
-
-
+var loadFile = function(event) {
+    // alert('hihi');
+    var output = document.getElementById('myImg');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+    $('#myModal').modal('show');
+};
 //PAGE LOADER
 $(window).on("load", function () {
 

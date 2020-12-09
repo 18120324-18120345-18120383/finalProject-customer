@@ -14,15 +14,12 @@ exports.updateAccountInfo = async (req, res, next) => {
         next(err);
         return;
         }
-        for(let i = 0; i < 5; i++) {
-            const avatar = files.avatar[i];
-            if (avatar.size > 0) {
-                const name = avatar.path.split('/').pop()
-                const extension = avatar.name.split('.').pop();
-                fields.avatar =  name + '.' + extension;
-                fs.renameSync(avatar.path, __dirname + '/../public/book-shop/img/' + name + '.' + extension);
-                break;
-            }
+        const avatar = files.avatar;
+        if (avatar.size > 0) {
+            const name = avatar.path.split('/').pop()
+            const extension = avatar.name.split('.').pop();
+            fields.avatar =  name + '.' + extension;
+            fs.renameSync(avatar.path, __dirname + '/../public/book-shop/img/' + name + '.' + extension);
         }
         listUser.updateOncAccount('5fcf583b6e22188a3952ec00', fields).then((result) => {
             res.redirect('/book-shop/account-info');
