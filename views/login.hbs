@@ -1,0 +1,39 @@
+<a class="scroll-top-arrow" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
+
+
+<!-- Contact Us Start -->
+<section class="contact-sec" id="contact-sec">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-4 contact-box text-center text-md-left wow slideInRight" data-wow-delay=".8s">
+            </div>
+            <div class="col-12 col-lg-4 contact-box text-center text-md-left wow slideInRight" data-wow-delay=".8s">
+                <div class="c-box wow fadeInRight">
+                    <h4 class="small-heading">Login</h4>
+<!--                        <p class="small-text">Lorem ipsum is simply dummy text of the printing and typesetting industry. </p>-->
+                    <form action="/login" method="POST" class="login-form" id="login-form-data">
+                        <div class="row my-form">
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" rows="7" required="required"></input>
+                            </div>
+                            <div class="col-12">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" rows="7" required="required"></input>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn green-color-yellow-gradient-btn user-contact contact_btn" type="submit">LOGIN</button>
+                            </div>
+                            {{#if messages.error}}
+                                <br>
+                                <div class="col-12">
+                                    <p>{{messages.error}}</p>  
+                                </div>
+                            {{/if}}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact Us End -->
