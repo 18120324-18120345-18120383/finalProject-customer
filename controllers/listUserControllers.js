@@ -40,10 +40,17 @@ exports.addOneAccount = async (req, res, next) => {
     res.send(user);
 }
 
-exports.login = async (req, res, next) => {
+exports.getLogin = async (req, res, next) => {
     res.render('book-shop/login');
 }
 
-exports.register = async (req, res, next) => {
+exports.getRegister = async (req, res, next) => {
     res.render('book-shop/register');
+}
+
+exports.postRegister = async (req, res, next) => {
+    const data = req.body
+    const message = await listUser.createAccount(data);
+    console.log(message)
+    res.send(message)
 }

@@ -1,14 +1,16 @@
 const { ObjectID } = require('mongodb');
 const mongoose = require('mongoose');
-
+const bcrybt = require('bcrypt')
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+    username: String,
+    password: String,
     firstName : String,
     lastName: String,
     avatar: String,
     email: String,
-    numberPhone: String,
+    phoneNumber: String,
     more: String
 })
 
@@ -26,7 +28,7 @@ module.exports.updateOncAccount = async (id, fields) => {
         firstName: fields.firstName, 
         lastName: fields.lastName, 
         email: fields.email, 
-        numberPhone: fields.numberPhone,
+        phoneNumber: fields.numberPhone,
         more: fields.more,
         avatar: '/book-shop/img/' +fields.avatar
     };
@@ -35,20 +37,44 @@ module.exports.updateOncAccount = async (id, fields) => {
             firstName: fields.firstName, 
             lastName: fields.lastName, 
             email: fields.email, 
-            numberPhone: fields.numberPhone,
+            phoneNumber: fields.numberPhone,
             more: fields.more
         }
     }
     const user = await User.findOneAndUpdate(filter, update);
     return user;
 }
-module.exports.addOneAccount = async (firstName, lastName, avatar, email, numberPhone, more) => {
+module.exports.addOneAccount = async (firstName, lastName, avatar, email, phoneNumber, more) => {
     const user = await User.insertMany({
         firstName: firstName,
         lastName: lastName,
         avatar: avatar,
         email: email,
-        numberPhone: numberPhone,
+        phoneNumber: phoneNumber,
         more: more
     })
+}
+module.exports.createAccount = async (data) => {
+    const username = data.username;
+    const password = data.password;
+    console.log(username);
+    console.log(password[0])
+    let message = "";
+    const flag = await User.findOne({username: username}).exec();
+    // const flag = false;
+    if (flag) {
+        message = "Username exists!";
+        return message
+    }
+    if (password[0] != password[1]) {
+        message = "Password and retype not match!";
+        return message
+    }
+    const hashedPassword = await bcrybt.hash(password[0], 10);
+    const user = await User.insertMany({
+        username: username,
+        password: hashedPassword
+    })
+    message = "Create account successful!";
+    return message;
 }
