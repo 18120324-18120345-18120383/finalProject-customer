@@ -465,6 +465,7 @@ END scroll-top-arrow
 .product-listing-products .product-list .product-item .p-item-img img{
     height: 100%;
     width: 100%;
+    object-fit: cover;
 }
 
 .product-listing-products .product-list .p-item-detail  .p-item-name{

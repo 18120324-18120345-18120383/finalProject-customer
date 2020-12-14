@@ -8,82 +8,56 @@
 <!-- Contact Us Start -->
 <section class="contact-sec" id="contact-sec">
 
-    <div class="container">
-        <div class="row justify-content-md-center">
-            {{!-- <div class="col-12 col-lg-6 contact-description wow slideInLeft" data-wow-delay=".8s">
-                <div class="contact-detail wow fadeInLeft">
-                    <div class="ex-detail">
-                        <span class="fly-text">CONTACT US</span>
-                        <h4 class="large-heading">
-                            <span class="heading-1">Get</span>
-                            <span class="heading-2">In Touch</span>
-                        </h4>
-                    </div>
-                    <p class="small-text text-center text-md-left">
-                        Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard.
-                    </p>
-                    <div class="row location-details text-center text-md-left">
-                        <div class="col-12 col-md-6 country-1">
-                            <h4 class="heading-text text-left">United States</h4>
-                            <ul>
-                                <li><i class="fas fa-mobile-alt"></i><a href="#">+(34) 609 33 17 54</a></li>
-                                <li><i class="fas fa-envelope"></i><a href="#">email@website.com</a></li>
-                                <li><i class="fas fa-map-marker"></i><a href="#">201 Oak Street 27 Manchester, USA</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-md-6 couuntry-1">
-                            <h4 class="heading-text text-left">Australia</h4>
-                            <ul>
-                                <li><i class="fas fa-mobile-alt"></i><a href="#">+(34) 609 33 17 54</a></li>
-                                <li><i class="fas fa-envelope"></i><a href="#">email@website.com</a></li>
-                                <li><i class="fas fa-map-marker"></i><a href="#">201 Oak Street 27 Manchester, USA</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            <div class="col-12 col-lg-6 contact-box text-center text-md-left wow slideInRight" data-wow-delay=".8s">
-                <div class="c-box wow fadeInRight product-listing-products">
-                    <h4 class="small-heading">Account Infomation</h4>
-<!--                        <p class="small-text">Lorem ipsum is simply dummy text of the printing and typesetting industry. </p>-->
-                    <form action="/book-shop/account-info" enctype="multipart/form-data" method="post">
-                        <div class="d-flex justify-content-center mb-4">  
-                            <img src={{avatar}} id="myImg" alt="Avatar" class="avatar">
-                            <a id="my-editIcon" class="icon" title="User Profile">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                            <input type="file" name="avatar" id="my-file" onchange="loadFile(event)" multiple="multiple" hidden>
-                        </div>
-                        <div class="contact-form" id="contact-form-data">
-                            <div class="row my-form">
-                                <div class="col-md-12 col-sm-12">
-                                    <div id="result"></div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <input type="text" class="form-control" id="candidate_fname" name="firstName" placeholder="First Name" required="required" value={{firstName}}>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <input type="text" class="form-control" id="candidate_lname" name="lastName" placeholder="Last Name" required="required" value={{lastName}}>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <input type="email" class="form-control" id="user_email" name="email" placeholder="Email" required="required" value={{email}}>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <input type="tel" class="form-control" id="user_subject" name="numberPhone" placeholder="Number phone" pattern="[0-9]{10}" required="required" value={{numberPhone}}>
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control" id="user_message" name="more" placeholder="Message" rows="7" required="required">{{more}}</textarea>
-                                </div>
-                                <div class="col-12">
-                                    <input class="btn green-color-yellow-gradient-btn user-contact contact_btn" type="Submit">
-                                    </input>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+  <div class="container">
+    <div class="row justify-content-md-center">
+
+      <div class="col-12 col-lg-6 contact-box text-center text-md-left wow slideInRight" data-wow-delay=".8s">
+        <div class="c-box wow fadeInRight product-listing-products">
+          <h4 class="small-heading">Account Infomation</h4>
+          <!--                        <p class="small-text">Lorem ipsum is simply dummy text of the printing and typesetting industry. </p>-->
+          <form action="/book-shop/account-info" enctype="multipart/form-data" method="post">
+            <div class="d-flex justify-content-center mb-4">
+              <img src={{avatar}} id="myImg" alt="Avatar" class="avatar">
+              <a id="my-editIcon" class="icon" title="User Profile">
+                <i class="fa fa-edit"></i>
+              </a>
+              <input type="file" name="avatar" id="my-file" onchange="loadFile(event)" multiple="multiple" hidden>
             </div>
+            <div class="contact-form" id="contact-form-data">
+              <div class="row my-form">
+                <div class="col-md-12 col-sm-12">
+                  <div id="result"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <input type="text" class="form-control" id="candidate_fname" name="firstName" placeholder="First Name"
+                    required="required" value={{firstName}}>
+                </div>
+                <div class="col-12 col-md-6">
+                  <input type="text" class="form-control" id="candidate_lname" name="lastName" placeholder="Last Name"
+                    required="required" value={{lastName}}>
+                </div>
+                <div class="col-12 col-md-6">
+                  <input type="email" class="form-control" id="user_email" name="email" placeholder="Email"
+                    required="required" value={{email}}>
+                </div>
+                <div class="col-12 col-md-6">
+                  <input type="tel" class="form-control" id="user_subject" name="numberPhone" placeholder="Number phone"
+                    pattern="[0-9]{10}" required="required" value={{numberPhone}}>
+                </div>
+                <div class="col-12">
+                  <textarea class="form-control" id="user_message" name="more" placeholder="Message" rows="7"
+                    required="required">{{more}}</textarea>
+                </div>
+                <div class="col-12">
+                  <input class="btn green-color-yellow-gradient-btn user-contact contact_btn" type="Submit">
+                  </input>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 <!-- Contact Us End -->
