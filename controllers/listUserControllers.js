@@ -40,9 +40,19 @@ exports.addOneAccount = async (req, res, next) => {
     res.send(user);
 }
 
-exports.getLogin = async (req, res, next) => {
+exports.index = (req, res, next) => {
+    res.render('index');
+}
+
+exports.login = (req, res, next) => {
     res.render('book-shop/login');
 }
+
+exports.postLogout = (req, res, next) => {
+    req.logOut()
+    res.redirect('book-shop/login')
+}
+
 
 exports.getRegister = async (req, res, next) => {
     res.render('book-shop/register');

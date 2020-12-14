@@ -1,6 +1,8 @@
 const { ObjectID } = require('mongodb');
 const mongoose = require('mongoose');
 const bcrybt = require('bcrypt')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -13,7 +15,12 @@ const userSchema = new Schema({
     phoneNumber: String,
     more: String
 })
+passport.initialize();
+passport.session();
 
+initializePassport(
+    passport,
+)
 const User = mongoose.model('list-users', userSchema);
 
 module.exports.getListAccount = async () => {
@@ -77,4 +84,35 @@ module.exports.createAccount = async (data) => {
     })
     message = "Create account successful!";
     return message;
+}
+
+function initializePassport(passport) {
+    const authenticateUser = async (username, password, done) => {
+        const user = await User.findOne({username: username}).exec();
+        if (user == null) {
+            return done(null, false, { message: "Username or password is incorrect!!!" })
+        }
+
+        try {
+            if (await bcrypt.compare(password, user.password)) {
+                console.log(password)
+                return done(null, user)
+            }
+            else {
+                return done(null, false, { message: "Username or password is incorrect!!!" })
+            }
+        }
+        catch (e) {
+            return done(e)
+        }
+    }
+
+    passport.use(new LocalStrategy({
+        usernameField: 'username'
+    },
+        authenticateUser))
+    passport.serializeUser((user, done) => done(null, user.id))
+    passport.deserializeUser((id, done) => {
+        return done(null, getUserById(id))
+    })
 }

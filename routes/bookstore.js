@@ -13,7 +13,7 @@ router.get('/product-listing', checkAuthenticated, listBookController.productLis
 router.get('/shop-cart', checkAuthenticated, listBookController.shopCart);
 router.get('/account-info', checkAuthenticated, listUserController.getAccountInfo);
 router.post('/account-info', checkAuthenticated, listUserController.updateAccountInfo);
-router.get('/login', listUserController.getLogin);
+// router.get('/login', listUserController.getLogin);
 router.get('/register', checkAuthenticated, listUserController.getRegister);
 router.post('/register', checkAuthenticated, listUserController.postRegister);
 // router.get('/add-product', listBookController.addBook);

@@ -3,10 +3,10 @@ const mongoose = require('mongoose')
 const bookModels = require('../models/listBookModels');
 const categoryModels = require('../models/categoriesModels');
 
+
 exports.index = (req, res, next) => {
     res.render('index');
 }
-
 exports.contact = async (req, res, next) => {
     // const books = await bookModels.addManyBook();
     // console.log('add');
