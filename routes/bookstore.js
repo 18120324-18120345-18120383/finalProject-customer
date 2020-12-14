@@ -13,5 +13,7 @@ router.get('/product-listing', listBookController.productListing);
 router.get('/shop-cart', listBookController.shopCart);
 router.get('/account-info', listUserController.getAccountInfo);
 router.post('/account-info', listUserController.updateAccountInfo);
+router.get('/login', listUserController.login);
+router.get('/register', listUserController.register);
 // router.get('/add-product', listBookController.addBook);
 module.exports = router;

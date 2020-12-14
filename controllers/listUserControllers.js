@@ -39,3 +39,11 @@ exports.addOneAccount = async (req, res, next) => {
     const user = listUser.addOneAccount(firstName, lastName, avatar, email, numberPhone, more);
     res.send(user);
 }
+
+exports.login = async (req, res, next) => {
+    res.render('book-shop/login');
+}
+
+exports.register = async (req, res, next) => {
+    res.render('book-shop/register');
+}
