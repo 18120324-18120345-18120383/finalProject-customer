@@ -8,8 +8,6 @@ exports.index = (req, res, next) => {
     res.render('index');
 }
 exports.contact = async (req, res, next) => {
-    // const books = await bookModels.addManyBook();
-    // console.log('add');
     res.render('book-shop/contact');
 }
 

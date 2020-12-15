@@ -180,17 +180,35 @@
                               href="/book-shop/shop-cart">ShopCart Page</a></li>
                           <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
                               href="/book-shop/account-info">Account Info</a></li>
-                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
-                              href="/book-shop/login">Login</a></li>
-                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
-                              href="/book-shop/register">Register</a></li>
                         </ul>
                       </div>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="/book-shop/contact">CONTACT</a>
                     </li>
-
+                    <li class="nav-item dropdown position-relative">
+                      <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="lni lni-user"></i>
+                      </a>
+                      <div class="dropdown-menu">
+                        <ul>
+                          {{#if user}}
+                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item">
+                            Hello {{user.username}}</a></li>
+                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
+                              href="/book-shop/account-info">Your profile</a></li>
+                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
+                              href="/book-shop/logout">Logout</a></li>
+                          {{else}}
+                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
+                              href="/book-shop/login">Login</a></li>
+                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
+                              href="/book-shop/register">Register</a></li>
+                          {{/if}}
+                        </ul>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </div>
