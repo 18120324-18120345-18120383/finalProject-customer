@@ -47,6 +47,12 @@ exports.index = (req, res, next) => {
 exports.login = (req, res, next) => {
     res.render('book-shop/login');
 }
+
+
+exports.forgotPassword = (req, res, next) => {
+    res.render('book-shop/forgotPassword');
+}
+
 exports.postLogout = (req, res, next) => {
     req.logOut()
     res.redirect('/book-shop/login')
@@ -59,6 +65,10 @@ exports.getRegister = async (req, res, next) => {
 exports.postRegister = async (req, res, next) => {
     const data = req.body
     const message = await listUser.createAccount(data);
-    console.log(message)
+    
+    //
+    //verify by email here
+    //
+
     res.send(message)
 }

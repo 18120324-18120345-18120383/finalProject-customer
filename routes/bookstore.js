@@ -19,9 +19,10 @@ router.post('/account-info', checkAuthenticated, listUserController.updateAccoun
 router.get('/login', checkNotAuthenticated, listUserController.login);
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/book-shop/login?error=wrong-account',
+  failureRedirect: '/book-shop/login',
   failureFlash: false
 }));
+router.get('/forgotPassword', checkNotAuthenticated, listUserController.forgotPassword);
 router.delete('/logout', listUserController.postLogout);
 router.get('/register', checkNotAuthenticated, listUserController.getRegister);
 router.post('/register', listUserController.postRegister);
