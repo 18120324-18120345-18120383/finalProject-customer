@@ -49,7 +49,7 @@ exports.login = (req, res, next) => {
 }
 exports.postLogout = (req, res, next) => {
     req.logOut()
-    res.redirect('book-shop/login')
+    res.redirect('/book-shop/login')
 }
 
 exports.getRegister = async (req, res, next) => {

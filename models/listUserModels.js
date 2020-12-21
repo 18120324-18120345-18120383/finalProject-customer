@@ -86,7 +86,7 @@ module.exports.authenticateUser = async (username, password) => {
     const user = await User.findOne({username: username}).exec();
 
     if (user == null) {
-        return false;
+        return false;;
     }
     let flag = await bcrybt.compare(password, user.password);
     if (flag) {
