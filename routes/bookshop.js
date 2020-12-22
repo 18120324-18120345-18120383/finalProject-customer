@@ -32,6 +32,9 @@ router.delete('/logout', listUserController.postLogout);
 router.get('/register', checkNotAuthenticated, listUserController.getRegister);
 router.post('/register', listUserController.postRegister);
 router.get('/verifyEmail/:token', listUserController.verifyEmail);
+router.get('/changePassword', checkAuthenticated, listUserController.changePassword);
+router.post('/changePassword', checkAuthenticated, listUserController.postChangePassword);
+
 // router.get('/add-product', listBookController.addBook);
 
 function checkAuthenticated(req, res, next) {
