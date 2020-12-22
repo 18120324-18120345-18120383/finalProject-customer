@@ -20,7 +20,7 @@ module.exports.getListAccount = async () => {
     const users = await User.find({});
     return users;
 }
-module.exports.updateOncAccount = async (id, fields) => {
+module.exports.updateOneAccount = async (id, fields) => {
     const newID = id;
     const filter = {_id: newID};
     
@@ -113,4 +113,19 @@ module.exports.authenticateUser = async (username, password) => {
     }
     return false;
 }
+module.exports.findUserByEmail = async (email) => {
+    const user = await User.findOne({email: email}).exec();
+    return user;
+}
+module.exports.setPassword = async (email, newPassword) => {
+    const filter = {email: email};
 
+    const hashedPassword = await bcrybt.hash(newPassword, 10);
+
+    let update = {
+        password: hashedPassword
+    };
+
+    const user = await User.findOneAndUpdate(filter, update);
+    return user;
+}

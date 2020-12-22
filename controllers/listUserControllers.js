@@ -3,6 +3,7 @@ const formidable = require('formidable');
 const fs = require('fs');
 const { dirname } = require('path');
 const { ExpectationFailed } = require('http-errors');
+const randomstring = require('randomstring')
 
 require("dotenv").config();
 const nodemailer = require('nodemailer')
@@ -33,7 +34,7 @@ exports.updateAccountInfo = async (req, res, next) => {
             fields.avatar = name + '.' + extension;
             fs.renameSync(avatar.path, __dirname + '/../public/book-shop/img/' + name + '.' + extension);
         }
-        listUser.updateOncAccount(req.user.id, fields).then((result) => {
+        listUser.updateOneAccount(req.user.id, fields).then((result) => {
             res.redirect('/book-shop/account-info');
         });
     });
@@ -63,6 +64,60 @@ exports.login = (req, res, next) => {
 
 exports.forgotPassword = (req, res, next) => {
     res.render('book-shop/forgotPassword');
+}
+
+exports.postForgotPassword = async (req, res, next) => {
+    const email = req.body.email
+    const user = await listUser.findUserByEmail(email)
+    if (user == null){
+        showNotif(res, "Error!!!", "An account with your email does not exist!!!")    
+    }
+
+    const token = jwt.sign({email}, process.env.JWT_RESET_PASS, {expiresIn: '1m'})
+
+    const emailData = {
+        from: 'My Book Store <noreply@mybookstore.com>',
+        to: email,
+        subject: 'Reset your password',
+        html: `
+            <h2>Please click on the link below to reset your password</h2>  
+            <a href="${process.env.CLIENT_URL}book-shop/resetPassword/${token}">
+            ${process.env.CLIENT_URL}book-shop/resetPassword/${token}</a>
+        `
+    };
+
+    transporter.sendMail(emailData, (err, info) => {
+        if (err){
+            console.log(err);
+            showNotif(res, "Error", 'Sorry, some error happen while we try to send you reset password link!!!');
+        } else {
+            console.log('Email has been sent!!!');
+            showNotif(res, "Reset password", 'Please check your email to take reset password link!!!');
+        }
+    })
+}
+
+exports.resetPassword = async (req, res) => {
+    const token = req.params.token;
+    if (token){
+        let email;
+        jwt.verify(token, process.env.JWT_RESET_PASS, function(err, decoded) {
+            if (err){
+                showNotif(res, "Error!!!", 'Link is expired!!!');
+            } else {
+                email = decoded.email
+            }
+          });
+        const newPassword = randomstring.generate(10)
+        const user = await listUser.setPassword(email, newPassword)
+        if (user != null){
+            showNotif(res, "Reset password successfully", "Your username is: " + user.username + " ;Your new password is: " + newPassword)
+        } else {
+            showNotif(res, "Error", "Sorry, something happen while we are trying to reset your password")
+        }
+    } else {
+        showNotif(res, "Error!!!", 'Link is expired!!!');
+    }
 }
 
 exports.postLogout = (req, res, next) => {
@@ -99,43 +154,46 @@ exports.postRegister = async (req, res, next) => {
         transporter.sendMail(emailData, (err, info) => {
             if (err){
                 console.log(err);
+                showNotif(res, "Error", "Sorry, some error happen while we try to send you an email with verify link!!!");
             } else {
                 console.log('Email has been sent!!!');
+                showNotif(res, "Verify email", "Please check your email to take verify link!!!");
             }
         })
-
-        res.render('book-shop/notif', {
-            notifTitle: "Verify email",
-            notifText: "Please check your email to take verify link!!!"
-        })
     } else {
-        res.render('book-shop/notif', {
-            notifTitle: "Register error!!!",
-            notifText: message
-        })
+
+        showNotif(res, "Register error!!!", message);
+
     }
 }
 exports.verifyEmail = async (req, res) => {
     const token = req.params.token;
     if (token){
-        const {username, email, password} = jwt.verify(token, process.env.JWT_ACC_ACTIVATE)
+        let username, email, password
+        jwt.verify(token, process.env.JWT_ACC_ACTIVATE, function(err, decoded) {
+            if (err){
+                showNotif(res, "Error!!!", 'Link is expired!!!');
+            } else {
+                username = decoded.username
+                email = decoded.email
+                password = decoded.password
+            }
+          });
         const isValid = await listUser.checkValidEmailAndUsername(email, username)
         if (isValid){
             await listUser.createAccount(username, password, email)
-            res.render('book-shop/notif', {
-                notifTitle: "Verify successfully!!!",
-                notifText: "Your account are registered successfully!!!"
-            })
+            showNotif(res, "Verify successfully!!!", "Your account are registered successfully!!!");
         } else {
-            res.render('book-shop/notif', {
-                notifTitle: "Verify error!!!",
-                notifText: "Your email or username already exist!!!"
-            })
+            showNotif(res, "Verify error!!!", "Your email or username already exist!!!");
         }
     } else {
-        res.render('book-shop/notif', {
-            notifTitle: "Verify error!!!",
-            notifText: 'Link is expired!!!'
-        })
+        showNotif(res, "Verify error!!!", 'Link is expired!!!');
     }
+}
+
+function showNotif(res, myNotifTitle, myNotifText) {
+    res.render('book-shop/notif', {
+        notifTitle: myNotifTitle,
+        notifText: myNotifText
+    });
 }

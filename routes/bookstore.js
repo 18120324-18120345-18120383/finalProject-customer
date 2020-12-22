@@ -23,6 +23,8 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: false
 }));
 router.get('/forgotPassword', checkNotAuthenticated, listUserController.forgotPassword);
+router.post('/forgotPassword', listUserController.postForgotPassword);
+router.get('/resetPassword/:token', listUserController.resetPassword);
 router.delete('/logout', listUserController.postLogout);
 router.get('/register', checkNotAuthenticated, listUserController.getRegister);
 router.post('/register', listUserController.postRegister);
