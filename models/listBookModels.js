@@ -9,7 +9,8 @@ const bookSchema = new Schema({
     category: String,
     categoryID: ObjectID,
     basePrice: Number,
-    description: String
+    description: String,
+    views: Number
 })
 
 bookSchema.plugin(mongoosePaginate);
@@ -25,7 +26,12 @@ module.exports.listBook = async (filter, pageNumber, itemPerPage) => {
 }
 
 module.exports.getOneBook = async (id) => {
-    const book = await Book.findById(id);
+    let book = await Book.findById(id);
+    let views = 0;
+    if (book.views) {
+        views = book.views
+    }
+    book = await Book.findByIdAndUpdate(id, {views: views + 1})
     return book;
 }
 

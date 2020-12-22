@@ -38,6 +38,7 @@
                   <th></th>
                 </tr>
               </thead>
+              {{#each listItem}}
               <tbody>
                 <tr>
                   <td>
@@ -47,13 +48,13 @@
                         <div class="row no-gutters">
 
                           <div class="col-12 col-lg-2 product-detail-cart-image">
-                            <a class="shopping-product" href="javascript:void(0)"><img src="img\shopcart-1.jpg"
+                            <a class="shopping-product" href="javascript:void(0)"><img src={{cover}}
                                 alt="Generic placeholder image"></a>
                           </div>
 
                           <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
                             <div class="media-body ml-lg-3">
-                              <h4 class="product-name"><a href="product-detail">Love Does</a></h4>
+                              <h4 class="product-name"><a href="product-detail">{{name}}</a></h4>
                               <p class="product-des">We offer the most complete in the country</p>
                             </div>
                           </div>
@@ -62,90 +63,23 @@
                     </div>
                   </td>
                   <td>
-                    <h4 class="text-center amount">$130.00</h4>
+                    <h4 class="text-center amount">${{price}}</h4>
                   </td>
                   <td class="text-center">
                     <div class="quote text-center mt-1">
-                      <input type="number" placeholder="1" class="quote" min="1" max="100">
+                      <input type="number" placeholder="1" class="quote" min="1" max="100" value={{quantity}}>
                     </div>
                   </td>
                   <td>
-                    <h4 class="text-center amount">$136.00</h4>
+                    <h4 class="text-center amount">${{total}}</h4>
                   </td>
-                  <td class="text-center"><a class="btn-close" href="javascript:void(0)"><i class="lni-trash"></i></a>
+                  <form method="POST" action="delete-item">
+                    <input name="id" value={{_id}} hidden>
+                    <td class="text-center"><button type="submit" class="btn-close" href="javascript:void(0)"><i class="lni-trash"></i></button>
+                  </form>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <div class="d-table product-detail-cart">
-                      <div class="media">
-                        <div class="row no-gutters">
-
-                          <div class="col-12 col-lg-2 product-detail-cart-image">
-                            <a class="shopping-product" href="javascript:void(0)"><img src="img\shopcart-2.jpg"
-                                alt="Generic placeholder image"></a>
-                          </div>
-
-                          <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
-                            <div class="media-body ml-lg-3">
-                              <h4 class="product-name"><a href="product-detail">The Last Stand</a></h4>
-                              <p class="product-des">We offer the most complete in the country</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <h4 class="text-center d-table-price amount">$100.00</h4>
-                  </td>
-                  <td class="text-center">
-                    <div class="quote text-center mt-1">
-                      <input type="number" placeholder="1" class="quote" min="1" max="100">
-                    </div>
-                  </td>
-                  <td>
-                    <h4 class="text-center amount">$106.00</h4>
-                  </td>
-                  <td class="text-center"><a class="btn-close" href="javascript:void(0)"><i class="lni-trash"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-table product-detail-cart">
-
-                      <div class="media">
-                        <div class="row no-gutters">
-
-                          <div class="col-12 col-lg-2 product-detail-cart-image">
-                            <a class="shopping-product" href="javascript:void(0)"><img src="img\shopcart-1.jpg"
-                                alt="Generic placeholder image"></a>
-                          </div>
-
-                          <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
-                            <div class="media-body ml-lg-3">
-                              <h4 class="product-name"><a href="product-detail">The Road</a></h4>
-                              <p class="product-des">We offer the most complete in the country</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <h4 class="text-center d-table-price amount">$150.00</h4>
-                  </td>
-                  <td class="text-center">
-                    <div class="quote text-center mt-1">
-                      <input type="number" placeholder="1" class="quote" min="1" max="100">
-                    </div>
-                  </td>
-                  <td>
-                    <h4 class="text-center amount">$150.00</h4>
-                  </td>
-                  <td class="text-center"><a class="btn-close" href="javascript:void(0)"><i class="lni-trash"></i></a>
-                  </td>
-                </tr>
+                {{/each}}
               </tbody>
             </table>
           </div>

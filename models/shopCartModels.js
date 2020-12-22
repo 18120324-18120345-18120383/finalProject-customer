@@ -17,11 +17,15 @@ module.exports.addOneItem = async(id, quantity) => {
   const book = await listBookModel.getOneBook(id)
   console.log(book)
   let olditem = await ShopCart.findOne({name: book.name});
-  let item = await ShopCart.findOneAndUpdate({name: book.name}, {quantity: olditem.quantity + 1})
+  let item;
+  if (olditem) {
+    item = await ShopCart.findOneAndUpdate({name: book.name}, {quantity: olditem.quantity + 1, total: olditem.price * (olditem.quantity + 1)})
+  }
+  
   if (!item) {
     item = await ShopCart.create({
       name : book.name ,
-      price : book.price,
+      price : book.basePrice,
       quantity : Number(quantity),
       total : book.basePrice * Number(quantity),
       cover : book.cover[0],
@@ -29,4 +33,13 @@ module.exports.addOneItem = async(id, quantity) => {
     });
   }
   return item;
+}
+
+module.exports.deleteItem = async (id) => {
+  console.log(id);
+  await ShopCart.findByIdAndDelete({_id: id})
+}
+module.exports.listProduct = async () => {
+  const listItem = await ShopCart.find({});
+  return listItem;
 }

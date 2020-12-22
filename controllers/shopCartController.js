@@ -9,3 +9,12 @@ module.exports.addItem = async(req, res, next) => {
   const item = await shopCart.addOneItem(id, quantity);
   res.redirect('shop-cart')
 }
+module.exports.deleteItem = async(req, res, next) => {
+  await shopCart.deleteItem(req.body.id)
+  res.redirect('shop-cart')
+}
+module.exports.listItem = async(req, res, next) => {
+  const listItem = await shopCart.listProduct();
+  console.log(listItem);
+  res.render('book-shop/shop-cart', {listItem});
+}
