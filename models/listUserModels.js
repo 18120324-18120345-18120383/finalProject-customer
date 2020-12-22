@@ -54,7 +54,7 @@ module.exports.addOneAccount = async (firstName, lastName, avatar, email, phoneN
         more: more
     })
 }
-module.exports.createAccount = async (data) => {
+module.exports.checkValidAccount = async (data) => {
     const username = data.username;
     const password = data.password;
     const email = data.email;
@@ -73,17 +73,29 @@ module.exports.createAccount = async (data) => {
         message = "Password and retype not match!";
         return message
     }
+    
+    message = "Valid account";
+    return message;
+}
+module.exports.checkValidEmailAndUsername = async (email, username) => {
+    let flag = await User.findOne({username: username}).exec();
+    if (flag) {
+        return false;
+    }
+    flag = await User.findOne({email: email}).exec();
+    if (flag) {
+        return false;
+    }
+    return true;
+}
+module.exports.createAccount = async(username, password, email) => {
     const hashedPassword = await bcrybt.hash(password[0], 10);
     const user = await User.insertMany({
         username: username,
         password: hashedPassword,
         email: email
     })
-
-    //do something to verify email here
-
-    message = "Create account successful!";
-    return message;
+    return user;
 }
 module.exports.getUserByID = async (id) =>{
     const user = User.findById(id);

@@ -3,6 +3,18 @@ const formidable = require('formidable');
 const fs = require('fs');
 const { dirname } = require('path');
 const { ExpectationFailed } = require('http-errors');
+
+require("dotenv").config();
+const nodemailer = require('nodemailer')
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS
+    }
+})
+const jwt = require('jsonwebtoken')
+
 exports.getAccountInfo = async (req, res, next) => {
     const users = await listUser.getUserByID(req.user.id);
     res.render('book-shop/account-info', users);
@@ -64,11 +76,66 @@ exports.getRegister = async (req, res, next) => {
 
 exports.postRegister = async (req, res, next) => {
     const data = req.body
-    const message = await listUser.createAccount(data);
+    const message = await listUser.checkValidAccount(data);
     
-    //
-    //verify by email here
-    //
+    if (message == 'Valid account'){
+        const username = data.username
+        const email = data.email
+        const password = data.password
 
-    res.send(message)
+        const token = jwt.sign({username, email, password}, process.env.JWT_ACC_ACTIVATE, {expiresIn: '1m'})
+
+        const emailData = {
+            from: 'My Book Store <noreply@mybookstore.com>',
+            to: data.email,
+            subject: 'Verify your email',
+            html: `
+                <h2>Please click on the link below to activate your account!</h2>  
+                <a href="${process.env.CLIENT_URL}book-shop/verifyEmail/${token}">
+                ${process.env.CLIENT_URL}book-shop/verifyEmail/${token}</a>
+            `
+        };
+
+        transporter.sendMail(emailData, (err, info) => {
+            if (err){
+                console.log(err);
+            } else {
+                console.log('Email has been sent!!!');
+            }
+        })
+
+        res.render('book-shop/notif', {
+            notifTitle: "Verify email",
+            notifText: "Please check your email to take verify link!!!"
+        })
+    } else {
+        res.render('book-shop/notif', {
+            notifTitle: "Register error!!!",
+            notifText: message
+        })
+    }
+}
+exports.verifyEmail = async (req, res) => {
+    const token = req.params.token;
+    if (token){
+        const {username, email, password} = jwt.verify(token, process.env.JWT_ACC_ACTIVATE)
+        const isValid = await listUser.checkValidEmailAndUsername(email, username)
+        if (isValid){
+            await listUser.createAccount(username, password, email)
+            res.render('book-shop/notif', {
+                notifTitle: "Verify successfully!!!",
+                notifText: "Your account are registered successfully!!!"
+            })
+        } else {
+            res.render('book-shop/notif', {
+                notifTitle: "Verify error!!!",
+                notifText: "Your email or username already exist!!!"
+            })
+        }
+    } else {
+        res.render('book-shop/notif', {
+            notifTitle: "Verify error!!!",
+            notifText: 'Link is expired!!!'
+        })
+    }
 }
