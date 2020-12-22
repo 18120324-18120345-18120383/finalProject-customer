@@ -551,61 +551,29 @@
           </div>
           <div class="col-12">
             <div class="listing-search-scroll">
+              {{#if listItem}}
+              {{#each listItem}}
               <div class="media row">
                 <div class="img-holder ml-1 mr-2 col-4">
                   <a href="javascript:void(0)"><img src="/book-shop/img/book-1.jpg" class="align-self-center"
                       alt="cartitem"></a>
                 </div>
                 <div class="media-body mt-auto mb-auto col-8">
-                  <h5 class="name"><a href="javascript:void(0)">So Sad Today</a></h5>
+                  <h5 class="name"><a href="javascript:void(0)">{{name}}</a></h5>
                   <p class="category">light wear Lastest</p>
                   <a class="btn black-sm-btn" href="/book-shop/shop-cart"><i class="fas fa-shopping-bag"></i></a>
                   <a class="btn black-sm-btn"><i class="fas fa-eye"></i></a>
                 </div>
               </div>
-              <div class="media row">
-                <div class="img-holder ml-1 mr-2 col-4">
-                  <a href="javascript:void(0)"><img src="/book-shop/img/book-2.jpg" class="align-self-center"
-                      alt="cartitem"></a>
-                </div>
-                <div class="media-body mt-auto mb-auto col-8">
-                  <h5 class="name"><a href="javascript:void(0)">As I Lay Dying</a></h5>
-                  <p class="category">light wear Lastest</p>
-                  <a class="btn black-sm-btn" href="/book-shop/shop-cart"><i class="fas fa-shopping-bag"></i></a>
-                  <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                </div>
-              </div>
-              <div class="media row">
-                <div class="img-holder ml-1 mr-2 col-4">
-                  <a href="javascript:void(0)"><img src="/book-shop/img/book-3.jpg" class="align-self-center"
-                      alt="cartitem"></a>
-                </div>
-                <div class="media-body mt-auto mb-auto col-8">
-                  <h5 class="name"><a href="javascript:void(0)">Love Does</a></h5>
-                  <p class="category">light wear Lastest</p>
-                  <a class="btn black-sm-btn" href="/book-shop/shop-cart"><i class="fas fa-shopping-bag"></i></a>
-                  <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                </div>
-              </div>
-              <div class="media row">
-                <div class="img-holder ml-1 mr-2 col-4">
-                  <a href="javascript:void(0)"><img src="/book-shop/img/book-2-1.jpg" class="align-self-center"
-                      alt="cartitem"></a>
-                </div>
-                <div class="media-body mt-auto mb-auto col-8">
-                  <h5 class="name"><a href="javascript:void(0)">The Last Stand</a></h5>
-                  <p class="category">light wear Lastest</p>
-                  <a class="btn black-sm-btn" href="/book-shop/shop-cart"><i class="fas fa-shopping-bag"></i></a>
-                  <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                </div>
-              </div>
+              {{/each}}
+              {{/if}}
             </div>
           </div>
         </div>
       </div>
       <div class="bag-btn">
         <h4 class="total"><span>Total: </span>100$</h4>
-        <a href="javascript:void(0)" class="btn green-color-yellow-gradient-btn">View Bag </a>
+        <a href="/book-shop/shop-cart" class="btn green-color-yellow-gradient-btn">View Bag </a>
         <a href="javascript:void(0)" class="btn yellow-color-green-gradient-btn">Checkout </a>
       </div>
 

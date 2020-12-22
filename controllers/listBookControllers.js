@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const bookModels = require('../models/listBookModels');
 const categoryModels = require('../models/categoriesModels');
+const shopCartMoels = require('../models/shopCartModels')
 const buildUrl = require('build-url');
 
-exports.index = (req, res, next) => {
-    res.render('index');
+exports.index = async (req, res, next) => {
+    const listItem = await shopCartMoels.listItem()
+    res.render('index', {listItem});
 }
 exports.contact = async (req, res, next) => {
     res.render('book-shop/contact');
