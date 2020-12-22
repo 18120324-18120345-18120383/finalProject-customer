@@ -117,8 +117,20 @@ module.exports.findUserByEmail = async (email) => {
     const user = await User.findOne({email: email}).exec();
     return user;
 }
-module.exports.setPassword = async (email, newPassword) => {
+module.exports.setPasswordByEmail = async (email, newPassword) => {
     const filter = {email: email};
+
+    const hashedPassword = await bcrybt.hash(newPassword, 10);
+
+    let update = {
+        password: hashedPassword
+    };
+
+    const user = await User.findOneAndUpdate(filter, update);
+    return user;
+}
+module.exports.setPasswordByUsername = async (username, newPassword) => {
+    const filter = {username: username};
 
     const hashedPassword = await bcrybt.hash(newPassword, 10);
 

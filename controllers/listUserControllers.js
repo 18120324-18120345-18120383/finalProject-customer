@@ -109,7 +109,7 @@ exports.resetPassword = async (req, res) => {
             }
           });
         const newPassword = randomstring.generate(10)
-        const user = await listUser.setPassword(email, newPassword)
+        const user = await listUser.setPasswordByEmail(email, newPassword)
         if (user != null){
             showNotif(res, "Reset password successfully", "Your username is: " + user.username + " ;Your new password is: " + newPassword)
         } else {
@@ -196,4 +196,25 @@ function showNotif(res, myNotifTitle, myNotifText) {
         notifTitle: myNotifTitle,
         notifText: myNotifText
     });
+}
+
+exports.changePassword = (req, res) => {
+    res.render('book-shop/changePassword')
+}
+exports.postChangePassword = async(req, res) => {
+    const password = req.body.password;
+    const newPassword = req.body.newPassword;
+    const isValid = await listUser.authenticateUser(req.user.username, password)
+    if (!isValid){
+        showNotif(res, "Error", "Your password is incorrect!!!")
+    }
+    if (newPassword[0] !== newPassword[1]){
+        showNotif(res, "Error", "Your new password and retype does not match!!!")
+    }
+    const user = await listUser.setPasswordByUsername(req.user.username, newPassword[0])
+    if (user != null){
+        showNotif(res, "Successfully", "Your password is changed!!!")
+    } else {
+        showNotif(res, "Error", "Sorry, something happened while we are trying to change your password!!!")
+    }
 }
