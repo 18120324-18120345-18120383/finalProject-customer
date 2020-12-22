@@ -14,7 +14,9 @@
  $('#my-editIcon').click(function(){
     $('#my-file').click();
 });
-
+function changeLink() {
+    alert("The URL of this page is: " + window.location.href)
+}
 var loadFile = function(event) {
     // alert('hihi');
     var output = document.getElementById('myImg');

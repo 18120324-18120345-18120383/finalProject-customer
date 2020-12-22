@@ -4,7 +4,7 @@ let router = express.Router();
 const listUserController = require('../controllers/listUserControllers');
 
 /* GET home page. */
-router.get('/', checkAuthenticated, listUserController.index);
+router.get('/', listUserController.index);
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
