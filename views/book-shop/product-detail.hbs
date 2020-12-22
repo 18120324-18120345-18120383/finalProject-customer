@@ -118,6 +118,11 @@
                         aria-hidden="true"></i></a></li>
                   <li><a href="javascript:void(0)" class="instagram-bg-hvr"><i class="fab fa-instagram"
                         aria-hidden="true"></i></a></li>
+                  {{#if book.views}}
+                  <li><p>{{book.views}} views</i></p></li>
+                  {{else}}
+                  <li><p>0 views</i></p></li>
+                  {{/if}}
                 </ul>
               </div>
             </div>
