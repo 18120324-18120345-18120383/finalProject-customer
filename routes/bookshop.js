@@ -21,12 +21,16 @@ router.post('/account-info', checkAuthenticated, listUserController.updateAccoun
 router.get('/login', checkNotAuthenticated, listUserController.login);
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/book-shop/login?error=wrong-account',
+  failureRedirect: '/book-shop/login',
   failureFlash: false
 }));
+router.get('/forgotPassword', checkNotAuthenticated, listUserController.forgotPassword);
+router.post('/forgotPassword', listUserController.postForgotPassword);
+router.get('/resetPassword/:token', listUserController.resetPassword);
 router.delete('/logout', listUserController.postLogout);
 router.get('/register', checkNotAuthenticated, listUserController.getRegister);
 router.post('/register', listUserController.postRegister);
+router.get('/verifyEmail/:token', listUserController.verifyEmail);
 // router.get('/add-product', listBookController.addBook);
 
 function checkAuthenticated(req, res, next) {

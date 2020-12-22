@@ -20,7 +20,7 @@ module.exports.getListAccount = async () => {
     const users = await User.find({});
     return users;
 }
-module.exports.updateOncAccount = async (id, fields) => {
+module.exports.updateOneAccount = async (id, fields) => {
     const newID = id;
     const filter = {_id: newID};
     
@@ -54,29 +54,48 @@ module.exports.addOneAccount = async (firstName, lastName, avatar, email, phoneN
         more: more
     })
 }
-module.exports.createAccount = async (data) => {
+module.exports.checkValidAccount = async (data) => {
     const username = data.username;
     const password = data.password;
-    console.log(username);
-    console.log(password[0])
+    const email = data.email;
     let message = "";
-    const flag = await User.findOne({username: username}).exec();
-    // const flag = false;
+    let flag = await User.findOne({username: username}).exec();
     if (flag) {
         message = "Username exists!";
+        return message
+    }
+    flag = await User.findOne({email: email}).exec();
+    if (flag) {
+        message = "Your email has been used already!";
         return message
     }
     if (password[0] != password[1]) {
         message = "Password and retype not match!";
         return message
     }
+    
+    message = "Valid account";
+    return message;
+}
+module.exports.checkValidEmailAndUsername = async (email, username) => {
+    let flag = await User.findOne({username: username}).exec();
+    if (flag) {
+        return false;
+    }
+    flag = await User.findOne({email: email}).exec();
+    if (flag) {
+        return false;
+    }
+    return true;
+}
+module.exports.createAccount = async(username, password, email) => {
     const hashedPassword = await bcrybt.hash(password[0], 10);
     const user = await User.insertMany({
         username: username,
-        password: hashedPassword
+        password: hashedPassword,
+        email: email
     })
-    message = "Create account successful!";
-    return message;
+    return user;
 }
 module.exports.getUserByID = async (id) =>{
     const user = User.findById(id);
@@ -86,7 +105,7 @@ module.exports.authenticateUser = async (username, password) => {
     const user = await User.findOne({username: username}).exec();
 
     if (user == null) {
-        return false;;
+        return false;
     }
     let flag = await bcrybt.compare(password, user.password);
     if (flag) {
@@ -94,4 +113,19 @@ module.exports.authenticateUser = async (username, password) => {
     }
     return false;
 }
+module.exports.findUserByEmail = async (email) => {
+    const user = await User.findOne({email: email}).exec();
+    return user;
+}
+module.exports.setPassword = async (email, newPassword) => {
+    const filter = {email: email};
 
+    const hashedPassword = await bcrybt.hash(newPassword, 10);
+
+    let update = {
+        password: hashedPassword
+    };
+
+    const user = await User.findOneAndUpdate(filter, update);
+    return user;
+}
