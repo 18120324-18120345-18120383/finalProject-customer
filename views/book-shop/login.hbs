@@ -18,6 +18,13 @@
                     <form action="/book-shop/login" method="post">
                         <div class="contact-form" id="contact-form-data">
                             <div class="row my-form">
+                                {{#if messageErr}}
+                                <div class="col-12 col-md-12">
+                                    <p class="text-danger">{{messageErr}}</p>
+                                </div>
+                                <br>
+                                <br>
+                                {{/if}}
                                 <div class="col-12 col-md-12">
                                     <input type="text" class="form-control" id="username" name="username"
                                         placeholder="Username" required="required">
@@ -30,12 +37,6 @@
                                     <button class="btn green-color-yellow-gradient-btn user-contact contact_btn"
                                         type="submit">SUBMIT</button>
                                 </div>
-                                {{#if messages.error}}
-                                <br>
-                                <div class="col-12 col-md-12">
-                                    <p>{{messages.error}}</p>
-                                </div>
-                                {{/if}}
                             </div>
                             <br>
                             <div class="row my-form">

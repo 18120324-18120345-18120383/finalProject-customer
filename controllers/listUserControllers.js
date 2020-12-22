@@ -58,9 +58,14 @@ exports.index = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
-    res.render('book-shop/login');
+    res.render('book-shop/login')
 }
 
+exports.loginErr = (req, res, next) => {
+    res.render('book-shop/login', {
+        messageErr: "Your username or password is incorrect!!!"
+    });
+}
 
 exports.forgotPassword = (req, res, next) => {
     res.render('book-shop/forgotPassword');

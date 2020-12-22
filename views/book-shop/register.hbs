@@ -15,9 +15,15 @@
         <div class="c-box wow fadeInRight product-listing-products">
           <h4 class="small-heading">Register</h4>
           <!--<p class="small-text">Lorem ipsum is simply dummy text of the printing and typesetting industry. </p>-->
-          <form action="/book-shop/register" method="post">  
+          <form onsubmit="return validateForm()" action="/book-shop/register" method="post">  
             <div class="contact-form" id="contact-form-data">
               <div class="row my-form">
+                <div class="col-12 col-md-12">
+                  <p class="text-danger" id="errUsername" style="visibility: hidden;">Username must not contain special characters.</p>
+                </div>
+                <div class="col-12 col-md-12">
+                  <p class="text-danger" id="errPassword" style="visibility: hidden;">Password and retype must be the same.</p>
+                </div>
                 <div class="col-12 col-md-12">
                   <input type="text" class="form-control" id="username" name="username" placeholder="Username"
                     required="required">
