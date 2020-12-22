@@ -3,17 +3,19 @@ const router = express.Router();
 const methodOverride = require('method-override')
 const listBookController = require('../controllers/listBookControllers');
 const listUserController = require('../controllers/listUserControllers');
+const shopCartController = require('../controllers/shopCartController');
 const passport = require('../passport/index');
 
 /* GET home page. */
 router.use(express.static('public'));
 router.use(methodOverride('_method'));
 
-router.get('/', checkAuthenticated,listBookController.index);
-router.get('/contact', checkAuthenticated, listBookController.contact);
-router.get('/product-detail/:id', checkAuthenticated, listBookController.productDetail);
-router.get('/product-listing', checkAuthenticated, listBookController.productListing);
-router.get('/shop-cart', checkAuthenticated, listBookController.shopCart);
+router.get('/', listBookController.index);
+router.get('/contact', listBookController.contact);
+router.get('/product-detail/:id', listBookController.productDetail);
+router.post('/add-to-cart', shopCartController.addItem);
+router.get('/product-listing', listBookController.productListing);
+router.get('/shop-cart', listBookController.shopCart);
 router.get('/account-info', checkAuthenticated, listUserController.getAccountInfo);
 router.post('/account-info', checkAuthenticated, listUserController.updateAccountInfo);
 router.get('/login', checkNotAuthenticated, listUserController.login);

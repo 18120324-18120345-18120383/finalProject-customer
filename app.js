@@ -9,7 +9,7 @@ const session = require("express-session")
 const bodyParser = require("body-parser");
 
 const indexRouter = require('./routes/index');
-const bookShopRouter = require('./routes/bookstore');
+const bookShopRouter = require('./routes/bookshop');
 const detailRouter = require('./routes/detail')
 
 const app = express();
