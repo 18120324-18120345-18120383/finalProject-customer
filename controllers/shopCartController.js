@@ -18,3 +18,10 @@ module.exports.listItem = async(req, res, next) => {
   console.log(listItem);
   res.render('book-shop/shop-cart', {listItem});
 }
+module.exports.updateQuantity = async(req, res, next) => {
+  const listQuantity = req.body.quantity;
+  const listID = req.body.newID;
+  await shopCart.updateQuantity(listQuantity, listID);
+  const listItem = await shopCart.listProduct();
+  res.redirect('shop-cart');
+}

@@ -27,66 +27,70 @@
       <div class="row pt-5">
         <div class="col-12 col-md-12  cart_table wow fadeInUp animated" data-wow-delay="300ms"
           style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
-          <div class="table-responsive">
-            <table class="table table-bordered border-radius">
-              <thead>
-                <tr>
-                  <th class="darkcolor">Product</th>
-                  <th class="darkcolor">Price</th>
-                  <th class="darkcolor">Quantity</th>
-                  <th class="darkcolor">Total</th>
-                  <th></th>
-                </tr>
-              </thead>
-              {{#each listItem}}
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="d-table product-detail-cart">
+          <form method="POST">
+            <div class="table-responsive">
+              <table class="table table-bordered border-radius">
+                <thead>
+                  <tr>
+                    <th class="darkcolor">Product</th>
+                    <th class="darkcolor">Price</th>
+                    <th class="darkcolor">Quantity</th>
+                    <th class="darkcolor">Total</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                {{#each listItem}}
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="d-table product-detail-cart">
 
-                      <div class="media">
-                        <div class="row no-gutters">
+                        <div class="media">
+                          <div class="row no-gutters">
 
-                          <div class="col-12 col-lg-2 product-detail-cart-image">
-                            <a class="shopping-product" href="javascript:void(0)"><img src={{cover}}
-                                alt="Generic placeholder image"></a>
-                          </div>
+                            <div class="col-12 col-lg-2 product-detail-cart-image">
+                              <a class="shopping-product" href="javascript:void(0)"><img src={{cover}}
+                                  alt="Generic placeholder image"></a>
+                            </div>
 
-                          <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
-                            <div class="media-body ml-lg-3">
-                              <h4 class="product-name"><a href="product-detail">{{name}}</a></h4>
-                              <p class="product-des">We offer the most complete in the country</p>
+                            <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
+                              <div class="media-body ml-lg-3">
+                                <h4 class="product-name"><a href="product-detail">{{name}}</a></h4>
+                                <p class="product-des">We offer the most complete in the country</p>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>
-                    <h4 class="text-center amount">${{price}}</h4>
-                  </td>
-                  <td class="text-center">
-                    <div class="quote text-center mt-1">
-                      <input type="number" placeholder="1" class="quote" min="1" max="100" value={{quantity}}>
-                    </div>
-                  </td>
-                  <td>
-                    <h4 class="text-center amount">${{total}}</h4>
-                  </td>
-                  <form method="POST" action="delete-item">
-                    <input name="id" value={{_id}} hidden>
-                    <td class="text-center"><button type="submit" class="btn-close" href="javascript:void(0)"><i class="lni-trash"></i></button>
-                  </form>
-                  </td>
-                </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          </div>
+                    </td>
+                    <td>
+                      <h4 class="text-center amount">${{price}}</h4>
+                    </td>
+                    <td class="text-center">
+                      <div class="quote text-center mt-1">
+                        <input name="newID" value={{_id}} hidden>
+                        <input type="number" placeholder="1" class="quote" min="1" max="100" name="quantity" value={{quantity}}>
+                      </div>
+                    </td>
+                    <td>
+                      <h4 class="text-center amount">${{total}}</h4>
+                    </td>
+                    <form method="POST" action="delete-item">
+                      <input name="id" value={{_id}} hidden>
+                      <td class="text-center"><button type="submit" class="btn-close" href="javascript:void(0)"><i
+                            class="lni-trash"></i></button>
+                    </form>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </form>
           <div class="apply_coupon">
             <div class="row">
               <div class="col-12 text-left">
-                <a href="shop-cart" class="btn yellow-color-green-gradient-btn">UPDATE</a>
+                <button type="submit" formaction="update-shop-cart" class="btn yellow-color-green-gradient-btn">UPDATE</button>
                 <a href="shop-cart" class="btn green-color-yellow-gradient-btn ">CHECKOUT</a>
               </div>
               <!--                            <div class="col-6  coupon text-left">-->

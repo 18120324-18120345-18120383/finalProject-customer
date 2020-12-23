@@ -35,9 +35,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 // user
-app.use(function (req, res, next) {
+app.use(async function (req, res, next) {
   res.locals.user = req.user;
-  // console.log(req.user)
+  const lItem = await require('./models/shopCartModels').listProduct();
+  // console.log(lItem);
+  res.locals.listItem = lItem;
   next()
 });
 // Router

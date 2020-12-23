@@ -43,3 +43,15 @@ module.exports.listProduct = async () => {
   const listItem = await ShopCart.find({});
   return listItem;
 }
+module.exports.updateQuantity = async (listQuantity, listID) => {
+  let count = 0;
+  if (listQuantity && listID) {
+    count = listQuantity.length;
+  }
+  let i = 0
+  for(i = 0; i < count; i++) {
+    const item = await ShopCart.findById(listID[i]);
+    await ShopCart.findByIdAndUpdate(listID[i], {quantity: listQuantity[i], total: listQuantity[i] * item.price})
+  }
+  return true;
+}
