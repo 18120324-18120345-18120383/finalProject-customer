@@ -20,18 +20,18 @@ const isValidExtension = () => {
       
     if (!allowedExtensions.exec(filePath)) {
         file.value = '';
-        errExtension.style.visibility = 'visible'
+        errExtension.hidden = false
         return false; 
     }
-    errExtension.style.visibility = 'hidden'
+    errExtension.hidden = true
     return true; 
 }
 
 const isValidSize = () => {
     if (file.files[0].size > 2000000){
-        errSize.style.visibility = 'visible'
+        errSize.hidden = false
         return false;
     }
-    errSize.style.visibility = 'hidden'
+    errSize.hidden = true
     return true;
 }
