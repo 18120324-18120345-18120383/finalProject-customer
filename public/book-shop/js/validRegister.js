@@ -17,26 +17,26 @@ const validateForm = () => {
 
 retype.onchange = () => {
     if (retype.value !== password.value){
-        errPassword.style.visibility = "visible"
+        errPassword.hidden = false
     } else {
-        errPassword.style.visibility = "hidden"
+        errPassword.hidden = true
     }
 }
 
 password.onchange = () => {
     if (retype.value !== password.value){
-        errPassword.style.visibility = "visible"
+        errPassword.hidden = false
     } else {
-        errPassword.style.visibility = "hidden"
+        errPassword.hidden = true
     }
 }
 
 username.onchange = () => {
     usernameVal = username.value;
     if (checkValidUsername(usernameVal) == false){
-        errUsername.style.visibility = "visible"
+        errUsername.hidden = false
     } else {
-        errUsername.style.visibility = "hidden"
+        errUsername.hidden = true
     }
 }
 
