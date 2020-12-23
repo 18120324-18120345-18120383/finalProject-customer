@@ -20,29 +20,24 @@
             </a>
             <div id="sideNavPages2" class="collapse sideNavPages">
               <ul class="navbar-nav">
-                {{#if haveSearch}}
-                {{#each categories}}
-                <li><a href={{newURL.[1]}}>{{name}}</a><span>({{numberOfBook}})</span></li>
-                {{/each}}
-                {{else}}
                 {{#each categories}}
                 <li><a href="?categoryID={{_id}}">{{name}}</a><span>({{numberOfBook}})</span></li>
                 {{/each}}
-                {{/if}}
               </ul>
             </div>
           </div>
-          <form method="GET">
+          <form method="GET" action="" id="filterPrice">
             <div class="product-price mt-1">
               <h5 class="filter-heading">Shop By</h5>
               <div id="slider-range"></div>
-              <p class="price-num" style="color: #0b2e13;">Price: <span id="min-p" name="minPrice"></span>
-                <span id="max-p" name="maxPrice"></span></p>
+              <p class="price-num" style="color: #0b2e13;">Price: 
+                <span id="min-p"></span>
+                <span id="max-p"></span></p>
+                <input name="minPrice" id="minPrice" hidden>
+                <input name="maxPrice" id="maxPrice" hidden>
             </div>
-            <button type="submit" class="btn yellow-color-green-gradient-btn mt-1">Filter</button>
+            <button class="btn yellow-color-green-gradient-btn mt-1" onclick="filterPrice()">Filter</button>
           </form>
-
-
           <div class="product-add mt-4">
             <div class="row no-gutters">
               <div class="col-12">

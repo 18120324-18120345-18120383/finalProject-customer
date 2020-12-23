@@ -8,6 +8,7 @@ const categorySchema = new mongoose.Schema ({
 const Categories = mongoose.model('Categories', categorySchema);
 module.exports.categories = async () => {
     const categories = await Categories.find()
+    console.log(categories[1]._id);
     return categories;
 }
 module.exports.addManyCategory = async () => {

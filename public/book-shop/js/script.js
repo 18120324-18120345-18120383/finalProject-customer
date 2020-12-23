@@ -14,6 +14,17 @@
  $('#my-editIcon').click(function(){
     $('#my-file').click();
 });
+function filterPrice() {
+    const strMaxPrice = document.getElementById('max-p').innerHTML;
+    const strMinPRice = document.getElementById('min-p').innerHTML;
+    const maxPrice = Number(strMaxPrice.split('$')[1]);
+    const minPrice = Number(strMinPRice.split('$')[1].split(' ')[0]);
+    document.getElementById('maxPrice').value = maxPrice;
+    document.getElementById('minPrice').value = minPrice;
+    alert(params);
+    // document.location.href = params
+}
+
 function changeLink() {
     alert("The URL of this page is: " + window.location.href)
 }

@@ -22,6 +22,10 @@ exports.productListing = async (req, res, next) => {
     const page = req.query.page || 1
     const categoryID = req.query.categoryID;
     const nameBook = req.query.search;
+    const maxPrice = req.query.maxPrice;
+    const minPrice = req.query.minPrice;
+    console.log(minPrice);
+    console.log(maxPrice);
     console.log(req.originalUrl)
     let url = buildUrl('/book-shop/product-listing', {
         
@@ -49,6 +53,9 @@ exports.productListing = async (req, res, next) => {
             }
         });
         haveSearch = true;
+    }
+    if (minPrice && maxPrice) {
+        filter.basePrice = { $gt: minPrice, $lt: maxPrice }
     }
     const paginate = await bookModels.listBook(filter, page, 9);
     const categories = await categoryModels.categories();

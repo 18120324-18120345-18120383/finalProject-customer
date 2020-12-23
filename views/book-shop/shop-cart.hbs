@@ -75,11 +75,8 @@
                     <td>
                       <h4 class="text-center amount">${{total}}</h4>
                     </td>
-                    <form method="POST" action="delete-item">
-                      <input name="id" value={{_id}} hidden>
-                      <td class="text-center"><button type="submit" class="btn-close" href="javascript:void(0)"><i
+                      <td class="text-center"><button type="submit" formaction="delete-item?id={{_id}}" class="btn-close" href="javascript:void(0)"><i
                             class="lni-trash"></i></button>
-                    </form>
                     </td>
                   </tr>
                   {{/each}}
