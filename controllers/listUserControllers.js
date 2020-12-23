@@ -1,9 +1,19 @@
 const listUser = require('../models/listUserModels');
-const formidable = require('formidable');
-const fs = require('fs');
-const { dirname } = require('path');
+const path = require('path');
 const { ExpectationFailed } = require('http-errors');
 const randomstring = require('randomstring')
+
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: './public/book-shop/img/userAvatar',
+    filename: (req, file, callback) => {
+        callback(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+    }
+})
+const upload = multer({
+    storage: storage,
+    limits: {fileSize: 2000000} //size of image must under 2000000 byte (2MB)
+}).single('avatar')
 
 require("dotenv").config();
 const nodemailer = require('nodemailer')
@@ -20,31 +30,43 @@ exports.getAccountInfo = async (req, res, next) => {
     const users = await listUser.getUserByID(req.user.id);
     res.render('book-shop/account-info', users);
 }
+
 exports.updateAccountInfo = async (req, res, next) => {
-    const form = formidable({ multiples: true });
-    form.parse(req, (err, fields, files) => {
-        if (err) {
-            next(err);
-            return;
+    upload(req, res, async (err) => {
+        if (err){
+            showNotif(res, "Error", err);
+        } else {
+            let avatar;
+            //check if user has uploaded new avatar yet
+            if (req.file !== undefined){
+                avatar = req.file.filename
+            } else {
+                avatar = null;
+            }
+            
+            //fields contain data need to be updated
+            const fields = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                phoneNumber: req.body.phoneNumber,
+                more: req.body.more,
+                avatar: avatar
+            }
+
+            const user = await listUser.updateOneAccount(req.user.id, fields)
+
+            if (user) {
+                res.redirect('/book-shop/account-info')
+            } else {
+                showNotif(res, "Error", "Sorry, some error happen while we trying to update your account!")
+            }
         }
-        const avatar = files.avatar;
-        if (avatar.size > 0) {
-            const name = avatar.path.split('/').pop()
-            const extension = avatar.name.split('.').pop();
-            fields.avatar = name + '.' + extension;
-            fs.renameSync(avatar.path, __dirname + '/../public/book-shop/img/' + name + '.' + extension);
-        }
-        listUser.updateOneAccount(req.user.id, fields).then((result) => {
-            res.redirect('/book-shop/account-info');
-        });
-    });
+    })
 }
 
 exports.addOneAccount = async (req, res, next) => {
     const firstName = req.body.firstName;
-    console.log(firstName);
     const lastName = req.body.lastName;
-    console.log(lastName);
     const avatar = req.body.avatar[0];
     const email = req.body.email;
     const numberPhone = req.body.numberPhone;

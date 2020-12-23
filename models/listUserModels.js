@@ -27,17 +27,15 @@ module.exports.updateOneAccount = async (id, fields) => {
     let update = {
         firstName: fields.firstName, 
         lastName: fields.lastName, 
-        email: fields.email, 
-        phoneNumber: fields.numberPhone,
+        phoneNumber: fields.phoneNumber,
         more: fields.more,
-        avatar: '/book-shop/img/' +fields.avatar
+        avatar: '/book-shop/img/userAvatar/' + fields.avatar
     };
-    if (!fields.avatar) {
+    if (fields.avatar === null) {
         update = {
             firstName: fields.firstName, 
             lastName: fields.lastName, 
-            email: fields.email, 
-            phoneNumber: fields.numberPhone,
+            phoneNumber: fields.phoneNumber,
             more: fields.more
         }
     }
