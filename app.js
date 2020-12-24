@@ -37,7 +37,7 @@ app.use(passport.session());
 // user
 app.use(async function (req, res, next) {
   res.locals.user = req.user;
-  const lItem = await require('./models/shopCartModels').listProduct();
+  const lItem = await require('./models/shopCartModels').listProduct('5fe3e937fc4c1719b1fe98d2');
   // console.log(lItem);
   res.locals.listItem = lItem;
   next()

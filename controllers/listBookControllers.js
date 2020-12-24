@@ -5,8 +5,7 @@ const shopCartMoels = require('../models/shopCartModels')
 const buildUrl = require('build-url');
 
 exports.index = async (req, res, next) => {
-    const listItem = await shopCartMoels.listItem()
-    res.render('index', {listItem});
+    res.render('index');
 }
 exports.contact = async (req, res, next) => {
     res.render('book-shop/contact');

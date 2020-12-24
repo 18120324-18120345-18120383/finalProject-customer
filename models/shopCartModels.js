@@ -18,43 +18,103 @@ const ShopCart = mongoose.model('carts', cartSchema);
 
 module.exports.addOneItem = async(cartID, productID, quantity) => {
   const book = await listBookModel.getOneBook(productID)
-  console.log(book)
-  // let olditem = await ShopCart.products[0].findOne({name: book.name});
-  // let item;
-  // if (olditem) {
-  //   item = await ShopCart.products[0].findOneAndUpdate({name: book.name}, {quantity: olditem.quantity + 1, total: olditem.price * (olditem.quantity + 1)})
-  // }
-  const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID));
-
-  cart.products.push({
-    name : book.name ,
-    price : book.basePrice,
-    quantity : Number(quantity),
-    total : book.basePrice * Number(quantity),
-    cover : book.cover[0],
-    description : book.description
-  });
-  await cart.save();
-  console.log(cart);
+  let cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID));
+  if (cart) {
+    const products = cart.products;
+    const index = products.findIndex(x => x.name == book.name)
+    console.log(index);
+    if (index >= 0) {
+      products[index].quantity += 1;
+      products[index].total = products[index].quantity * products[index].price
+    }
+    else {
+      cart.products.push({
+        name : book.name ,
+        price : book.basePrice,
+        quantity : Number(quantity),
+        total : book.basePrice * Number(quantity),
+        cover : book.cover[0],
+        description : book.description
+      });
+    }    
+    cart.save();
+  }
+  else {
+    cart = new ShopCart({
+      products: {
+        name : book.name ,
+        price : book.basePrice,
+        quantity : Number(quantity),
+        total : book.basePrice * Number(quantity),
+        cover : book.cover[0],
+        description : book.description
+      }
+    })
+    cart.save();
+  }
   return cart;
 }
 
-module.exports.deleteItem = async (id) => {
-  await ShopCart.findByIdAndDelete({_id: id})
+module.exports.deleteItem = async (cartID, productID) => {
+  const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID));
+  if (cart) {
+    const products = cart.products;
+    const index = products.findIndex(x => x._id == productID)
+    console.log(index);
+    if (index >= 0) {
+      products.splice(index, 1);
+    }
+  }
+  cart.save();
 }
 module.exports.listProduct = async (cartID) => {
-  const cart = await ShopCart.findById(cartID);
-  return cart;
+  // console.log('Cart ID: ' + cartID);
+  const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID)).exec();
+  if (cart) {
+    // console.log(cart.products);
+  }
+  else {
+    console.log('Not exists');
+  }
+  return cart.products;
 }
-module.exports.updateQuantity = async (listQuantity, listID) => {
+module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
+  console.log('Cart ID: ' + cartID);
+  const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID)).exec();
+  if (cart) {
+    console.log(cart.products);
+  }
+  else {
+    console.log('Not exists');
+  }
+  const products = cart.products;
   let count = 0;
-  if (listQuantity && listID) {
+  if (listQuantity.length > 1 && listID.length > 1) {
     count = listQuantity.length;
   }
-  let i = 0
-  for(i = 0; i < count; i++) {
-    const item = await ShopCart.findById(listID[i]);
-    await ShopCart.findByIdAndUpdate(listID[i], {quantity: listQuantity[i], total: listQuantity[i] * item.price})
+  else {
+    if (cart) {
+      const index = products.findIndex(x => x._id == listID)
+      console.log(index);
+      if (index >= 0) {
+        products[index].quantity = listQuantity;
+        products[index].total = products[index].quantity * products[index].price
+      }
+    }
+    cart.save();
+    return true;
   }
+  let i = 0
+  if (cart) {
+    for(i = 0; i < count; i++) {
+      const index = products.findIndex(x => x._id == listID[i])
+      console.log(index);
+      if (index >= 0) {
+        products[index].quantity = listQuantity[i];
+        products[index].total = products[index].quantity * products[index].price
+      }
+    }
+  }
+  cart.save();
   return true;
 }

@@ -28,6 +28,12 @@ module.exports.listBook = async (filter, pageNumber, itemPerPage) => {
 
 module.exports.getOneBook = async (id) => {
     let book = await Book.findById(id);
+    if (book) {
+        console.log(book);
+    }
+    else {
+        console.log("book not exists");
+    }
     let views = 0;
     if (book.views) {
         views = book.views

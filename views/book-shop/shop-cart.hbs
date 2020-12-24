@@ -69,32 +69,35 @@
                     <td class="text-center">
                       <div class="quote text-center mt-1">
                         <input name="newID" value={{_id}} hidden>
-                        <input type="number" placeholder="1" class="quote" min="1" max="100" name="quantity" value={{quantity}}>
+                        <input type="number" placeholder="1" class="quote" min="1" max="100" name="quantity"
+                          value={{quantity}}>
                       </div>
                     </td>
                     <td>
                       <h4 class="text-center amount">${{total}}</h4>
                     </td>
-                      <td class="text-center"><button type="submit" formaction="delete-item?id={{_id}}" class="btn-close" href="javascript:void(0)"><i
-                            class="lni-trash"></i></button>
+                    <td class="text-center"><button type="submit" formaction="delete-item?id={{_id}}" class="btn-close"
+                        href="javascript:void(0)"><i class="lni-trash"></i></button>
                     </td>
                   </tr>
                   {{/each}}
                 </tbody>
               </table>
             </div>
-          </form>
-          <div class="apply_coupon">
-            <div class="row">
-              <div class="col-12 text-left">
-                <button type="submit" formaction="update-shop-cart" class="btn yellow-color-green-gradient-btn">UPDATE</button>
-                <a href="shop-cart" class="btn green-color-yellow-gradient-btn ">CHECKOUT</a>
+
+            <div class="apply_coupon">
+              <div class="row">
+                <div class="col-12 text-left">
+                  <button type="submit" formaction="update-shop-cart"
+                    class="btn yellow-color-green-gradient-btn">UPDATE</button>
+                  <a href="shop-cart" class="btn green-color-yellow-gradient-btn ">CHECKOUT</a>
+                </div>
+                <!--                            <div class="col-6  coupon text-left">-->
+                <!--                                <a href="shop-cart" class="btn pink-color-black-gradient-btn ">CHECKOUT</a>-->
+                <!--                            </div>-->
               </div>
-              <!--                            <div class="col-6  coupon text-left">-->
-              <!--                                <a href="shop-cart" class="btn pink-color-black-gradient-btn ">CHECKOUT</a>-->
-              <!--                            </div>-->
             </div>
-          </div>
+          </form>
         </div>
       </div>
       <!-- END SHOP CART TABLE -->
