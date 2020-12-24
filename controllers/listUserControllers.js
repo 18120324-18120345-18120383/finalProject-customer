@@ -29,7 +29,10 @@ const jwt = require('jsonwebtoken')
 
 exports.getAccountInfo = async (req, res, next) => {
     const users = await listUser.getUserByID(req.user.id);
-    res.render('book-shop/account-info', users);
+    res.render('book-shop/account-info', {
+        users,
+        title: 'Account Information'
+    })
 }
 
 exports.updateAccountInfo = async (req, res, next) => {
@@ -77,21 +80,28 @@ exports.addOneAccount = async (req, res, next) => {
 }
 
 exports.index = (req, res, next) => {
-    res.render('index');
+    res.render('index', {
+        title: 'Home'
+    })
 }
 
 exports.login = (req, res, next) => {
-    res.render('book-shop/login')
+    res.render('book-shop/login', {
+        title: 'Login'
+    })
 }
 
 exports.loginErr = (req, res, next) => {
     res.render('book-shop/login', {
-        messageErr: "Your username or password is incorrect!!!"
+        messageErr: "Your username or password is incorrect!!!",
+        title: 'Login'
     });
 }
 
 exports.forgotPassword = (req, res, next) => {
-    res.render('book-shop/forgotPassword');
+    res.render('book-shop/forgotPassword', {
+        title: 'Forgot Password'
+    })
 }
 
 exports.postForgotPassword = async (req, res, next) => {
@@ -154,7 +164,9 @@ exports.postLogout = (req, res, next) => {
 }
 
 exports.getRegister = async (req, res, next) => {
-    res.render('book-shop/register');
+    res.render('book-shop/register', {
+        title: 'Register'
+    })
 }
 
 exports.postRegister = async (req, res, next) => {
@@ -223,7 +235,8 @@ exports.verifyEmail = async (req, res) => {
 function showNotif(res, myNotifTitle, myNotifText) {
     res.render('book-shop/notif', {
         notifTitle: myNotifTitle,
-        notifText: myNotifText
+        notifText: myNotifText,
+        title: 'Error'
     });
 }
 
