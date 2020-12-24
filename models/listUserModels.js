@@ -15,7 +15,8 @@ const userSchema = new Schema({
     email: String,
     phoneNumber: String,
     more: String,
-    cartID: String
+    cartID: String,
+    isActive: Boolean
 })
 const User = mongoose.model('list-users', userSchema);
 
@@ -106,7 +107,8 @@ module.exports.createAccount = async(username, hashedPassword, email) => {
     const user = await User.insertMany({
         username: username,
         password: hashedPassword,
-        email: email
+        email: email,
+        isActive: true
     })
     return user;
 }
