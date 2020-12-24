@@ -21,7 +21,8 @@ const userSchema = new Schema({
 const User = mongoose.model('list-users', userSchema);
 
 module.exports.getListAccount = async () => {
-    const users = await User.find({});
+    // const users = await User.find({});
+    const users = await User.updateMany({}, {isActive: true})
     return users;
 }
 module.exports.addCartID = async (id, CartID) => {

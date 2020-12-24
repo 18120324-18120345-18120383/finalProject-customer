@@ -35,6 +35,10 @@ exports.getAccountInfo = async (req, res, next) => {
     })
 }
 
+exports.getListAccount = async (req, res, next) => {
+    const users = await listUser.getListAccount()
+    res.send(users);
+}
 exports.updateAccountInfo = async (req, res, next) => {
     upload(req, res, async (err) => {
         if (err){
