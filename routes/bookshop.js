@@ -21,9 +21,10 @@ router.post('/update-shop-cart', shopCartController.updateQuantity)
 router.get('/account-info', checkAuthenticated, listUserController.getAccountInfo);
 router.post('/account-info', checkAuthenticated, listUserController.updateAccountInfo);
 router.get('/login', checkNotAuthenticated, listUserController.login);
+router.get('/loginErr', checkNotAuthenticated, listUserController.loginErr);
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/book-shop/login',
+  failureRedirect: '/book-shop/loginErr',
   failureFlash: false
 }));
 router.get('/forgotPassword', checkNotAuthenticated, listUserController.forgotPassword);
