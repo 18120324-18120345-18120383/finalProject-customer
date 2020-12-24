@@ -3,6 +3,9 @@ const errExtension = document.getElementById('errExtension')
 const errSize = document.getElementById('errSize')
 
 const validateForm = () => {
+    if (file.value == ''){
+        return true;
+    }
     if (!isValidExtension()){
         return false;
     }

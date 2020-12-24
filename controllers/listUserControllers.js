@@ -28,9 +28,9 @@ const transporter = nodemailer.createTransport({
 const jwt = require('jsonwebtoken')
 
 exports.getAccountInfo = async (req, res, next) => {
-    const users = await listUser.getUserByID(req.user.id);
+    const user = await listUser.getUserByID(req.user.id);
     res.render('book-shop/account-info', {
-        users,
+        user,
         title: 'Account Information'
     })
 }
@@ -56,7 +56,7 @@ exports.updateAccountInfo = async (req, res, next) => {
                 more: req.body.more,
                 avatar: avatar
             }
-
+            
             const user = await listUser.updateOneAccount(req.user.id, fields)
 
             if (user) {
@@ -236,12 +236,14 @@ function showNotif(res, myNotifTitle, myNotifText) {
     res.render('book-shop/notif', {
         notifTitle: myNotifTitle,
         notifText: myNotifText,
-        title: 'Error'
+        title: 'Alert'
     });
 }
 
 exports.changePassword = (req, res) => {
-    res.render('book-shop/changePassword')
+    res.render('book-shop/changePassword', {
+        title: "Change password"
+    })
 }
 exports.postChangePassword = async(req, res) => {
     const password = req.body.password;

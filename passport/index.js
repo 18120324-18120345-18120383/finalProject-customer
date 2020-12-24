@@ -14,13 +14,11 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-  // console.log(user._id);
   done(null, user._id);
 });
 
 passport.deserializeUser(async function(id, done) {
   const user = await listUserModels.getUserByID(id);
-  // console.log(user);
   done(null, user);
 });
 

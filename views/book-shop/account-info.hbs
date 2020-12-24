@@ -15,7 +15,7 @@
           <!--<p class="small-text">Lorem ipsum is simply dummy text of the printing and typesetting industry. </p>-->
           <form action="/book-shop/account-info" onsubmit="return validateForm()" enctype="multipart/form-data" method="POST">
             <div class="d-flex justify-content-center mb-4">
-              <img src={{avatar}} id="myImg" alt="Avatar" class="avatar">
+              <img src={{user.avatar}} id="myImg" alt="Avatar" class="avatar">
             </div>
             <div class="d-flex justify-content-center mb-4">
               <label for="file" <button type="file" name="avatar" class="btn btn-info">Upload new avatar</button> </label>
@@ -25,19 +25,22 @@
               <div class="row my-form">
                 <div class="col-12 col-md-6">
                   <input type="text" class="form-control" id="candidate_fname" name="firstName" placeholder="First Name"
-                    required="required" value="{{firstName}}">
+                    required="required" value="{{user.firstName}}">
                 </div>
                 <div class="col-12 col-md-6">
                   <input type="text" class="form-control" id="candidate_lname" name="lastName" placeholder="Last Name"
-                    required="required" value="{{lastName}}">
+                    required="required" value="{{user.lastName}}">
+                </div>
+                <div class="col-12">
+                  <input type="email" class="form-control" id="candidate_fname" name="email" value="{{user.email}}" disabled>
                 </div>
                 <div class="col-12 col-md-12">
                   <input type="tel" class="form-control" id="user_subject" name="phoneNumber" placeholder="Number phone"
-                    pattern="[0-9]{10}" required="required" value="{{phoneNumber}}">
+                    pattern="[0-9]{10}" required="required" value="{{user.phoneNumber}}">
                 </div>
                 <div class="col-12">
                   <textarea class="form-control" id="user_message" name="more" placeholder="Message" rows="7"
-                    required="required">{{more}}</textarea>
+                    required="required">{{user.more}}</textarea>
                 </div>
                 <div class="col-12" id="errExtension" hidden>
                   <p class="text-danger">Avatar just allow file type .jpg, .jpeg, .png</p>
