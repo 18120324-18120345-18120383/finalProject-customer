@@ -5,16 +5,23 @@ const shopCartMoels = require('../models/shopCartModels')
 const buildUrl = require('build-url');
 
 exports.index = async (req, res, next) => {
-    res.render('index');
+    res.render('index', {
+        title: 'Home'
+    })
 }
 exports.contact = async (req, res, next) => {
-    res.render('book-shop/contact');
+    res.render('book-shop/contact', {
+        title: 'Contact'
+    })
 }
 
 exports.productDetail = async (req, res, next) => {
     const id = req.params.id;
     const book = await bookModels.getOneBook(id);
-    res.render('book-shop/product-detail', { book, orginalPrice: book.basePrice * 2 });
+    res.render('book-shop/product-detail', {
+        book, orginalPrice: book.basePrice * 2,
+        title: 'Product detail'
+    });
 }
 
 exports.productListing = async (req, res, next) => {
@@ -92,10 +99,13 @@ exports.productListing = async (req, res, next) => {
         total: paginate.totalPages,
         categories,
         haveSearch,
-        newURL
+        newURL,
+        title: 'Product list'
     });
 }
 
 exports.shopCart = (req, res, next) => {
-    res.render('book-shop/shop-cart');
+    res.render('book-shop/shop-cart', {
+        title: 'Shop Cart'
+    })
 }
