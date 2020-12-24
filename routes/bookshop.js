@@ -18,6 +18,7 @@ router.get('/product-listing', listBookController.productListing);
 router.get('/shop-cart', shopCartController.listItem);
 router.post('/delete-item', shopCartController.deleteItem);
 router.post('/update-shop-cart', shopCartController.updateQuantity)
+router.post('/pay-shop-cart', checkAuthenticated, shopCartController.checkOut);
 router.get('/account-info', checkAuthenticated, listUserController.getAccountInfo);
 router.post('/account-info', checkAuthenticated, listUserController.updateAccountInfo);
 router.get('/login', checkNotAuthenticated, listUserController.login);

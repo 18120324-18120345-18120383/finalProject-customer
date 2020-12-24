@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { shopCart } = require('../controllers/listBookControllers');
 const { ObjectID } = require('mongodb');
 const listBookModel = require('./listBookModels');
+
 const productSchema = new mongoose.Schema({
   name: String,
   price: Number,
@@ -12,14 +13,22 @@ const productSchema = new mongoose.Schema({
 })
 
 const cartSchema = new mongoose.Schema({
+  status: Number,
   products: [productSchema]
 })
 const ShopCart = mongoose.model('carts', cartSchema);
 
+module.exports.initCart = async() => {
+  const cart = new ShopCart({
+    status: 0
+  })
+  cart.save();
+  return cart;
+}
 module.exports.addOneItem = async(cartID, productID, quantity) => {
   const book = await listBookModel.getOneBook(productID)
   let cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID));
-  if (cart) {
+  if (cart && cart.status == 0) {
     const products = cart.products;
     const index = products.findIndex(x => x.name == book.name)
     console.log(index);
@@ -40,17 +49,7 @@ module.exports.addOneItem = async(cartID, productID, quantity) => {
     cart.save();
   }
   else {
-    cart = new ShopCart({
-      products: {
-        name : book.name ,
-        price : book.basePrice,
-        quantity : Number(quantity),
-        total : book.basePrice * Number(quantity),
-        cover : book.cover[0],
-        description : book.description
-      }
-    })
-    cart.save();
+    return false;
   }
   return cart;
 }
@@ -75,6 +74,10 @@ module.exports.listProduct = async (cartID) => {
   }
   else {
     console.log('Not exists');
+    return false;
+  }
+  if (cart.status == 1) {
+    return false;
   }
   return cart.products;
 }
@@ -117,4 +120,8 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
   }
   cart.save();
   return true;
+}
+
+module.exports.payShopCart = async(cartID) => {
+  await ShopCart.findByIdAndUpdate(cartID, {status: 1});
 }

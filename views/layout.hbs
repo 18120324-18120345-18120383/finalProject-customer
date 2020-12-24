@@ -193,13 +193,13 @@
                         <ul>
                           {{#if user}}
                           <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item">
-                            Hello {{user.username}}</a></li>
+                              Hello {{user.username}}</a></li>
                           <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
                               href="/book-shop/account-info">Your profile</a></li>
                           <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
-                          href="/book-shop/changePassword">Change password</a></li>
-                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
-                              href="#" onclick="document.getElementById('logoutForm').submit();">Log out</a></li>
+                              href="/book-shop/changePassword">Change password</a></li>
+                          <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="#"
+                              onclick="document.getElementById('logoutForm').submit();">Log out</a></li>
                           <form id="logoutForm" action="/book-shop/logout?_method=DELETE" method="POST"></form>
                           {{else}}
                           <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item"
@@ -549,14 +549,13 @@
           <div class="col-12 mb-4">
             <h4 class="">Shop Cart</h4>
           </div>
+          {{#if listItem}}
           <div class="col-12">
             <div class="listing-search-scroll">
-              {{#if listItem}}
               {{#each listItem}}
               <div class="media row">
                 <div class="img-holder ml-1 mr-2 col-4">
-                  <a href="javascript:void(0)"><img src="book-shop/{{cover}}"align-self-center"
-                      alt="cartitem"></a>
+                  <a href="javascript:void(0)"><img src="book-shop/{{cover}}" align-self-center alt="cartitem"></a>
                 </div>
                 <div class="media-body mt-auto mb-auto col-8">
                   <h5 class="name"><a href="javascript:void(0)">{{name}}</a></h5>
@@ -566,9 +565,9 @@
                 </div>
               </div>
               {{/each}}
-              {{/if}}
             </div>
           </div>
+          {{/if}}
         </div>
       </div>
       <div class="bag-btn">

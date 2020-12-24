@@ -14,13 +14,18 @@ const userSchema = new Schema({
     avatar: String,
     email: String,
     phoneNumber: String,
-    more: String
+    more: String,
+    cartID: String
 })
 const User = mongoose.model('list-users', userSchema);
 
 module.exports.getListAccount = async () => {
     const users = await User.find({});
     return users;
+}
+module.exports.addCartID = async (id, CartID) => {
+    const user = await User.findByIdAndUpdate(id, {cartID: CartID});
+    return user;
 }
 module.exports.updateOneAccount = async (id, fields) => {
     const newID = id;

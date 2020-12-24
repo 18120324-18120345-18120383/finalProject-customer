@@ -11,6 +11,8 @@ const bodyParser = require("body-parser");
 const indexRouter = require('./routes/index');
 const bookShopRouter = require('./routes/bookshop');
 const detailRouter = require('./routes/detail')
+const listUser = require('./models/listUserModels');
+const shopCart = require('./models/shopCartModels')
 
 const app = express();
 
@@ -37,9 +39,23 @@ app.use(passport.session());
 // user
 app.use(async function (req, res, next) {
   res.locals.user = req.user;
-  const lItem = await require('./models/shopCartModels').listProduct('5fe3e937fc4c1719b1fe98d2');
-  // console.log(lItem);
-  res.locals.listItem = lItem;
+  if (req.user) { // Nếu có đăng nhập 
+    if (!req.user.cartID) { // Nếu không có CartID
+      const cart = await shopCart.initCart();
+      await listUser.addCartID(req.user._id, cart._id)
+    } 
+    let lItem = await shopCart.listProduct(req.user.cartID);
+    if (!lItem) {
+      const cart = await shopCart.initCart();
+      await listUser.addCartID(req.user._id, cart._id)
+      lItem = await shopCart.listProduct(req.user.cartID);
+    }
+    res.locals.listItem = lItem;
+  }
+  else {
+    const lItem = await shopCart.listProduct('5fe453a22329a4349fda3be2');
+    res.locals.listItem = lItem;
+  }
   next()
 });
 // Router

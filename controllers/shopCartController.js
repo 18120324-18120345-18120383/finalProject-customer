@@ -1,30 +1,83 @@
+const { authenticateUser } = require('../models/listUserModels');
+const listUser = require('../models/listUserModels');
 const shopCart = require('../models/shopCartModels')
 
-module.exports.addItem = async(req, res, next) => {
+const cartID = '5fe453a22329a4349fda3be2' // cartID cho nguoi dung khong dang nhap
+module.exports.checkOut = async (req, res, next) => {
+  if (req.user) {
+    const userCartID = req.user.cartID
+    await shopCart.payShopCart(userCartID)
+    res.redirect('shop-cart')
+  }
+}
+module.exports.addItem = async (req, res, next) => {
   const bookID = req.body.id;
-  const quantity = req.body.qty1 || 1;
-  const cartID = '5fe3e937fc4c1719b1fe98d2'
-  const item = await shopCart.addOneItem(cartID, bookID, quantity);
+  const quantity = req.body.qty1 || 1; /// Van con bug o day
+  if (req.user) {
+    if (!req.user.cartID) {
+      const cart = await shopCart.initCart()
+      await listUser.addCartID(req.user._id, cart._id)
+    }
+    const userCartID = req.user.cartID
+    const item = await shopCart.listProduct(userCartID);
+    if (item) {
+      await shopCart.addOneItem(userCartID, bookID, quantity);
+    }
+    else {
+      const cart = await shopCart.initCart();
+      await listUser.addCartID(req.user._id, cart._id)
+      const userCartID = req.user.cartID
+      await shopCart.addOneItem(userCartID, bookID, quantity)
+    }
+  }
+  else {
+    const item = await shopCart.listProduct(cartID);
+    if (item) {
+      await shopCart.addOneItem(cartID, bookID, quantity);
+    }
+  }
   res.redirect('shop-cart');
 }
-module.exports.deleteItem = async(req, res, next) => {
-  console.log(req.query);
-  const cartID = '5fe3e937fc4c1719b1fe98d2';
-  await shopCart.deleteItem(cartID, req.query.id);
-  res.redirect('shop-cart');
+module.exports.deleteItem = async (req, res, next) => {
+  if (req.user) {
+    const userCartID = req.user.cartID
+    await shopCart.deleteItem(userCartID, req.query.id);
+    res.redirect('shop-cart');
+  } else {
+    await shopCart.deleteItem(cartID, req.query.id);
+    res.redirect('shop-cart');
+  }
 }
-module.exports.listItem = async(req, res, next) => {
-  const cartID = '5fe3e937fc4c1719b1fe98d2';
-  const cart = await shopCart.listProduct(cartID);
-  // console.log(cart.products);
-  res.render('book-shop/shop-cart', {listItem: cart});
+module.exports.listItem = async (req, res, next) => {
+  if (req.user) {
+    const userCartID = req.user.cartID
+    const cart = await shopCart.listProduct(userCartID);
+    if (cart) {
+      res.render('book-shop/shop-cart', { listItem: cart });
+    }
+    else {
+      res.render('book-shop/shop-cart')
+    }
+  } else {
+    const cart = await shopCart.listProduct(cartID);
+    if (cart) {
+      res.render('book-shop/shop-cart', { listItem: cart });
+    }
+    else {
+      res.render('book-shop/shop-cart')
+    }
+  }
+
 }
-module.exports.updateQuantity = async(req, res, next) => {
+module.exports.updateQuantity = async (req, res, next) => {
   const listQuantity = req.body.quantity;
   const listID = req.body.newID;
-  console.log(listID);
-  console.log(listQuantity);
-  const cartID = '5fe3e937fc4c1719b1fe98d2';
-  await shopCart.updateQuantity(cartID, listQuantity, listID);
-  res.redirect('shop-cart');
+  if (req.user) {
+    const userCartID = req.user.cartID;
+    await shopCart.updateQuantity(cartID, listQuantity, listID);
+    res.redirect('shop-cart');
+  } else {
+    await shopCart.updateQuantity(cartID, listQuantity, listID);
+    res.redirect('shop-cart');
+  }
 }
