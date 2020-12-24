@@ -2,6 +2,7 @@ const listUser = require('../models/listUserModels');
 const path = require('path');
 const { ExpectationFailed } = require('http-errors');
 const randomstring = require('randomstring')
+const bcrybt = require('bcrypt')
 
 const multer = require('multer')
 const storage = multer.diskStorage({
@@ -164,8 +165,9 @@ exports.postRegister = async (req, res, next) => {
         const username = data.username
         const email = data.email
         const password = data.password
+        const hashedPassword = await bcrybt.hash(password[0], 10);
 
-        const token = jwt.sign({username, email, password}, process.env.JWT_ACC_ACTIVATE, {expiresIn: '1m'})
+        const token = jwt.sign({username, email, hashedPassword}, process.env.JWT_ACC_ACTIVATE, {expiresIn: '1m'})
 
         const emailData = {
             from: 'My Book Store <noreply@mybookstore.com>',
@@ -196,19 +198,19 @@ exports.postRegister = async (req, res, next) => {
 exports.verifyEmail = async (req, res) => {
     const token = req.params.token;
     if (token){
-        let username, email, password
+        let username, email, hashedPassword
         jwt.verify(token, process.env.JWT_ACC_ACTIVATE, function(err, decoded) {
             if (err){
                 showNotif(res, "Error!!!", 'Link is expired!!!');
             } else {
                 username = decoded.username
                 email = decoded.email
-                password = decoded.password
+                hashedPassword = decoded.hashedPassword
             }
           });
         const isValid = await listUser.checkValidEmailAndUsername(email, username)
         if (isValid){
-            await listUser.createAccount(username, password, email)
+            await listUser.createAccount(username, hashedPassword, email)
             showNotif(res, "Verify successfully!!!", "Your account are registered successfully!!!");
         } else {
             showNotif(res, "Verify error!!!", "Your email or username already exist!!!");
