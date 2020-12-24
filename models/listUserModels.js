@@ -97,8 +97,7 @@ module.exports.checkValidEmailAndUsername = async (email, username) => {
     }
     return true;
 }
-module.exports.createAccount = async(username, password, email) => {
-    const hashedPassword = await bcrybt.hash(password[0], 10);
+module.exports.createAccount = async(username, hashedPassword, email) => {
     const user = await User.insertMany({
         username: username,
         password: hashedPassword,
