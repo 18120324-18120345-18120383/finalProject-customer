@@ -124,10 +124,13 @@ module.exports.authenticateUser = async (username, password) => {
         return false;
     }
     let flag = await bcrybt.compare(password, user.password);
-    if (flag) {
-        return user;
+    if (!flag) {
+        return false;
     }
-    return false;
+    if (!user.isActive) {
+        return false;
+    }
+    return true;
 }
 module.exports.findUserByEmail = async (email) => {
     const user = await User.findOne({email: email}).exec();
