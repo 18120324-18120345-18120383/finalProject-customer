@@ -4,10 +4,9 @@ const listUserModels = require('../models/listUserModels')
 
 passport.use(new LocalStrategy(
   async function (username, password, done) {
-    const user = await listUserModels.authenticateUser(username, password) 
-    console.log(user);
-    if (!user) {
-      return done(null, false);
+    const user = await listUserModels.authenticateUser(username, password)
+    if (!user.username) {
+      return done(null, false, { message: user });
     }
     return done(null, user);
   }

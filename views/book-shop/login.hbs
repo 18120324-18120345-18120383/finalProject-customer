@@ -18,9 +18,9 @@
                     <form action="/book-shop/login" method="post">
                         <div class="contact-form" id="contact-form-data">
                             <div class="row my-form">
-                                {{#if messageErr}}
+                                {{#if messages}}
                                 <div class="col-12 col-md-12">
-                                    <p class="text-danger">{{messageErr}}</p>
+                                    <p class="text-danger">{{messages.error}}</p>
                                 </div>
                                 {{/if}}
                                 <div class="col-12 col-md-12">

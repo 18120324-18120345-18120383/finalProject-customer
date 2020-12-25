@@ -5,7 +5,6 @@ const listBookController = require('../controllers/listBookControllers');
 const listUserController = require('../controllers/listUserControllers');
 const shopCartController = require('../controllers/shopCartController');
 const passport = require('../passport/index');
-
 /* GET home page. */
 router.use(express.static('public'));
 router.use(methodOverride('_method'));
@@ -23,11 +22,10 @@ router.get('/account-info', checkAuthenticated, listUserController.getAccountInf
 router.post('/account-info', checkAuthenticated, listUserController.updateAccountInfo);
 // router.get('/get-list-account', listUserController.getListAccount);  // Them Acitive = true cho tat ca cac tai khoan
 router.get('/login', checkNotAuthenticated, listUserController.login);
-router.get('/loginErr', checkNotAuthenticated, listUserController.loginErr);
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/book-shop/loginErr',
-  failureFlash: false
+  failureRedirect: '/book-shop/login',
+  failureFlash: true
 }));
 router.get('/forgotPassword', checkNotAuthenticated, listUserController.forgotPassword);
 router.post('/forgotPassword', listUserController.postForgotPassword);

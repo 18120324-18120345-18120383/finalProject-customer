@@ -95,13 +95,6 @@ exports.login = (req, res, next) => {
     })
 }
 
-exports.loginErr = (req, res, next) => {
-    res.render('book-shop/login', {
-        messageErr: "Your username or password is incorrect!!!",
-        title: 'Login'
-    });
-}
-
 exports.forgotPassword = (req, res, next) => {
     res.render('book-shop/forgotPassword', {
         title: 'Forgot Password'
