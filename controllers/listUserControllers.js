@@ -245,7 +245,7 @@ exports.changePassword = (req, res) => {
 exports.postChangePassword = async(req, res) => {
     const password = req.body.password;
     const newPassword = req.body.newPassword;
-    const isValid = await listUser.authenticateUser(req.user.username, password)
+    const isValid = await bcrybt.compare(password, req.user.password)
     if (!isValid){
         showNotif(res, "Error", "Your password is incorrect!!!")
     }

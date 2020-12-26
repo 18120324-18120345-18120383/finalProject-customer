@@ -12,6 +12,8 @@ const bodyParser = require("body-parser");
 const indexRouter = require('./routes/index');
 const bookShopRouter = require('./routes/bookshop');
 const detailRouter = require('./routes/detail')
+const serviceRouter = require('./routes/api')
+
 const listUser = require('./models/listUserModels');
 const shopCart = require('./models/shopCartModels')
 
@@ -64,6 +66,7 @@ app.use(async function (req, res, next) {
 app.use('/', indexRouter);
 app.use('/book-shop', bookShopRouter);
 app.use('/product-detail', detailRouter);
+app.use('/api', serviceRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
