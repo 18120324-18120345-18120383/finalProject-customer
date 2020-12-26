@@ -18,8 +18,11 @@
               <img src={{user.avatar}} id="myImg" alt="Avatar" class="avatar">
             </div>
             <div class="d-flex justify-content-center mb-4">
-              <label for="file" <button type="file" name="avatar" class="btn btn-info">Upload new avatar</button> </label>
-              <input type="file" id="file" name="avatar" value="Prebrskaj" hidden>      
+              <label for="file" <button type="file" name="avatar" id="btnImg" class="btn btn-info">Upload new avatar</button> </label>
+              <input accept="image/*" type="file" id="file" name="avatar" value="Prebrskaj" hidden>      
+            </div>
+            <div class="justify-content-center mb-4" id="notifUploadSuccess" hidden>
+              <p class="text-success">Upload successfully, filename: </p>     
             </div>
             <div class="contact-form" id="contact-form-data">
               <div class="row my-form">
