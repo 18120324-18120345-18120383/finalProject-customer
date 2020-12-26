@@ -118,10 +118,16 @@ module.exports.getUserByID = async (id) =>{
     return user;
 }
 module.exports.authenticateUser = async (username, password) => {
-    const user = await User.findOne({username: username}).exec();
+    //Check user use username or email to authenticate
+    let user;
+    if (username.indexOf('@') != -1){ 
+        user = await User.findOne({email: username}).exec();
+    } else {
+        user = await User.findOne({username: username}).exec();
+    }
 
     if (user == null) {
-        return "Your username does not exist!!!";
+        return "An account with your username or email does not exist!!!";
     }
     let flag = await bcrybt.compare(password, user.password);
     if (!flag) {
