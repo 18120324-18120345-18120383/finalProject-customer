@@ -21,7 +21,7 @@
             <div id="sideNavPages2" class="collapse sideNavPages">
               <ul class="navbar-nav">
                 {{#each categories}}
-                <li><a href="?categoryID={{_id}}">{{name}}</a><span>({{numberOfBook}})</span></li>
+                <li><a id="choseCategory" onclick="choseCategory()" >{{name}}</a><span>({{numberOfBook}})</span></li>
                 {{/each}}
               </ul>
             </div>
@@ -30,12 +30,32 @@
             <div class="product-price mt-1">
               <h5 class="filter-heading">Shop By</h5>
               <div id="slider-range"></div>
-              <p class="price-num" style="color: #0b2e13;">Price: 
+              <p class="price-num" style="color: #0b2e13;">Price:
                 <span id="min-p"></span>
                 <span id="max-p"></span></p>
-                <input name="minPrice" id="minPrice" hidden>
-                <input name="maxPrice" id="maxPrice" hidden>
+              <input name="minPrice" id="minPrice" hidden>
+              <input name="maxPrice" id="maxPrice" hidden>
             </div>
+            <ul class="color-grey">
+              <li>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="default-sort" name="sort" class="custom-control-input" checked="" value="default">
+                  <label class="custom-control-label" for="default-sort">Default</label>
+                </div>
+              </li>
+              <li>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="increase-sort" name="sort" class="custom-control-input" value="increase">
+                  <label class="custom-control-label" for="increase-sort">Increase</label>
+                </div>
+              </li>
+              <li>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="decrease-sort" name="sort" class="custom-control-input" value="decrease">
+                  <label class="custom-control-label" for="decrease-sort">Decrease</label>
+                </div>
+              </li>
+            </ul>
             <button class="btn yellow-color-green-gradient-btn mt-1" onclick="filterPrice()">Filter</button>
           </form>
           <div class="product-add mt-4">

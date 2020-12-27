@@ -27,6 +27,7 @@ exports.productDetail = async (req, res, next) => {
 exports.productListing = async (req, res, next) => {
     const page = req.query.page || 1
     const categoryID = req.query.categoryID;
+    
     const nameBook = req.query.search;
     const maxPrice = req.query.maxPrice;
     const minPrice = req.query.minPrice;
@@ -70,6 +71,8 @@ exports.productListing = async (req, res, next) => {
         queryParams: {
             search: nameBook,
             categoryID: categoryID,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
             page: paginate.page
         }
     });
@@ -77,6 +80,8 @@ exports.productListing = async (req, res, next) => {
         queryParams: {
             search: nameBook,
             categoryID: categoryID,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
             page: paginate.prevPage
         }
     });
@@ -84,6 +89,8 @@ exports.productListing = async (req, res, next) => {
         queryParams: {
             search: nameBook,
             categoryID: categoryID,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
             page: paginate.nextPage
         }
     });
