@@ -2,6 +2,8 @@
     About
 ====================================== */
 
+// const { serializeUser } = require("passport");
+
 /*---------------------------------------------------------------------
     Theme Name: Woman Store
     Theme URI:
@@ -15,14 +17,48 @@ $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
 function filterPrice() {
-    const strMaxPrice = document.getElementById('max-p').innerHTML;
+    const strMaxPrice = document.getElementById('max-p').innerHTML;     
     const strMinPRice = document.getElementById('min-p').innerHTML;
     const maxPrice = Number(strMaxPrice.split('$')[1]);
     const minPrice = Number(strMinPRice.split('$')[1].split(' ')[0]);
-    document.getElementById('maxPrice').value = maxPrice;
-    document.getElementById('minPrice').value = minPrice;
-    alert(params);
-    // document.location.href = params
+    // alert('max price: ' + maxPrice + 'min price: ' + minPrice);
+    const isDefault = document.getElementById('default-sort').checked;
+    const isIncrease = document.getElementById('increase-sort').checked;
+    const isDecrease = document.getElementById('decrease-sort').checked;
+    let sort = 0
+    if (isDefault) {
+        sort = 0;
+    }
+    else if (isIncrease) {
+        sort = 1;
+    }
+    else if (isDecrease) {
+        sort = -1;
+    }
+    else {
+
+    }
+    alert(sort)
+    let url = new URL(window.location.href);
+    if (url.searchParams.has('minPrice')) {
+        url.searchParams.set('minPrice', minPrice);
+    }
+    else {
+        url.searchParams.append('minPrice', minPrice);
+    }
+    if (url.searchParams.has('maxPrice')) {
+        url.searchParams.set('maxPrice', maxPrice);
+    }
+    else {
+        url.searchParams.append('maxPrice', maxPrice);
+    }
+    if (url.searchParams.has('sort')) {
+        url.searchParams.set('sort', sort);
+    }
+    else {
+        url.searchParams.append('sort', sort);
+    }
+    document.location.href = url;
 }
 
 function insertParam(key, value) {
@@ -45,18 +81,11 @@ function insertParam(key, value) {
     if (i >= kvp.length) {
         kvp[kvp.length] = [key, value].join('=');
     }
-
     // can return this or...
     let params = kvp.join('&');
 
     // reload page with new params
     document.location.search = params;
-}
-function choseCategory() {
-    const key = "categoryID";
-    const category = document.getElementById("choseCategory").innerHTML
-    
-    insertParam(key, value);
 }
 
 var loadFile = function (event) {

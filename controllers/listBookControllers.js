@@ -27,74 +27,24 @@ exports.productDetail = async (req, res, next) => {
 exports.productListing = async (req, res, next) => {
     const page = req.query.page || 1
     const categoryID = req.query.categoryID;
-    
+    console.log("categoryID" + categoryID)
     const nameBook = req.query.search;
     const maxPrice = req.query.maxPrice;
     const minPrice = req.query.minPrice;
-    console.log(minPrice);
-    console.log(maxPrice);
-    console.log(req.originalUrl)
-    let url = buildUrl('/book-shop/product-listing', {
-        
-    });
-    let haveSearch = false;
+    const sort = req.query.sort;
     // console.log(nameBook);
     let filter = {};
     if (categoryID) {
         filter.categoryID = mongoose.Types.ObjectId(categoryID);
-        url = buildUrl('/book-shop/product-listing', {
-            queryParams: {
-                search: nameBook,
-                categoryID: categoryID
-            }
-        });
-        flag = true;
     }
     if (nameBook) {
         filter.name = { "$regex": nameBook, "$options": "i" };
-        console.log(filter.name)
-        url = buildUrl('/book-shop/product-listing', {
-            queryParams: {
-                search: nameBook,
-                categoryID: categoryID
-            }
-        });
-        haveSearch = true;
     }
     if (minPrice && maxPrice) {
         filter.basePrice = { $gt: minPrice, $lt: maxPrice }
     }
-    const paginate = await bookModels.listBook(filter, page, 9);
+    const paginate = await bookModels.listBook(filter, sort, page, 9);
     const categories = await categoryModels.categories();
-    
-    const currentPageURL = buildUrl('/book-shop/product-listing', {
-        queryParams: {
-            search: nameBook,
-            categoryID: categoryID,
-            minPrice: minPrice,
-            maxPrice: maxPrice,
-            page: paginate.page
-        }
-    });
-    const prevPageURL = buildUrl('/book-shop/product-listing', {
-        queryParams: {
-            search: nameBook,
-            categoryID: categoryID,
-            minPrice: minPrice,
-            maxPrice: maxPrice,
-            page: paginate.prevPage
-        }
-    });
-    const nextPageURL = buildUrl('/book-shop/product-listing', {
-        queryParams: {
-            search: nameBook,
-            categoryID: categoryID,
-            minPrice: minPrice,
-            maxPrice: maxPrice,
-            page: paginate.nextPage
-        }
-    });
-    const newURL = [prevPageURL, currentPageURL, nextPageURL]
     res.render('book-shop/product-listing', {
         books: paginate.docs,
         page: paginate.page,
@@ -105,8 +55,6 @@ exports.productListing = async (req, res, next) => {
         limit: paginate.limit,
         total: paginate.totalPages,
         categories,
-        haveSearch,
-        newURL,
         title: 'Product list'
     });
 }

@@ -21,43 +21,43 @@
             <div id="sideNavPages2" class="collapse sideNavPages">
               <ul class="navbar-nav">
                 {{#each categories}}
-                <li><a id="choseCategory" onclick="choseCategory()" >{{name}}</a><span>({{numberOfBook}})</span></li>
+                <li><a onclick="insertParam('categoryID', '{{_id}}')">{{this.name}}</a><span>({{numberOfBook}})</span>
+                </li>
                 {{/each}}
               </ul>
             </div>
           </div>
-          <form method="GET" action="" id="filterPrice">
-            <div class="product-price mt-1">
-              <h5 class="filter-heading">Shop By</h5>
-              <div id="slider-range"></div>
-              <p class="price-num" style="color: #0b2e13;">Price:
-                <span id="min-p"></span>
-                <span id="max-p"></span></p>
-              <input name="minPrice" id="minPrice" hidden>
-              <input name="maxPrice" id="maxPrice" hidden>
-            </div>
-            <ul class="color-grey">
-              <li>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="default-sort" name="sort" class="custom-control-input" checked="" value="default">
-                  <label class="custom-control-label" for="default-sort">Default</label>
-                </div>
-              </li>
-              <li>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="increase-sort" name="sort" class="custom-control-input" value="increase">
-                  <label class="custom-control-label" for="increase-sort">Increase</label>
-                </div>
-              </li>
-              <li>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="decrease-sort" name="sort" class="custom-control-input" value="decrease">
-                  <label class="custom-control-label" for="decrease-sort">Decrease</label>
-                </div>
-              </li>
-            </ul>
-            <button class="btn yellow-color-green-gradient-btn mt-1" onclick="filterPrice()">Filter</button>
-          </form>
+          <div class="product-price mt-1">
+            <h5 class="filter-heading">Shop By</h5>
+            <div id="slider-range"></div>
+            <p class="price-num" style="color: #0b2e13;">Price:
+              <span id="min-p"></span>
+              <span id="max-p"></span></p>
+            <input name="minPrice" id="minPrice" hidden>
+            <input name="maxPrice" id="maxPrice" hidden>
+          </div>
+          <ul class="color-grey">
+            <li>
+              <div class="custom-control custom-radio">
+                <input type="radio" id="default-sort" name="sort" class="custom-control-input" value="defualt" checked=""
+                  value="default">
+                <label class="custom-control-label" for="default-sort">Default</label>
+              </div>
+            </li>
+            <li>
+              <div class="custom-control custom-radio">
+                <input type="radio" id="increase-sort" name="sort" class="custom-control-input" value="increase">
+                <label class="custom-control-label" for="increase-sort">Increase</label>
+              </div>
+            </li>
+            <li>
+              <div class="custom-control custom-radio">
+                <input type="radio" id="decrease-sort" name="sort" class="custom-control-input" value="decrease">
+                <label class="custom-control-label" for="decrease-sort">Decrease</label>
+              </div>
+            </li>
+          </ul>
+          <button class="btn yellow-color-green-gradient-btn mt-1" onclick="filterPrice()">Filter</button>
           <div class="product-add mt-4">
             <div class="row no-gutters">
               <div class="col-12">
@@ -143,31 +143,31 @@
               {{#unless hasPrevPage}}
               {{#unless hasNextPage}}
               <div class="pagination">
-                <a href="{{newURL.[1]}}" class="btn active">{{page}}</a>
+                <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
               </div>
               {{else}}
               <div class="pagination">
                 {{!-- <a href="#">&laquo;</a> --}}
-                <a href={{newURL.[1]}} class="btn active">{{page}}</a>
-                <a href={{newURL.[2]}} class="btn">{{nextPage}}</a>
-                <a href={{newURL.[2]}}>&raquo;</a>
+                <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
+                <a onclick="insertParam('page', '{{nextPage}}')" class="btn">{{nextPage}}</a>
+                <a onclick="insertParam('page', '{{nextPage}}')">&raquo;</a>
               </div>
               {{/unless}}
               {{else}}
               {{#unless hasNextPage}}
               <div class="pagination">
-                <a href={{newURL.[0]}}>&laquo;</a>
-                <a href={{newURL.[0]}} class="btn">{{prevPage}}</a>
-                <a href={{newURL.[1]}} class="btn active">{{page}}</a>
+                <a onclick="insertParam('page', '{{prevPage}}')">&laquo;</a>
+                <a onclick="insertParam('page', '{{prevPage}}')" class="btn">{{prevPage}}</a>
+                <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
                 {{!-- <a href="#">&raquo;</a> --}}
               </div>
               {{else}}
               <div class="pagination">
-                <a href={{newURL.[0]}}>&laquo;</a>
-                <a href={{newURL.[0]}} class="btn">{{prevPage}}</a>
-                <a href={{newURL.[1]}} class="btn active">{{page}}</a>
-                <a href={{newURL.[2]}} class="btn">{{nextPage}}</a>
-                <a href={{newURL.[2]}}>&raquo;</a>
+                <a onclick="insertParam('page', '{{prevPage}}')">&laquo;</a>
+                <a onclick="insertParam('page', '{{prevPage}}')" class="btn">{{prevPage}}</a>
+                <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
+                <a onclick="insertParam('page', '{{nextPage}}')" class="btn">{{nextPage}}</a>
+                <a onclick="insertParam('page', '{{nextPage}}')">&raquo;</a>
               </div>
               {{/unless}}
               {{/unless}}
