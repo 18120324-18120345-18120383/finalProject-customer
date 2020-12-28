@@ -75,7 +75,6 @@ function filterPrice() {
     else {
 
     }
-    alert(sort)
     let url = new URL(window.location.href);
     if (url.searchParams.has('minPrice')) {
         url.searchParams.set('minPrice', minPrice);

@@ -16,9 +16,17 @@ const userSchema = new Schema({
     phoneNumber: String,
     more: String,
     cartID: String,
+    orderID: [String],
     isActive: Boolean
 })
 const User = mongoose.model('list-users', userSchema);
+
+module.exports.addOrderID = async (id, orderID) => {
+    const user = await User.findById(id);
+    user.orderID.push(orderID);
+    user.save();
+    return user;
+}
 
 module.exports.getListAccount = async () => {
     // const users = await User.find({});

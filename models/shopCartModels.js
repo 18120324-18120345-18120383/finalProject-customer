@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { shopCart } = require('../controllers/listBookControllers');
 const { ObjectID } = require('mongodb');
 const listBookModel = require('./listBookModels');
+const listUserModel = require('./listUserModels');
 
 const productSchema = new mongoose.Schema({
   name: String,
@@ -15,7 +16,7 @@ const productSchema = new mongoose.Schema({
 const cartSchema = new mongoose.Schema({
   status: Number,
   total: Number,
-  orderDay: Date,
+  orderDate: String,
   products: [productSchema]
 })
 const ShopCart = mongoose.model('carts', cartSchema);
@@ -86,7 +87,7 @@ module.exports.cart = async (cartID) => {
     console.log('Not exists');
     return false;
   }
-  if (cart.status == 1) {
+  if (cart.status != 0) {
     return false;
   }
   return cart;
@@ -138,7 +139,46 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
   return true;
 }
 
-module.exports.payShopCart = async (cartID) => {
-  console.log()
-  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDay: Date() });
+module.exports.payShopCart = async (cartID, userID) => {
+  let dateObj = new Date();
+  let myDate = (dateObj.getDate()) + "/" + (dateObj.getMonth() + 1) + "/" + (dateObj.getUTCFullYear());
+  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: myDate});
+  await listUserModel.addOrderID(userID, cartID);
+}
+
+module.exports.listProductOrdered = async (userID) => {
+  const user = await listUserModel.getUserByID(userID);
+  const listOrderd = user.orderID;
+  if (listOrderd) {
+    let listProduct = [];
+    if (listOrderd.length == 1) {
+      console.log('cartID: ' + listOrderd);
+      const cart = await ShopCart.findById(listOrderd);
+      if (!cart) {
+        return false;
+      } 
+      const productInCart = cart.products;
+      for (let index = 0; index < productInCart.length; index++) {
+        let product = { checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total, status: cart.status };
+        listProduct.push(product);
+      }
+      console.log(listProduct);
+      return listProduct;
+    }
+    for (let index = 0; index < listOrderd.length; index++) {
+      const cart = await ShopCart.findById(listOrderd[index]);
+      if (!cart) {
+        return false;
+      } 
+      const productInCart = cart.products;
+      for (let index = 0; index < productInCart.length; index++) {
+        let product = { checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total, 
+          status: cart.status, cover: productInCart[index].cover, _id: productInCart[index]._id };
+        listProduct.push(product);
+      }     
+    }
+    console.log(listProduct);
+    return listProduct;
+  }
+  return false;
 }

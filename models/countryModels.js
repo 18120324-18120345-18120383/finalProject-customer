@@ -30,10 +30,10 @@ module.exports.district = async (province) => {
   console.log('current provice: ' + province);
   const newProvince = await col.findOne({name: province});
   const district = newProvince.quan_huyen;
+  console.log(district);
   let districts = [];
   for(let key in district) {
     let dis = {name: district[key].name}
-    // console.log(district[key].name);
     districts.push(dis);
   }
   return districts;

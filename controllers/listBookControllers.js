@@ -40,7 +40,7 @@ exports.productListing = async (req, res, next) => {
     if (nameBook) {
         filter.name = { "$regex": nameBook, "$options": "i" };
     }
-    if (minPrice && maxPrice) {
+    if (minPrice >=0 && maxPrice >= 0) {
         filter.basePrice = { $gt: minPrice, $lt: maxPrice }
     }
     const paginate = await bookModels.listBook(filter, sort, page, 9);

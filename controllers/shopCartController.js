@@ -6,9 +6,10 @@ const countries = require('../models/countryModels');
 const cartID = '5fe453a22329a4349fda3be2' // cartID cho nguoi dung khong dang nhap
 module.exports.checkOut = async (req, res, next) => {
   if (req.user) {
-    const userCartID = req.user.cartID
-    await shopCart.payShopCart(userCartID)
-    res.redirect('shop-cart')
+    const userCartID = req.user.cartID;
+    const userID = req.user._id;
+    await shopCart.payShopCart(userCartID, userID);
+    res.redirect('shop-cart');
   }
 }
 module.exports.addItem = async (req, res, next) => {
@@ -21,8 +22,8 @@ module.exports.addItem = async (req, res, next) => {
       await listUser.addCartID(req.user._id, cart._id)
     }
     const userCartID = req.user.cartID
-    const item = await shopCart.cart(userCartID);
-    if (item) {
+    const cart = await shopCart.cart(userCartID);
+    if (cart) {
       await shopCart.addOneItem(userCartID, bookID, quantity);
       req.cart = cart;
     }
@@ -82,7 +83,6 @@ module.exports.listItem = async (req, res, next) => {
       res.render('book-shop/shop-cart')
     }
   }
-
 }
 module.exports.updateQuantity = async (req, res, next) => {
   const listQuantity = req.body.quantity;
@@ -94,5 +94,17 @@ module.exports.updateQuantity = async (req, res, next) => {
   } else {
     await shopCart.updateQuantity(cartID, listQuantity, listID);
     res.redirect('shop-cart');
+  }
+}
+
+module.exports.myOrder = async (req, res, next) => {
+  if (req.user) {
+    const listProduct = await shopCart.listProductOrdered(req.user._id);
+    if (listProduct) {
+      res.render('book-shop/my-order', {listProduct});
+    } else {
+      res.render('book-shop/my-order');
+    }
+    
   }
 }

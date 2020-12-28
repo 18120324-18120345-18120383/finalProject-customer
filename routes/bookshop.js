@@ -18,6 +18,7 @@ router.get('/shop-cart', shopCartController.listItem);
 router.post('/delete-item', shopCartController.deleteItem);
 router.post('/update-shop-cart', shopCartController.updateQuantity)
 router.post('/pay-shop-cart', checkAuthenticated, shopCartController.checkOut);
+router.get('/my-order', shopCartController.myOrder);
 router.get('/account-info', checkAuthenticated, listUserController.getAccountInfo);
 router.post('/account-info', checkAuthenticated, listUserController.updateAccountInfo);
 // router.get('/get-list-account', listUserController.getListAccount);  // Them Acitive = true cho tat ca cac tai khoan

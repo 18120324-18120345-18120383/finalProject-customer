@@ -1,0 +1,90 @@
+<a class="scroll-top-arrow" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
+
+
+<!--slider sec strat-->
+<section id="slider-sec" class="slider-sec parallax" style="background: url('img/banner1.3.jpg');">
+</section>
+<!--slider sec end-->
+
+<!-- START HEADING SECTION -->
+<div class="about_content">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-10  text-center text-lg-left wow slideInUp" data-wow-duration="2s">
+        <h1 class="heading">Get Ready For Checkout?</h1>
+        <p class="para_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dolores explicabo laudantium,
+          omnis provident consectetur adipisicing elit quam reiciendis voluptatum?</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- START SHOP CART SECTION -->
+  <div class="shop-cart wow slideInUp" data-wow-duration="2s">
+    <div class="container">
+      <!-- START SHOP CART TABLE -->
+      <div class="row pt-5">
+        <div class="col-12 col-md-12  cart_table wow fadeInUp animated" data-wow-delay="300ms"
+          style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
+          <form method="POST">
+            <div class="table-responsive">
+              <table class="table table-bordered border-radius">
+                <thead>
+                  <tr>
+                    <th class="darkcolor">Name</th>
+                    <th class="darkcolor">Order day</th>
+                    <th class="darkcolor">Total</th>
+                    <th class="darkcolor">Status</th>
+                  </tr>
+                </thead>
+                {{#each listProduct}}
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="d-table product-detail-cart">
+                        <div class="media">
+                          <div class="row no-gutters">
+                            <div class="col-12 col-lg-2 product-detail-cart-image">
+                              <a class="shopping-product" href="javascript:void(0)"><img src={{cover}}
+                                  alt="Generic placeholder image"></a>
+                            </div>
+                            <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
+                              <div class="media-body ml-lg-3">
+                                <h4 class="product-name"><a href="product-detail">{{name}}</a></h4>
+                                <p class="product-des">We offer the most complete in the country</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <h4 class="text-center amount">{{checkOutDay}}</h4>
+                    </td>
+                    <td>
+                      <h4 class="text-center amount">${{total}}</h4>
+                    </td>
+                    <td>
+                      {{#if status}}
+                      <h4 class="text-center amount">Delivering</h4>
+                      {{/if}}
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- END SHOP CART TABLE -->
+
+
+
+    </div>
+  </div>
+  <!-- END SHOP CART SECTION-->
+
+</div>
+<!-- END HEADING SECTION -->
