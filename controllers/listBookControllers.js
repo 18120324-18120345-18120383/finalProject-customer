@@ -27,7 +27,7 @@ exports.productDetail = async (req, res, next) => {
 exports.productListing = async (req, res, next) => {
     const page = req.query.page || 1
     const categoryID = req.query.categoryID;
-    console.log("categoryID" + categoryID)
+    // console.log("categoryID" + categoryID)
     const nameBook = req.query.search;
     const maxPrice = req.query.maxPrice;
     const minPrice = req.query.minPrice;

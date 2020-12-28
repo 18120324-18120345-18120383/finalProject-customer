@@ -12,31 +12,37 @@ module.exports.checkOut = async (req, res, next) => {
 }
 module.exports.addItem = async (req, res, next) => {
   const bookID = req.body.id;
-  const quantity = req.body.qty1 || 1; /// Van con bug o day
+  const quantity = req.body.qty || 1
+  ; /// Van con bug o day
+  console.log('quantity: ' + quantity);
   if (req.user) {
     if (!req.user.cartID) {
       const cart = await shopCart.initCart()
       await listUser.addCartID(req.user._id, cart._id)
     }
     const userCartID = req.user.cartID
-    const item = await shopCart.listProduct(userCartID);
+    const item = await shopCart.cart(userCartID);
     if (item) {
       await shopCart.addOneItem(userCartID, bookID, quantity);
+      req.cart = cart;
     }
     else {
       const cart = await shopCart.initCart();
       await listUser.addCartID(req.user._id, cart._id)
       const userCartID = req.user.cartID
       await shopCart.addOneItem(userCartID, bookID, quantity)
+      req.cart = cart;
     }
   }
   else {
-    const item = await shopCart.listProduct(cartID);
-    if (item) {
+    const cart = await shopCart.cart(cartID);
+    req.cart = cart;
+    if (cart) {
       await shopCart.addOneItem(cartID, bookID, quantity);
     }
   }
-  res.redirect('shop-cart');
+  
+  res.redirect('product-listing');
 }
 module.exports.deleteItem = async (req, res, next) => {
   if (req.user) {
@@ -51,17 +57,17 @@ module.exports.deleteItem = async (req, res, next) => {
 module.exports.listItem = async (req, res, next) => {
   if (req.user) {
     const userCartID = req.user.cartID
-    const cart = await shopCart.listProduct(userCartID);
+    const cart = await shopCart.cart(userCartID);
     if (cart) {
-      res.render('book-shop/shop-cart', { listItem: cart });
+      res.render('book-shop/shop-cart', { listItem: cart.products, total: cart.total });
     }
     else {
       res.render('book-shop/shop-cart')
     }
   } else {
-    const cart = await shopCart.listProduct(cartID);
+    const cart = await shopCart.cart(cartID);
     if (cart) {
-      res.render('book-shop/shop-cart', { listItem: cart });
+      res.render('book-shop/shop-cart', { listItem: cart.products, total: cart.total });
     }
     else {
       res.render('book-shop/shop-cart')
@@ -74,7 +80,7 @@ module.exports.updateQuantity = async (req, res, next) => {
   const listID = req.body.newID;
   if (req.user) {
     const userCartID = req.user.cartID;
-    await shopCart.updateQuantity(cartID, listQuantity, listID);
+    await shopCart.updateQuantity(userCartID, listQuantity, listID);
     res.redirect('shop-cart');
   } else {
     await shopCart.updateQuantity(cartID, listQuantity, listID);

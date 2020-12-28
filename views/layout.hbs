@@ -549,13 +549,13 @@
           <div class="col-12 mb-4">
             <h4 class="">Shop Cart</h4>
           </div>
-          {{#if listItem}}
+          {{#if cart.products}}
           <div class="col-12">
             <div class="listing-search-scroll">
-              {{#each listItem}}
+              {{#each cart.products}}
               <div class="media row">
                 <div class="img-holder ml-1 mr-2 col-4">
-                  <a href="javascript:void(0)"><img src="book-shop/{{cover}}" align-self-center alt="cartitem"></a>
+                  <a href="javascript:void(0)"><img src="/book-shop/{{cover}}" align-self-center alt="cartitem"></a>
                 </div>
                 <div class="media-body mt-auto mb-auto col-8">
                   <h5 class="name"><a href="javascript:void(0)">{{name}}</a></h5>
@@ -571,7 +571,7 @@
         </div>
       </div>
       <div class="bag-btn">
-        <h4 class="total"><span>Total: </span>100$</h4>
+        <h4 class="total"><span>Total: </span>{{cart.total}}$</h4>
         <a href="/book-shop/shop-cart" class="btn green-color-yellow-gradient-btn">View Bag </a>
         <a href="javascript:void(0)" class="btn yellow-color-green-gradient-btn">Checkout </a>
       </div>

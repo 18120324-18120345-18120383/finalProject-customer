@@ -16,8 +16,43 @@
 $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
+
+
+
+function post(path, params, method = 'post') {
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    const form = document.createElement('form');
+    form.method = method;
+    form.action = path;
+
+    for (const key in params) {
+        if (params.hasOwnProperty(key)) {
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = key;
+            hiddenField.value = params[key];
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function addNewItem(productID) {
+    const quantity = document.getElementById('quantity').value
+    post('/book-shop/add-to-cart', {id: productID, qty: quantity});
+}
+
+function addOneItem(productID) {
+    console.log('hihi');
+    post('/book-shop/add-to-cart', {id: productID});
+}
+
 function filterPrice() {
-    const strMaxPrice = document.getElementById('max-p').innerHTML;     
+    const strMaxPrice = document.getElementById('max-p').innerHTML;
     const strMinPRice = document.getElementById('min-p').innerHTML;
     const maxPrice = Number(strMaxPrice.split('$')[1]);
     const minPrice = Number(strMinPRice.split('$')[1].split(' ')[0]);

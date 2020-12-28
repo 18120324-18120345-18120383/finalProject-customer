@@ -45,20 +45,20 @@ app.use(async function (req, res, next) {
   res.locals.user = req.user;
   if (req.user) { // Nếu có đăng nhập 
     if (!req.user.cartID) { // Nếu không có CartID
-      const cart = await shopCart.initCart();
-      await listUser.addCartID(req.user._id, cart._id)
+      const cartInit = await shopCart.initCart();
+      await listUser.addCartID(req.user._id, cartInit._id)
     } 
-    let lItem = await shopCart.listProduct(req.user.cartID);
-    if (!lItem) {
-      const cart = await shopCart.initCart();
-      await listUser.addCartID(req.user._id, cart._id)
-      lItem = await shopCart.listProduct(req.user.cartID);
+    let cart = await shopCart.cart(req.user.cartID);
+    if (!cart) {
+      const cartInit = await shopCart.initCart();
+      await listUser.addCartID(req.user._id, cartInit._id)
+      cart = await shopCart.cart(req.user.cartID);
     }
-    res.locals.listItem = lItem;
+    res.locals.cart = cart;
   }
   else {
-    const lItem = await shopCart.listProduct('5fe453a22329a4349fda3be2');
-    res.locals.listItem = lItem;
+    const cart = await shopCart.cart('5fe453a22329a4349fda3be2');
+    res.locals.cart = cart;
   }
   next()
 });
