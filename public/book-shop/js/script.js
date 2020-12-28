@@ -17,7 +17,10 @@ $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
 
-
+function selectProvince() {
+    const province = document.getElementById('province').value
+    insertParam('province', province);
+}
 
 function post(path, params, method = 'post') {
 
@@ -36,7 +39,6 @@ function post(path, params, method = 'post') {
             form.appendChild(hiddenField);
         }
     }
-
     document.body.appendChild(form);
     form.submit();
 }

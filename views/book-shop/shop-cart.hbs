@@ -110,21 +110,30 @@
             <form>
               <div class="form-group">
                 <label class="select form-control">
-                  <select name="country" id="states">
-                    <option>USA</option>
-                    <option>Canada</option>
-                    <option>Chile</option>
-                    <option>France</option>
+                  
+                  <select name="country" id="province" onchange="selectProvince()">
+                    {{#if currentProvince}}
+                    <option>{{currentProvince}}</option>
+                    {{#each province}}
+                    <option>{{name}}</option>
+                    {{/each}}
+                    {{else}}
+                    {{#each province}}
+                    <option>{{name}}</option>
+                    {{/each}}
+                    {{/if}}
                   </select>
+                  
                 </label>
               </div>
               <div class="form-group">
                 <label class="select form-control">
                   <select name="country" id="state">
-                    <option>USA</option>
-                    <option>Canada</option>
-                    <option>Chile</option>
-                    <option>France</option>
+                    {{#if districts}}
+                    {{#each districts}}
+                    <option>{{name}}</option>
+                    {{/each}}
+                    {{/if}}
                   </select>
                 </label>
               </div>

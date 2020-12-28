@@ -1,6 +1,7 @@
 const { authenticateUser } = require('../models/listUserModels');
 const listUser = require('../models/listUserModels');
 const shopCart = require('../models/shopCartModels')
+const countries = require('../models/countryModels');
 
 const cartID = '5fe453a22329a4349fda3be2' // cartID cho nguoi dung khong dang nhap
 module.exports.checkOut = async (req, res, next) => {
@@ -12,8 +13,7 @@ module.exports.checkOut = async (req, res, next) => {
 }
 module.exports.addItem = async (req, res, next) => {
   const bookID = req.body.id;
-  const quantity = req.body.qty || 1
-  ; /// Van con bug o day
+  const quantity = req.body.qty || 1; /// Van con bug o day
   console.log('quantity: ' + quantity);
   if (req.user) {
     if (!req.user.cartID) {
@@ -55,11 +55,20 @@ module.exports.deleteItem = async (req, res, next) => {
   }
 }
 module.exports.listItem = async (req, res, next) => {
+  const province = await countries.province();
+  const currentProvince = req.query.province;
+  let districts;
+  if (currentProvince) {
+    console.log('current province ' + currentProvince);
+    districts = await countries.district(currentProvince);
+    
+  }
   if (req.user) {
     const userCartID = req.user.cartID
     const cart = await shopCart.cart(userCartID);
+    console.log(province)
     if (cart) {
-      res.render('book-shop/shop-cart', { listItem: cart.products, total: cart.total });
+      res.render('book-shop/shop-cart', {listItem: cart.products, total: cart.total, province, currentProvince, districts});
     }
     else {
       res.render('book-shop/shop-cart')
@@ -67,7 +76,7 @@ module.exports.listItem = async (req, res, next) => {
   } else {
     const cart = await shopCart.cart(cartID);
     if (cart) {
-      res.render('book-shop/shop-cart', { listItem: cart.products, total: cart.total });
+      res.render('book-shop/shop-cart', { listItem: cart.products, total: cart.total, province, currentProvince, districts});
     }
     else {
       res.render('book-shop/shop-cart')
