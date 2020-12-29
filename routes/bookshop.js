@@ -4,6 +4,7 @@ const methodOverride = require('method-override')
 const listBookController = require('../controllers/listBookControllers');
 const listUserController = require('../controllers/listUserControllers');
 const shopCartController = require('../controllers/shopCartController');
+const commentContrroller = require('../controllers/commentController');
 const passport = require('../passport/index');
 /* GET home page. */
 router.use(express.static('public'));
@@ -12,6 +13,7 @@ router.use(methodOverride('_method'));
 router.get('/', listBookController.index);
 router.get('/contact', listBookController.contact);
 router.get('/product-detail/:id', listBookController.productDetail);
+router.post('/product-detail/addComment', commentContrroller.addCommnet);
 router.post('/add-to-cart', shopCartController.addItem);
 router.get('/product-listing', listBookController.productListing);
 router.get('/shop-cart', shopCartController.listItem);
@@ -21,6 +23,7 @@ router.post('/pay-shop-cart', checkAuthenticated, shopCartController.checkOut);
 router.get('/my-order', shopCartController.myOrder);
 router.get('/account-info', checkAuthenticated, listUserController.getAccountInfo);
 router.post('/account-info', checkAuthenticated, listUserController.updateAccountInfo);
+
 // router.get('/get-list-account', listUserController.getListAccount);  // Them Acitive = true cho tat ca cac tai khoan
 router.get('/login', checkNotAuthenticated, listUserController.login);
 router.post('/login', passport.authenticate('local', {

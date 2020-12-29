@@ -35,7 +35,7 @@ module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
 module.exports.getOneBook = async (id) => {
     let book = await Book.findById(id);
     if (book) {
-        console.log(book);
+        // noting 
     }
     else {
         console.log("book not exists");

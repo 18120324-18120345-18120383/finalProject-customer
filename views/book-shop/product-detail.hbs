@@ -76,8 +76,8 @@
                   <span class="plus bg-dark"><i class="lni-plus"></i></span>
                 </div>
                 <div class="col-12 col-lg-9">
-                  <button class="btn green-color-yellow-gradient-btn"
-                    onclick="addNewItem('{{book._id}}')">ADD TO CART</button>
+                  <button class="btn green-color-yellow-gradient-btn" onclick="addNewItem('{{book._id}}')">ADD TO
+                    CART</button>
                 </div>
 
               </div>
@@ -133,178 +133,138 @@
               <div class="row no-gutters product-all-details">
 
                 <ul class="col-12 nav nav-tabs" id="myTab" role="tablist">
-                  <li class="col-4 nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                      aria-controls="home" aria-selected="true">Project Description</a>
+                  <li class="col-6 nav-item">
+                    <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                      aria-controls="contact" aria-selected="true">Customer Reviews (2)</a>
                   </li>
-                  <li class="col-4 nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                      aria-controls="profile" aria-selected="false">Additional Information</a>
+                  <li class="col-6 nav-item">
+                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                      aria-selected="false">Project Description</a>
                   </li>
-                  <li class="col-4 nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                      aria-controls="contact" aria-selected="false">Customer Reviews (2)</a>
-                  </li>
+
                 </ul>
                 <div class="col-12 tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <p class="product-tab-description text-center text-lg-left">{{book.description}}</p>
+                  <div class="tab-pane fade reviews" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <p class="product-tab-description text-center text-lg-left">{{book.description}}</p>
                   </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                  <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    {{#each comments}}
                     <div class="row">
-                      <div class="col-12">
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">First</th>
-                              <th scope="col">Last</th>
-                              <th scope="col">Handle</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">2</th>
-                              <td>Jacob</td>
-                              <td>Thornton</td>
-                              <td>@fat</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">3</th>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">4</th>
-                              <td>Alex</td>
-                              <td>Thorn</td>
-                              <td>@mdo</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade reviews" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                      <div class="col-12 col-lg-2">
 
-                    <div class="media">
-                      <div class="row no-gutter">
-                        <div class="col-12 col-lg-2 p-0">
-
-                          <div class="row no-gutters">
-                            <div class="col-12 d-flex  justify-content-center">
-                              <img src="/book-shop/img/user.jpg" alt="Generic placeholder image">
-                            </div>
-                            <div class="col-12 d-flex mt-2 justify-content-center">
-                              <ul class="user-rating">
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star"></i></a></li>
-                              </ul>
-                            </div>
+                        <div class="row">
+                          <div class="col-12 d-flex justify-content-center">
+                            <img src="{{avatar}}" alt="Generic placeholder image" width="70px"
+                              style="border-radius: 50%;">
                           </div>
-
-                        </div>
-
-                        <div class="col-12 col-lg-10 p-0">
-                          <div class="media-body">
-                            <span class="text-center text-lg-left d-block">27 Aug 2017</span>
-                            <h5 class="mb-2 text-center text-lg-left">Media heading</h5>
-                            <p class="text-center text-lg-left">Neque porro quisquam est, qui dolorem ipsum quia dolor
-                              sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut
-                              labore et dolore magnam.</p>
+                          <div class="col-12 d-flex mt-2 justify-content-center">
+                            <ul class="user-rating">
+                              {{#each rating}}
+                              {{#if this}}
+                              <li><a href="#" style="color: #f5c136;"><i class="lni-star-filled"></i></a></li>
+                              {{else}}
+                              <li><a href="#" style="color: #f5c136;"><i class="lni-star"></i></a></li>
+                              {{/if}}
+                              {{/each}}
+                            </ul>
                           </div>
                         </div>
 
                       </div>
-                    </div>
-                    <div class="media">
-                      <div class="row no-gutter">
-                        <div class="col-12 col-lg-2 p-0">
 
-                          <div class="row no-gutters">
-                            <div class="col-12 d-flex  justify-content-center">
-                              <img src="/book-shop/img/user2.jpg" alt="Generic placeholder image">
-                            </div>
-                            <div class="col-12 d-flex mt-2 justify-content-center">
-                              <ul class="user-rating">
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star"></i></a></li>
-                              </ul>
-                            </div>
-                          </div>
-
+                      <div class="col-12 col-lg-10">
+                        <div class="media-body"
+                          style="border-left: 1px solid #eceff6;    padding-left: 25px;    padding-right: 25px;">
+                          <span class="text-center text-lg-left d-block"
+                            style="font-family: Poppins, sans-serif; font-size: 12px;    color: lightgrey;    font-weight: lighter;">{{date}}</span>
+                          <h5 class="mb-2 text-center text-lg-left">{{name}}</h5>
+                          <p style="display: inline;">{{content}}</p>
                         </div>
-
-                        <div class="col-12 col-lg-10 p-0">
-                          <div class="media-body ">
-                            <span class="text-center text-lg-left d-block">27 Aug 2017</span>
-                            <h5 class="mb-2 text-center text-lg-left">Media heading</h5>
-                            <p class="text-center text-lg-left">Neque porro quisquam est, qui dolorem ipsum quia dolor
-                              sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut
-                              labore et dolore magnam.</p>
-                          </div>
-                        </div>
-
                       </div>
-                    </div>
 
+                    </div>
+                    {{/each}}
+                    {{!-- PAGINATE --}}
+                    <div class="center">
+                      {{#unless hasPrevPage}}
+                      {{#unless hasNextPage}}
+                      <div class="pagination">
+                        <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
+                      </div>
+                      {{else}}
+                      <div class="pagination">
+                        {{!-- <a href="#">&laquo;</a> --}}
+                        <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
+                        <a onclick="insertParam('page', '{{nextPage}}')" class="btn">{{nextPage}}</a>
+                        <a onclick="insertParam('page', '{{nextPage}}')">&raquo;</a>
+                      </div>
+                      {{/unless}}
+                      {{else}}
+                      {{#unless hasNextPage}}
+                      <div class="pagination">
+                        <a onclick="insertParam('page', '{{prevPage}}')">&laquo;</a>
+                        <a onclick="insertParam('page', '{{prevPage}}')" class="btn">{{prevPage}}</a>
+                        <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
+                        {{!-- <a href="#">&raquo;</a> --}}
+                      </div>
+                      {{else}}
+                      <div class="pagination">
+                        <a onclick="insertParam('page', '{{prevPage}}')">&laquo;</a>
+                        <a onclick="insertParam('page', '{{prevPage}}')" class="btn">{{prevPage}}</a>
+                        <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
+                        <a onclick="insertParam('page', '{{nextPage}}')" class="btn">{{nextPage}}</a>
+                        <a onclick="insertParam('page', '{{nextPage}}')">&raquo;</a>
+                      </div>
+                      {{/unless}}
+                      {{/unless}}
+                    </div>
                     <div class="row pl-2 pr-2">
                       <div class="col-12 d-flex mb-4 mt-3">
                         <h5 class="text-nowrap">Add Review</h5>
                         <hr class="w-100 ml-5">
                       </div>
                       <div class="col-12">
-                        <form class="getin_form border-form" id="register">
+                        <form class="getin_form border-form" method="POST" action="addComment">
                           <div class="row">
-                            <div class="col-md-6 col-sm-12">
+                            {{#unless user}}
+                            <div class="col-md-12 col-sm-12">
                               <div class="form-group bottom35">
-                                <input type="text" class="form-control" placeholder="Name*" required=""
+                                <input type="text" class="form-control" placeholder="Name*" required="" name="name"
                                   id="registerName">
                               </div>
                             </div>
-                            <div class="col-md-6 col-sm-12">
-                              <div class="form-group bottom35">
-                                <input type="email" class="form-control" placeholder="Email*" required=""
-                                  id="registerEmail">
-                              </div>
-                            </div>
+                            {{/unless}}
                             <div class="col-12 col-lg-2 text-center text-lg-left">
                               <h5 class="text-nowrap">Your Rating</h5>
                             </div>
                             <div class="col-12 col-lg-10 text-center text-lg-left">
                               <ul class="user-rating">
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                <li><a href="#"><i class="lni-star"></i></a></li>
+                                <li><a onclick="clickOneStar()"><i class="lni-star" id="one-star"></i></a></li>
+                                <li><a onclick="clickTwoStar()"><i class="lni-star" id="two-star"></i></a></li>
+                                <li><a onclick="clickThreeStar()"><i class="lni-star" id="three-star"></i></a></li>
+                                <li><a onclick="clickFourStar()"><i class="lni-star" id="four-star"></i></a></li>
+                                <li><a onclick="clickFiveStar()"><i class="lni-star" id="five-star"></i></a></li>
                               </ul>
+                            </div>
+                            <input type="text" class="form-control" required="" id="rating" name="rating" hidden>
+                            <input type="text" class="form-control" name="productID" value="{{book._id}}" hidden>
+                            <div class="col-md-6 col-sm-12" id="noneRate" hidden>
+                              <div class="form-group bottom35">
+                                <p class="text-danger">You have not rated yet</p>
+                              </div>
                             </div>
                             <div class="col-12">
                               <div class="form-group">
-                                <!--                                                                            <label for="comment">Your Rating:</label>-->
-                                <textarea class="form-control textareaclass" rows="5" id="comment"
+                                <textarea class="form-control textareaclass" rows="5" id="comment" name="content"
                                   placeholder="Your Review"></textarea>
                               </div>
                             </div>
 
                             <div class="col-12 mt-3">
                               <div class="form-group d-flex justify-content-center d-lg-block">
-                                <button class="text-center btn green-color-yellow-gradient-btn">Add Review</button>
+                                <button class="text-center btn green-color-yellow-gradient-btn"
+                                  onclick="checkComment()">Add Review</button>
                               </div>
                             </div>
 
@@ -312,8 +272,8 @@
                         </form>
                       </div>
                     </div>
-
                   </div>
+
                 </div>
 
               </div>

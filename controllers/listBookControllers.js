@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const bookModels = require('../models/listBookModels');
 const categoryModels = require('../models/categoriesModels');
 const shopCartMoels = require('../models/shopCartModels')
+const commentModel = require('../models/commnetModels');
 const buildUrl = require('build-url');
 
 exports.index = async (req, res, next) => {
@@ -16,11 +17,20 @@ exports.contact = async (req, res, next) => {
 }
 
 exports.productDetail = async (req, res, next) => {
+    const page = req.query.page || 1
     const id = req.params.id;
     const book = await bookModels.getOneBook(id);
+    const comments = await commentModel.listComment(id, page, 5);
+    console.log(comments);
     res.render('book-shop/product-detail', {
         book, orginalPrice: book.basePrice * 2,
-        title: 'Product detail'
+        title: 'Product detail',
+        comments : comments.docs,
+        page: comments.page,
+        nextPage: comments.nextPage,
+        prevPage: comments.prevPage,
+        hasNextPage: comments.hasNextPage,
+        hasPrevPage: comments.hasPrevPage,
     });
 }
 

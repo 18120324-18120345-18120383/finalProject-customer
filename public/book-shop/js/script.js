@@ -17,6 +17,61 @@ $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
 
+function checkComment() {
+    if (document.getElementById("rating").value == "") {
+        document.getElementById("noneRate").hidden = false;
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+function clickOneStar() {
+    document.getElementById("one-star").className = "lni-star-filled";
+    document.getElementById("two-star").className = "lni-star";
+    document.getElementById("three-star").className = "lni-star";
+    document.getElementById("four-star").className = "lni-star";
+    document.getElementById("five-star").className = "lni-star";
+    document.getElementById("rating").value = 1;
+    
+}
+
+function clickTwoStar() {
+    document.getElementById("one-star").className = "lni-star-filled";
+    document.getElementById("two-star").className = "lni-star-filled";
+    document.getElementById("three-star").className = "lni-star";
+    document.getElementById("four-star").className = "lni-star";
+    document.getElementById("five-star").className = "lni-star";
+    document.getElementById("rating").value = 2;
+}
+
+function clickThreeStar() {
+    document.getElementById("one-star").className = "lni-star-filled";
+    document.getElementById("two-star").className = "lni-star-filled";
+    document.getElementById("three-star").className = "lni-star-filled";
+    document.getElementById("four-star").className = "lni-star";
+    document.getElementById("five-star").className = "lni-star";
+    document.getElementById("rating").value = 3;
+}
+
+function clickFourStar() {
+    document.getElementById("one-star").className = "lni-star-filled";
+    document.getElementById("two-star").className = "lni-star-filled";
+    document.getElementById("three-star").className = "lni-star-filled";
+    document.getElementById("four-star").className = "lni-star-filled";
+    document.getElementById("five-star").className = "lni-star";
+    document.getElementById("rating").value = 4;
+}
+
+function clickFiveStar() {
+    document.getElementById("one-star").className = "lni-star-filled";
+    document.getElementById("two-star").className = "lni-star-filled";
+    document.getElementById("three-star").className = "lni-star-filled";
+    document.getElementById("four-star").className = "lni-star-filled";
+    document.getElementById("five-star").className = "lni-star-filled";
+    document.getElementById("rating").value = 5;
+}
+
 function selectProvince() {
     const province = document.getElementById('province').value
     insertParam('province', province);
