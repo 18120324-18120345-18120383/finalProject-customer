@@ -1,7 +1,6 @@
 const { ObjectID } = require('mongodb');
 const mongoose = require('mongoose');
 const bcrybt = require('bcrypt')
-const fs = require('fs')
 
 
 const Schema = mongoose.Schema;
@@ -11,7 +10,8 @@ const userSchema = new Schema({
     password: String,
     firstName : String,
     lastName: String,
-    avatar: String,
+    avatar: Buffer,
+    avatarType: String,
     email: String,
     phoneNumber: String,
     more: String,
@@ -38,33 +38,17 @@ module.exports.addCartID = async (id, CartID) => {
     return user;
 }
 module.exports.updateOneAccount = async (id, fields) => {
-    const newID = id;
-    const filter = {_id: newID};
+    const filter = {_id: id};
     
     let update = {
         firstName: fields.firstName, 
         lastName: fields.lastName, 
         phoneNumber: fields.phoneNumber,
         more: fields.more,
-        avatar: '/book-shop/img/userAvatar/' + fields.avatar
+        avatar: fields.avatar,
+        avatarType: fields.avatarType
     };
-    if (fields.avatar === null) {
-        update = {
-            firstName: fields.firstName, 
-            lastName: fields.lastName, 
-            phoneNumber: fields.phoneNumber,
-            more: fields.more
-        }
-    } else {
-        //delete current avatar before update new avatar
-        const currentAva = (await User.findOne(filter)).avatar 
-        try { 
-            fs.unlinkSync('./public' + currentAva)
-            console.log("delete file successfully!!!")
-        } catch (err){
-            console.log(err)
-        }
-    }
+
     const user = await User.findOneAndUpdate(filter, update);
     return user;
 }

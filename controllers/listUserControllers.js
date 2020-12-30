@@ -4,18 +4,6 @@ const { ExpectationFailed } = require('http-errors');
 const randomstring = require('randomstring')
 const bcrybt = require('bcrypt')
 
-const multer = require('multer')
-const storage = multer.diskStorage({
-    destination: './public/book-shop/img/userAvatar',
-    filename: (req, file, callback) => {
-        callback(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
-    }
-})
-const upload = multer({
-    storage: storage,
-    limits: {fileSize: 2000000} //size of image must under 2000000 byte (2MB)
-}).single('avatar')
-
 require("dotenv").config();
 const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
@@ -29,6 +17,12 @@ const jwt = require('jsonwebtoken')
 
 exports.getAccountInfo = async (req, res, next) => {
     const user = await listUser.getUserByID(req.user.id);
+
+    //decoded avatar
+    if (user.avatar){
+        user.avatar = user.avatar.toString('base64')
+    }
+
     res.render('book-shop/account-info', {
         user,
         title: 'Account Information'
@@ -40,38 +34,53 @@ exports.getListAccount = async (req, res, next) => {
     res.send(users);
 }
 exports.updateAccountInfo = async (req, res, next) => {
-    upload(req, res, async (err) => {
-        if (err){
-            showNotif(res, "Error", err);
-        } else {
-            let avatar;
-            //check if user has uploaded new avatar yet
-            if (req.file !== undefined){
-                avatar = req.file.filename
-            } else {
-                avatar = null;
-            }
-            
-            //fields contain data need to be updated
-            const fields = {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                phoneNumber: req.body.phoneNumber,
-                more: req.body.more,
-                avatar: avatar
-            }
-            
-            const user = await listUser.updateOneAccount(req.user.id, fields)
+    let user = await listUser.getUserByID(req.user.id)
 
-            if (user) {
-                res.redirect('/book-shop/account-info')
-            } else {
-                showNotif(res, "Error", "Sorry, some error happen while we trying to update your account!")
-            }
-        }
-    })
+    //update avatar
+    let avatar
+    let avatarType
+    let temp = saveAvatar(req.body.avatar)
+    if (temp == false) {
+        avatar = user.avatar
+        avatarType = user.avatarType
+    } else {
+        avatar = temp[0]
+        avatarType = temp[1]
+    }
+
+
+    //fields contain data need to be updated
+    const fields = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
+        more: req.body.more,
+        avatar: avatar,
+        avatarType: avatarType
+    }
+
+    user = await listUser.updateOneAccount(req.user.id, fields)
+
+    if (user) {
+        res.redirect('/book-shop/account-info')
+    } else {
+        showNotif(res, "Error", "Sorry, some error happen while we trying to update your account!")
+    }
 }
+const saveAvatar = (avatarEncoded) => {
+    if (!avatarEncoded) return false;
 
+    const avatarJSON = JSON.parse(avatarEncoded)
+    if (avatarJSON != null) {
+        let avatar = new Buffer.from(avatarJSON.data, 'base64');
+        let avatarType = avatarJSON.type;
+        return [
+            avatar,
+            avatarType
+        ]
+    }
+
+}
 exports.addOneAccount = async (req, res, next) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -104,11 +113,11 @@ exports.forgotPassword = (req, res, next) => {
 exports.postForgotPassword = async (req, res, next) => {
     const email = req.body.email
     const user = await listUser.findUserByEmail(email)
-    if (user == null){
-        showNotif(res, "Error!!!", "An account with your email does not exist!!!")    
+    if (user == null) {
+        showNotif(res, "Error!!!", "An account with your email does not exist!!!")
     }
 
-    const token = jwt.sign({email}, process.env.JWT_RESET_PASS, {expiresIn: '1m'})
+    const token = jwt.sign({ email }, process.env.JWT_RESET_PASS, { expiresIn: '1m' })
 
     const emailData = {
         from: 'My Book Store <noreply@mybookstore.com>',
@@ -122,7 +131,7 @@ exports.postForgotPassword = async (req, res, next) => {
     };
 
     transporter.sendMail(emailData, (err, info) => {
-        if (err){
+        if (err) {
             console.log(err);
             showNotif(res, "Error", 'Sorry, some error happen while we try to send you reset password link!!!');
         } else {
@@ -134,18 +143,18 @@ exports.postForgotPassword = async (req, res, next) => {
 
 exports.resetPassword = async (req, res) => {
     const token = req.params.token;
-    if (token){
+    if (token) {
         let email;
-        jwt.verify(token, process.env.JWT_RESET_PASS, function(err, decoded) {
-            if (err){
+        jwt.verify(token, process.env.JWT_RESET_PASS, function (err, decoded) {
+            if (err) {
                 showNotif(res, "Error!!!", 'Link is expired!!!');
             } else {
                 email = decoded.email
             }
-          });
+        });
         const newPassword = randomstring.generate(10)
         const user = await listUser.setPasswordByEmail(email, newPassword)
-        if (user != null){
+        if (user != null) {
             showNotif(res, "Reset password successfully", "Your username is: " + user.username + " ;Your new password is: " + newPassword)
         } else {
             showNotif(res, "Error", "Sorry, something happen while we are trying to reset your password")
@@ -169,14 +178,14 @@ exports.getRegister = async (req, res, next) => {
 exports.postRegister = async (req, res, next) => {
     const data = req.body
     const message = await listUser.checkValidAccount(data);
-    
-    if (message == 'Valid account'){
+
+    if (message == 'Valid account') {
         const username = data.username
         const email = data.email
         const password = data.password
         const hashedPassword = await bcrybt.hash(password[0], 10);
 
-        const token = jwt.sign({username, email, hashedPassword}, process.env.JWT_ACC_ACTIVATE, {expiresIn: '1m'})
+        const token = jwt.sign({ username, email, hashedPassword }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '1m' })
 
         const emailData = {
             from: 'My Book Store <noreply@mybookstore.com>',
@@ -190,7 +199,7 @@ exports.postRegister = async (req, res, next) => {
         };
 
         transporter.sendMail(emailData, (err, info) => {
-            if (err){
+            if (err) {
                 console.log(err);
                 showNotif(res, "Error", "Sorry, some error happen while we try to send you an email with verify link!!!");
             } else {
@@ -206,19 +215,19 @@ exports.postRegister = async (req, res, next) => {
 }
 exports.verifyEmail = async (req, res) => {
     const token = req.params.token;
-    if (token){
+    if (token) {
         let username, email, hashedPassword
-        jwt.verify(token, process.env.JWT_ACC_ACTIVATE, function(err, decoded) {
-            if (err){
+        jwt.verify(token, process.env.JWT_ACC_ACTIVATE, function (err, decoded) {
+            if (err) {
                 showNotif(res, "Error!!!", 'Link is expired!!!');
             } else {
                 username = decoded.username
                 email = decoded.email
                 hashedPassword = decoded.hashedPassword
             }
-          });
+        });
         const isValid = await listUser.checkValidEmailAndUsername(email, username)
-        if (isValid){
+        if (isValid) {
             await listUser.createAccount(username, hashedPassword, email)
             showNotif(res, "Verify successfully!!!", "Your account are registered successfully!!!");
         } else {
@@ -242,18 +251,18 @@ exports.changePassword = (req, res) => {
         title: "Change password"
     })
 }
-exports.postChangePassword = async(req, res) => {
+exports.postChangePassword = async (req, res) => {
     const password = req.body.password;
     const newPassword = req.body.newPassword;
     const isValid = await bcrybt.compare(password, req.user.password)
-    if (!isValid){
+    if (!isValid) {
         showNotif(res, "Error", "Your password is incorrect!!!")
     }
-    if (newPassword[0] !== newPassword[1]){
+    if (newPassword[0] !== newPassword[1]) {
         showNotif(res, "Error", "Your new password and retype does not match!!!")
     }
     const user = await listUser.setPasswordByUsername(req.user.username, newPassword[0])
-    if (user != null){
+    if (user != null) {
         showNotif(res, "Successfully", "Your password is changed!!!")
     } else {
         showNotif(res, "Error", "Sorry, something happened while we are trying to change your password!!!")
