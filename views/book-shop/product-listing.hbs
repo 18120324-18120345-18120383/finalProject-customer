@@ -39,8 +39,8 @@
           <ul class="color-grey">
             <li>
               <div class="custom-control custom-radio">
-                <input type="radio" id="default-sort" name="sort" class="custom-control-input" value="defualt" checked=""
-                  value="default">
+                <input type="radio" id="default-sort" name="sort" class="custom-control-input" value="defualt"
+                  checked="" value="default">
                 <label class="custom-control-label" for="default-sort">Default</label>
               </div>
             </li>
@@ -96,8 +96,7 @@
           <!-- END LISTING HEADING -->
 
           <!-- START PRODUCT LISTING SECTION -->
-          <div class="col-12 product-listing-products">
-
+          <div class="col-12 product-listing-products" id="books">
             <!-- START DISPLAY PRODUCT -->
             <div class="product-list row">
               {{#each books}}
@@ -137,52 +136,146 @@
               {{/each}}
             </div>
             <!-- END DISPLAY PRODUCT -->
-
             {{!-- Pagination --}}
             <div class="center">
               {{#unless hasPrevPage}}
               {{#unless hasNextPage}}
               <div class="pagination">
-                <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
+                <a onclick="paging('{{page}}')" class="btn active">{{page}}</a>
               </div>
               {{else}}
               <div class="pagination">
                 {{!-- <a href="#">&laquo;</a> --}}
-                <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
-                <a onclick="insertParam('page', '{{nextPage}}')" class="btn">{{nextPage}}</a>
-                <a onclick="insertParam('page', '{{nextPage}}')">&raquo;</a>
+                <a onclick="paging('{{page}}')" class="btn active">{{page}}</a>
+                <a onclick="paging('{{nextPage}}')" class="btn">{{nextPage}}</a>
+                <a onclick="paging('{{nextPage}}')">&raquo;</a>
               </div>
               {{/unless}}
               {{else}}
               {{#unless hasNextPage}}
               <div class="pagination">
-                <a onclick="insertParam('page', '{{prevPage}}')">&laquo;</a>
-                <a onclick="insertParam('page', '{{prevPage}}')" class="btn">{{prevPage}}</a>
-                <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
+                <a onclick="paging('{{prevPage}}')">&laquo;</a>
+                <a onclick="paging('{{prevPage}}')" class="btn">{{prevPage}}</a>
+                <a onclick="paging('{{page}}')" class="btn active">{{page}}</a>
                 {{!-- <a href="#">&raquo;</a> --}}
               </div>
               {{else}}
               <div class="pagination">
-                <a onclick="insertParam('page', '{{prevPage}}')">&laquo;</a>
-                <a onclick="insertParam('page', '{{prevPage}}')" class="btn">{{prevPage}}</a>
-                <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
-                <a onclick="insertParam('page', '{{nextPage}}')" class="btn">{{nextPage}}</a>
-                <a onclick="insertParam('page', '{{nextPage}}')">&raquo;</a>
+                <a onclick="paging('{{prevPage}}')">&laquo;</a>
+                <a onclick="paging('{{prevPage}}')" class="btn">{{prevPage}}</a>
+                <a onclick="paging('{{page}}')" class="btn active">{{page}}</a>
+                <a onclick="paging('{{nextPage}}')" class="btn">{{nextPage}}</a>
+                <a onclick="paging('{{nextPage}}')">&raquo;</a>
               </div>
               {{/unless}}
               {{/unless}}
-
-
             </div>
-
-
           </div>
           <!-- END PRODUCT LISTING SECTION -->
         </div>
       </div>
       <!-- END PRODUCT COL 8 -->
-
     </div>
   </div>
 </div>
 <!--Product Line Up End-->
+<script type="text/x-handlebars-template" id="list-book">
+<div class="product-list row">
+  \{{#each books}}
+  <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: slideInUp;">
+    <div class="product-item owl-theme product-listing-carousel owl-carousel owl-loaded owl-drag">
+    <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-473px, 0px, 0px); transition: all 0s ease 0s; width: 1657px;"><div class="owl-item cloned" style="width: 226.656px; margin-right: 10px;"><div class="item p-item-img">
+        <img src=\{{cover.[0]}} alt="images" width="500px" height="500px">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div></div><div class="owl-item cloned" style="width: 226.656px; margin-right: 10px;"><div class="item p-item-img">
+        <img src=\{{cover.[1]}} alt="images" width="500px" height="500px">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div></div><div class="owl-item active" style="width: 226.656px; margin-right: 10px;"><div class="item p-item-img">
+        <img src=\{{cover.[2]}} alt="images">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div></div><div class="owl-item" style="width: 226.656px; margin-right: 10px;"><div class="item p-item-img">
+        <img src=\{{cover.[0]}} alt="images" width="500px" height="500px">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div></div><div class="owl-item" style="width: 226.656px; margin-right: 10px;"><div class="item p-item-img">
+        <img src=\{{cover.[1]}} alt="images" width="500px" height="500px">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div></div><div class="owl-item cloned" style="width: 226.656px; margin-right: 10px;"><div class="item p-item-img">
+        <img src=\{{cover.[2]}} alt="images">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div></div><div class="owl-item cloned" style="width: 226.656px; margin-right: 10px;"><div class="item p-item-img">
+        <img src=\{{cover.[0]}} alt="images" width="500px" height="500px">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div></div></div></div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><div class="navigation-link-prev"><a class="prev-btn"><i class="lni-chevron-left"></i> </a></div></button><button type="button" role="presentation" class="owl-next"><div class="navigation-link-next"><a class="next-btn"><i class="lni-chevron-right"></i> </a></div></button></div><div class="owl-dots disabled"></div></div>
+    <div class="p-item-detail">
+      <h4 class="text-center p-item-name"><a href="product-detail/\{{_id}}">\{{name}}</a>
+      </h4>
+      <p class="text-center p-item-price">\{{basePrice}}$</p>
+    </div>
+  </div>
+  \{{/each}}
+  
+</div>
+<div class="center">
+    \{{#unless hasPrevPage}}
+    \{{#unless hasNextPage}}
+    <div class="pagination">
+      <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
+    </div>
+    \{{else}}
+    <div class="pagination">
+      {{!-- <a href="#">&laquo;</a> --}}
+      <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
+      <a onclick="paging('\{{nextPage}}')" class="btn">\{{nextPage}}</a>
+      <a onclick="paging('\{{nextPage}}')">&raquo;</a>
+    </div>
+    \{{/unless}}
+    \{{else}}
+    \{{#unless hasNextPage}}
+    <div class="pagination">
+      <a onclick="paging('\{{prevPage}}')">&laquo;</a>
+      <a onclick="paging('\{{prevPage}}')" class="btn">\{{prevPage}}</a>
+      <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
+      {{!-- <a href="#">&raquo;</a> --}}
+    </div>
+    \{{else}}
+    <div class="pagination">
+      <a onclick="paging('\{{prevPage}}')">&laquo;</a>
+      <a onclick="paging('\{{prevPage}}')" class="btn">\{{prevPage}}</a>
+      <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
+      <a onclick="paging('\{{nextPage}}')" class="btn">\{{nextPage}}</a>
+      <a onclick="paging('\{{nextPage}}')">&raquo;</a>
+    </div>
+    \{{/unless}}
+    \{{/unless}}
+  </div>
+</div>
+
+</script>

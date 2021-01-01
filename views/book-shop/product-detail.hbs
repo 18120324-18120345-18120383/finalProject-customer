@@ -149,76 +149,76 @@
                   </div>
 
                   <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    {{#each comments}}
-                    <div class="row">
-                      <div class="col-12 col-lg-2">
-
-                        <div class="row">
-                          <div class="col-12 d-flex justify-content-center">
-                            <img src="{{avatar}}" alt="Generic placeholder image" width="70px"
-                              style="border-radius: 50%;">
+                    <div id="list-comment">
+                      {{#each comments}}
+                      <div class="row">
+                        <div class="col-12 col-lg-2">
+                          <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                              <img src="{{avatar}}" alt="Generic placeholder image" width="70px"
+                                style="border-radius: 50%;">
+                            </div>
+                            <div class="col-12 d-flex mt-2 justify-content-center">
+                              <ul class="user-rating">
+                                {{#each rating}}
+                                {{#if this}}
+                                <li><a href="#" style="color: #f5c136;"><i class="lni-star-filled"></i></a></li>
+                                {{else}}
+                                <li><a href="#" style="color: #f5c136;"><i class="lni-star"></i></a></li>
+                                {{/if}}
+                                {{/each}}
+                              </ul>
+                            </div>
                           </div>
-                          <div class="col-12 d-flex mt-2 justify-content-center">
-                            <ul class="user-rating">
-                              {{#each rating}}
-                              {{#if this}}
-                              <li><a href="#" style="color: #f5c136;"><i class="lni-star-filled"></i></a></li>
-                              {{else}}
-                              <li><a href="#" style="color: #f5c136;"><i class="lni-star"></i></a></li>
-                              {{/if}}
-                              {{/each}}
-                            </ul>
+                        </div>
+                        <div class="col-12 col-lg-10">
+                          <div class="media-body"
+                            style="border-left: 1px solid #eceff6;    padding-left: 25px;    padding-right: 25px;">
+                            <span class="text-center text-lg-left d-block"
+                              style="font-family: Poppins, sans-serif; font-size: 12px;    color: lightgrey;    font-weight: lighter;">{{date}}</span>
+                            <h5 class="mb-2 text-center text-lg-left">{{name}}</h5>
+                            <p style="display: inline;">{{content}}</p>
                           </div>
                         </div>
 
                       </div>
-
-                      <div class="col-12 col-lg-10">
-                        <div class="media-body"
-                          style="border-left: 1px solid #eceff6;    padding-left: 25px;    padding-right: 25px;">
-                          <span class="text-center text-lg-left d-block"
-                            style="font-family: Poppins, sans-serif; font-size: 12px;    color: lightgrey;    font-weight: lighter;">{{date}}</span>
-                          <h5 class="mb-2 text-center text-lg-left">{{name}}</h5>
-                          <p style="display: inline;">{{content}}</p>
+                      {{/each}}
+                      {{!-- PAGINATE --}}
+                      <div class="center">
+                        {{#unless hasPrevPage}}
+                        {{#unless hasNextPage}}
+                        <div class="pagination">
+                          <a onclick="pagingComment('{{page}}')" class="btn active">{{page}}</a>
                         </div>
+                        {{else}}
+                        <div class="pagination">
+                          {{!-- <a href="#">&laquo;</a> --}}
+                          <a onclick="pagingComment('{{page}}')" class="btn active">{{page}}</a>
+                          <a onclick="pagingComment('{{nextPage}}')" class="btn">{{nextPage}}</a>
+                          <a onclick="pagingComment('{{nextPage}}')">&raquo;</a>
+                        </div>
+                        {{/unless}}
+                        {{else}}
+                        {{#unless hasNextPage}}
+                        <div class="pagination">
+                          <a onclick="pagingComment('{{prevPage}}')">&laquo;</a>
+                          <a onclick="pagingComment('{{prevPage}}')" class="btn">{{prevPage}}</a>
+                          <a onclick="pagingComment('{{page}}')" class="btn active">{{page}}</a>
+                          {{!-- <a href="#">&raquo;</a> --}}
+                        </div>
+                        {{else}}
+                        <div class="pagination">
+                          <a onclick="pagingComment('{{prevPage}}')">&laquo;</a>
+                          <a onclick="pagingComment('{{prevPage}}')" class="btn">{{prevPage}}</a>
+                          <a onclick="pagingComment('{{page}}')" class="btn active">{{page}}</a>
+                          <a onclick="pagingComment('{{nextPage}}')" class="btn">{{nextPage}}</a>
+                          <a onclick="pagingComment('{{nextPage}}')">&raquo;</a>
+                        </div>
+                        {{/unless}}
+                        {{/unless}}
                       </div>
+                    </div>
 
-                    </div>
-                    {{/each}}
-                    {{!-- PAGINATE --}}
-                    <div class="center">
-                      {{#unless hasPrevPage}}
-                      {{#unless hasNextPage}}
-                      <div class="pagination">
-                        <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
-                      </div>
-                      {{else}}
-                      <div class="pagination">
-                        {{!-- <a href="#">&laquo;</a> --}}
-                        <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
-                        <a onclick="insertParam('page', '{{nextPage}}')" class="btn">{{nextPage}}</a>
-                        <a onclick="insertParam('page', '{{nextPage}}')">&raquo;</a>
-                      </div>
-                      {{/unless}}
-                      {{else}}
-                      {{#unless hasNextPage}}
-                      <div class="pagination">
-                        <a onclick="insertParam('page', '{{prevPage}}')">&laquo;</a>
-                        <a onclick="insertParam('page', '{{prevPage}}')" class="btn">{{prevPage}}</a>
-                        <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
-                        {{!-- <a href="#">&raquo;</a> --}}
-                      </div>
-                      {{else}}
-                      <div class="pagination">
-                        <a onclick="insertParam('page', '{{prevPage}}')">&laquo;</a>
-                        <a onclick="insertParam('page', '{{prevPage}}')" class="btn">{{prevPage}}</a>
-                        <a onclick="insertParam('page', '{{page}}')" class="btn active">{{page}}</a>
-                        <a onclick="insertParam('page', '{{nextPage}}')" class="btn">{{nextPage}}</a>
-                        <a onclick="insertParam('page', '{{nextPage}}')">&raquo;</a>
-                      </div>
-                      {{/unless}}
-                      {{/unless}}
-                    </div>
                     <div class="row pl-2 pr-2">
                       <div class="col-12 d-flex mb-4 mt-3">
                         <h5 class="text-nowrap">Add Review</h5>
@@ -248,7 +248,7 @@
                               </ul>
                             </div>
                             <input type="text" class="form-control" required="" id="rating" name="rating" hidden>
-                            <input type="text" class="form-control" name="productID" value="{{book._id}}" hidden>
+                            <input type="text" class="form-control" name="productID" id="idOfBook" value="{{book._id}}" hidden>
                             <div class="col-md-6 col-sm-12" id="noneRate" hidden>
                               <div class="form-group bottom35">
                                 <p class="text-danger">You have not rated yet</p>
@@ -483,3 +483,72 @@
 
 </div>
 <!-- END HEADING SECTION -->
+<script type="text/x-handlebars-template" id="new-comments-template">
+\{{#each comments}}
+<div class="row">
+  <div class="col-12 col-lg-2">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center">
+        <img src="\{{avatar}}" alt="Generic placeholder image" width="70px"
+          style="border-radius: 50%;">
+      </div>
+      <div class="col-12 d-flex mt-2 justify-content-center">
+        <ul class="user-rating">
+          \{{#each rating}}
+          \{{#if this}}
+          <li><a href="#" style="color: #f5c136;"><i class="lni-star-filled"></i></a></li>
+          \{{else}}
+          <li><a href="#" style="color: #f5c136;"><i class="lni-star"></i></a></li>
+          \{{/if}}
+          \{{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-10">
+    <div class="media-body"
+      style="border-left: 1px solid #eceff6;    padding-left: 25px;    padding-right: 25px;">
+      <span class="text-center text-lg-left d-block"
+        style="font-family: Poppins, sans-serif; font-size: 12px;    color: lightgrey;    font-weight: lighter;">\{{date}}</span>
+      <h5 class="mb-2 text-center text-lg-left">\{{name}}</h5>
+      <p style="display: inline;">\{{content}}</p>
+    </div>
+  </div>
+
+</div>
+\{{/each}}
+{{!-- PAGINATE --}}
+<div class="center">
+  \{{#unless hasPrevPage}}
+  \{{#unless hasNextPage}}
+  <div class="pagination">
+    <a onclick="pagingComment('\{{page}}')" class="btn active">\{{page}}</a>
+  </div>
+  \{{else}}
+  <div class="pagination">
+    {{!-- <a href="#">&laquo;</a> --}}
+    <a onclick="pagingComment('\{{page}}')" class="btn active">\{{page}}</a>
+    <a onclick="pagingComment('\{{nextPage}}')" class="btn">\{{nextPage}}</a>
+    <a onclick="pagingComment('\{{nextPage}}')">&raquo;</a>
+  </div>
+  \{{/unless}}
+  \{{else}}
+  \{{#unless hasNextPage}}
+  <div class="pagination">
+    <a onclick="pagingComment('\{{prevPage}}')">&laquo;</a>
+    <a onclick="pagingComment('\{{prevPage}}')" class="btn">\{{prevPage}}</a>
+    <a onclick="pagingComment('\{{page}}')" class="btn active">\{{page}}</a>
+    {{!-- <a href="#">&raquo;</a> --}}
+  </div>
+  \{{else}}
+  <div class="pagination">
+    <a onclick="pagingComment('\{{prevPage}}')">&laquo;</a>
+    <a onclick="pagingComment('\{{prevPage}}')" class="btn">\{{prevPage}}</a>
+    <a onclick="pagingComment('\{{page}}')" class="btn active">\{{page}}</a>
+    <a onclick="pagingComment('\{{nextPage}}')" class="btn">\{{nextPage}}</a>
+    <a onclick="pagingComment('\{{nextPage}}')">&raquo;</a>
+  </div>
+  \{{/unless}}
+  \{{/unless}}
+</div>
+</script>

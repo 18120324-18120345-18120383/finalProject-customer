@@ -17,6 +17,42 @@ $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
 
+function pagingComment(page) {
+    const id = document.getElementById('idOfBook').value;
+    $.getJSON('/api/product-detail', { page, id }, (comments) => {
+        var template = Handlebars.compile($('#new-comments-template').html());
+        console.log(template);
+        var commentsHTML = template({
+            comments: comments.docs,
+            page: comments.page,
+            nextPage: comments.nextPage,
+            prevPage: comments.prevPage,
+            hasNextPage: comments.hasNextPage,
+            hasPrevPage: comments.hasPrevPage
+        })
+        console.log(commentsHTML);
+        $('#list-comment').html(commentsHTML);
+    })
+}
+function paging(page) {
+    
+    $.getJSON('/api/product-listing', { page}, (data) => {
+        var template = Handlebars.compile($('#list-book').html());
+        console.log(page);
+        console.log(data);
+        var booksHTML = template({
+            books: data.docs,
+            page: data.page,
+            nextPage: data.nextPage,
+            prevPage: data.prevPage,
+            hasNextPage: data.hasNextPage,
+            hasPrevPage: data.hasPrevPage
+        });
+        console.log(booksHTML)
+        $('#books').html(booksHTML);
+    })
+
+}
 function checkComment() {
     if (document.getElementById("rating").value == "") {
         document.getElementById("noneRate").hidden = false;
@@ -33,7 +69,7 @@ function clickOneStar() {
     document.getElementById("four-star").className = "lni-star";
     document.getElementById("five-star").className = "lni-star";
     document.getElementById("rating").value = 1;
-    
+
 }
 
 function clickTwoStar() {
@@ -100,12 +136,12 @@ function post(path, params, method = 'post') {
 
 function addNewItem(productID) {
     const quantity = document.getElementById('quantity').value
-    post('/book-shop/add-to-cart', {id: productID, qty: quantity});
+    post('/book-shop/add-to-cart', { id: productID, qty: quantity });
 }
 
 function addOneItem(productID) {
     console.log('hihi');
-    post('/book-shop/add-to-cart', {id: productID});
+    post('/book-shop/add-to-cart', { id: productID });
 }
 
 function filterPrice() {

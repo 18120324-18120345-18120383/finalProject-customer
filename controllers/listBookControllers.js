@@ -21,7 +21,12 @@ exports.productDetail = async (req, res, next) => {
     const id = req.params.id;
     const book = await bookModels.getOneBook(id);
     const comments = await commentModel.listComment(id, page, 5);
-    console.log(comments);
+    for (const element of comments.docs) {
+        console.log('element: ' + element.name)
+    }
+    // if (comments.docs.avatar){
+    //     comments.docs.avatar = comments.docs.avatar.toString('base64')
+    // }
     res.render('book-shop/product-detail', {
         book, orginalPrice: book.basePrice * 2,
         title: 'Product detail',
