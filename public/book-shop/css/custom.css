@@ -50,3 +50,23 @@
     -ms-transform: translate(-50%, -50%);
     text-align: center;
   }
+  .badge { 
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+    -webkit-border-radius: 9px !important;
+    -moz-border-radius: 9px !important;
+    border-radius: 9px !important;
+  }
+  
+  .label-warning[href],
+  .badge-warning[href] {
+    background-color: #c67605;
+  }
+  #lblCartCount {
+      font-size: 12px !important;
+      background: #ff0000 !important;
+      color: #fff !important;
+      padding: 0 5px !important;
+      vertical-align: top !important;
+      margin-left: -10px !important; 
+  }

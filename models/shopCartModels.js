@@ -5,6 +5,7 @@ const listBookModel = require('./listBookModels');
 const listUserModel = require('./listUserModels');
 
 const productSchema = new mongoose.Schema({
+  productID: String,
   name: String,
   price: Number,
   quantity: Number,
@@ -17,6 +18,7 @@ const cartSchema = new mongoose.Schema({
   status: Number,
   total: Number,
   orderDate: String,
+  quantity: Number,
   products: [productSchema]
 })
 const ShopCart = mongoose.model('carts', cartSchema);
@@ -29,21 +31,25 @@ module.exports.initCart = async () => {
   cart.save();
   return cart;
 }
+
 module.exports.addOneItem = async (cartID, productID, quantity) => {
   const book = await listBookModel.getOneBook(productID)
+  if (!book) {
+    return false;
+  } 
   let cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID));
   if (cart && cart.status == 0) {
     const products = cart.products;
     const index = products.findIndex(x => x.name == book.name)
-    console.log(index);
     let totalPriceItem = 0;
     if (index >= 0) {
-      products[index].quantity += quantity;
+      products[index].quantity += Number(quantity);
       products[index].total = products[index].quantity * products[index].price
       totalPriceItem = book.basePrice * Number(quantity)
     }
     else {
       cart.products.push({
+        productID: productID,
         name: book.name,
         price: book.basePrice,
         quantity: Number(quantity),
@@ -51,7 +57,13 @@ module.exports.addOneItem = async (cartID, productID, quantity) => {
         cover: book.cover[0],
         description: book.description
       });
-      totalPriceItem = book.basePrice * Number(quantity)
+      totalPriceItem = book.basePrice * Number(quantity);
+      if (!cart.quantity) {
+        cart.quantity = 1;
+      }
+      else {
+        cart.quantity += 1;
+      }
     }
     cart.total += totalPriceItem;
     cart.save();
@@ -74,6 +86,7 @@ module.exports.deleteItem = async (cartID, productID) => {
     }
   }
   cart.total -= totalPriceItem;
+  cart.quantity -= 1;
   cart.save();
 }
 module.exports.cart = async (cartID) => {
@@ -107,9 +120,9 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
     count = listQuantity.length;
   }
   else {
+    let totalPriceItem = 0
     if (cart) {
       const index = products.findIndex(x => x._id == listID)
-      let totalPriceItem = 0
       console.log(index);
       if (index >= 0) {
         products[index].quantity = listQuantity;
@@ -135,7 +148,7 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
     }
     cart.total = totalPriceItem;
   }
-  cart.save();
+  await cart.save();
   return true;
 }
 

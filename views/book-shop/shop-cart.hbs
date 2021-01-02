@@ -102,30 +102,23 @@
       <!-- START SHOP CART CHECKOUT FORM -->
       <div class="row pt-5">
         <div class="col-12 col-lg-6 wow slideInLeft" data-wow-duration="2s">
-          <div class="calculate-shipping">
+          <div class="calculate-shipping" id="calculate-shiping">
             <h4 class="heading">Calculate Shipping</h4>
             <form>
               <div class="form-group">
                 <label class="select form-control">
-                  
-                  <select name="country" id="province" onchange="selectProvince()">
-                    {{#if currentProvince}}
-                    <option>{{currentProvince}}</option>
-                    {{#each province}}
-                    <option>{{name}}</option>
-                    {{/each}}
-                    {{else}}
+                  <select name="provinces" id="provinces" onchange="selectProvince()">
+                    {{#if province}}
                     {{#each province}}
                     <option>{{name}}</option>
                     {{/each}}
                     {{/if}}
                   </select>
-                  
                 </label>
               </div>
               <div class="form-group">
                 <label class="select form-control">
-                  <select name="country" id="state">
+                  <select name="districts" id="districts" onchange="selectDistrict()">
                     {{#if districts}}
                     {{#each districts}}
                     <option>{{name}}</option>
@@ -133,6 +126,20 @@
                     {{/if}}
                   </select>
                 </label>
+              </div>
+              <div class="form-group">
+                <label class="select form-control">
+                  <select name="wards" id="wards">
+                    {{#if wards}}
+                    {{#each wards}}
+                    <option>{{name}}</option>
+                    {{/each}}
+                    {{/if}}
+                  </select>
+                </label>
+              </div>
+              <div class="form-group">
+                <input class="form-control" placeholder="Your address">
               </div>
               <div class="form-group">
                 <input class="form-control" placeholder="Postal/Zip Code">
@@ -190,3 +197,17 @@
 
 </div>
 <!-- END HEADING SECTION -->
+<script type="text/x-handlebars-template" id="districts-template">
+  \{{#if districts}}
+  \{{#each districts}}
+  <option>\{{name}}</option>
+  \{{/each}}
+  \{{/if}}
+</script>
+<script type="text/x-handlebars-template" id="wards-template">
+  \{{#if wards}}
+  \{{#each wards}}
+  <option>\{{name}}</option>
+  \{{/each}}
+  \{{/if}}
+</script>

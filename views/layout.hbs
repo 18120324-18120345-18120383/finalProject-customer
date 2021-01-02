@@ -167,11 +167,13 @@
                 <li class="d-inline-block">
                   <a id="add_search_box">
                     <i class="lni lni-search search-sidebar-hover"></i>
+                    
                   </a>
                 </li>
                 <li class="d-inline-block mini-menu-card">
-                  <a class="nav-link" id="add_cart_box" href="javascript:void(0)">
+                  <a class="nav-link d-inline-block" id="add_cart_box">
                     <i class="lni lni-shopping-basket"></i>
+                    <span class="badge badge-danger" id="count-item-cart">{{cart.quantity}}</span>
                   </a>
                 </li>
                 <a href="javascript:void(0)" class="d-inline-block sidemenu_btn d-block" id="sidemenu_toggle">
@@ -414,8 +416,7 @@
   <!--START Cart Box-->
   <div class="cart-box-overlay">
     <a><i class="fas fa-times cross-sign" id="close-window1"></i></a>
-
-    <div class="container">
+    <div class="container" id="item-side-menu">
       <div class="row">
         <div class="search-listing row">
           <div class="col-12 mb-4">
@@ -453,6 +454,40 @@
   </div>
   {{!-- Handlebars --}}
   <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+  <script type="text/x-handlebars-template" id="item-side-menu-template">
+    <div class="row">
+      <div class="search-listing row">
+        <div class="col-12 mb-4">
+          <h4 class="">Shop Cart</h4>
+        </div>
+        \{{#if listItem}}
+        <div class="col-12">
+          <div class="listing-search-scroll">
+            \{{#each listItem}}
+            <div class="media row">
+              <div class="img-holder ml-1 mr-2 col-4">
+                <a href="javascript:void(0)"><img src="/book-shop/\{{cover}}" align-self-center alt="cartitem"></a>
+              </div>
+              <div class="media-body mt-auto mb-auto col-8">
+                <h5 class="name"><a href="javascript:void(0)">\{{name}}</a></h5>
+                <p class="category">light wear Lastest</p>
+                <a class="btn black-sm-btn" href="/book-shop/shop-cart"><i class="fas fa-shopping-bag"></i></a>
+                <a class="btn black-sm-btn"><i class="fas fa-eye"></i></a>
+              </div>
+            </div>
+            \{{/each}}
+          </div>
+        </div>
+        \{{/if}}
+      </div>
+    </div>
+    <div class="bag-btn">
+      <h4 class="total"><span>Total: </span>\{{total}}$</h4>
+      <a href="/book-shop/shop-cart" class="btn green-color-yellow-gradient-btn">View Bag </a>
+      <a href="/book-shop/shop-cart" class="btn yellow-color-green-gradient-btn">Checkout </a>
+    </div>
+  </script>
   <!-- Option 1: Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
@@ -488,13 +523,15 @@
   <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
   <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
   <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
-  <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-  <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+  <script
+    src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+  <script
+    src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
   <script src="/fileUpload.js"></script>
 
   <!-- Custom Script -->
   <script src="/book-shop/js/script.js"></script>
-  <script>document.title='{{title}}' + ' | My Book Store'</script>
+  <script>document.title = '{{ title }}' + ' | My Book Store'</script>
   {{!-- <script src="/book-shop/js/customjavascript.js"></script> --}}
 </body>
 

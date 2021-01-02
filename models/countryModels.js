@@ -27,14 +27,35 @@ module.exports.district = async (province) => {
   const db = client.db(dbName);
   // Use the collection "people"
   const col = db.collection("vietnam");
-  console.log('current provice: ' + province);
+  // console.log('current provice: ' + province);
   const newProvince = await col.findOne({name: province});
   const district = newProvince.quan_huyen;
-  console.log(district);
+  // console.log(district);
   let districts = [];
   for(let key in district) {
     let dis = {name: district[key].name}
     districts.push(dis);
   }
   return districts;
+}
+
+module.exports.wards = async(province, district) => {
+  const db = client.db(dbName);
+  // Use the collection "people"
+  const col = db.collection("vietnam");
+  // console.log('current provice: ' + province);
+  const newProvince = await col.findOne({name: province});
+  const districts = newProvince.quan_huyen;
+  // console.log(district);
+  let listWard = []
+  for(let key in districts) {
+    if (district == districts[key].name) {
+      const wards = districts[key].xa_phuong;
+      for(let ward in wards) {
+        const w = {name: wards[ward].name};
+        listWard.push(w);
+      }
+    }
+  }
+  return listWard;
 }

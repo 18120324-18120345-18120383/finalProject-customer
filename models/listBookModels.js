@@ -4,7 +4,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
-    name : String,
+    name: String,
     cover: [String],
     category: String,
     categoryID: ObjectID,
@@ -21,29 +21,30 @@ module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
         let books = await Book.paginate(filter, {
             page: pageNumber,
             limit: itemPerPage,
-            sort: {basePrice: sort}
-        }); 
+            sort: { basePrice: sort }
+        });
         return books;
     }
     let books = await Book.paginate(filter, {
         page: pageNumber,
         limit: itemPerPage,
-    }); 
+    });
     return books;
 }
 
 module.exports.getOneBook = async (id) => {
     let book = await Book.findById(id);
+    let views = 0;
     if (book) {
-        // noting 
+        if (book.views) {
+            views = book.views
+        }
     }
     else {
         console.log("book not exists");
+        return false;
     }
-    let views = 0;
-    if (book.views) {
-        views = book.views
-    }
-    book = await Book.findByIdAndUpdate(id, {views: views + 1})
+
+    book = await Book.findByIdAndUpdate(id, { views: views + 1 })
     return book;
 }

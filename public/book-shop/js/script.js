@@ -17,6 +17,9 @@ $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
 
+function checkCheckOut() {
+    
+}
 function pagingComment(page) {
     const id = document.getElementById('idOfBook').value;
     $.getJSON('/api/product-detail', { page, id }, (comments) => {
@@ -34,9 +37,33 @@ function pagingComment(page) {
         $('#list-comment').html(commentsHTML);
     })
 }
+function addNewItem(productID) {
+    const quantity = document.getElementById('quantity').value
+    $.getJSON('/api/add-to-cart', { id: productID, qty: quantity }, (cart) => {
+        var template = Handlebars.compile($('#item-side-menu-template').html());
+        var itemSideMenu = template({
+            listItem: cart.products, total: cart.total
+        })
+        $('#item-side-menu').html(itemSideMenu);
+        $('#count-item-cart').text(cart.quantity.toString());
+    })
+
+}
+
+function addOneItem(productID) {
+    $.getJSON('/api/add-to-cart', { id: productID, qty: 1 }, (cart) => {
+        // console.log(cart)
+        var template = Handlebars.compile($('#item-side-menu-template').html());
+        var itemSideMenu = template({
+            listItem: cart.products, total: cart.total
+        });
+        $('#item-side-menu').html(itemSideMenu);
+        $('#count-item-cart').text(cart.quantity.toString())
+    })
+}
+
 function paging(page) {
-    
-    $.getJSON('/api/product-listing', { page}, (data) => {
+    $.getJSON('/api/product-listing', { page }, (data) => {
         var template = Handlebars.compile($('#list-book').html());
         console.log(page);
         console.log(data);
@@ -53,6 +80,29 @@ function paging(page) {
     })
 
 }
+function selectProvince() {
+    const province = document.getElementById('provinces').value
+    $.getJSON('/api/province', {province}, (districts) => {
+        var template = Handlebars.compile($('#districts-template').html());
+        var newHTML = template({
+            districts
+        })
+        $('#districts').html(newHTML);
+    })
+}
+
+function selectDistrict() {
+    const province = document.getElementById('provinces').value;
+    const district = document.getElementById('districts').value;
+    $.getJSON('/api/district', {province, district}, (wards) => {
+        var template = Handlebars.compile($('#wards-template').html());
+        var newHTML = template({
+            wards
+        })
+        $('#wards').html(newHTML);
+    })
+}
+
 function checkComment() {
     if (document.getElementById("rating").value == "") {
         document.getElementById("noneRate").hidden = false;
@@ -108,11 +158,6 @@ function clickFiveStar() {
     document.getElementById("rating").value = 5;
 }
 
-function selectProvince() {
-    const province = document.getElementById('province').value
-    insertParam('province', province);
-}
-
 function post(path, params, method = 'post') {
 
     // The rest of this code assumes you are not using a library.
@@ -132,16 +177,6 @@ function post(path, params, method = 'post') {
     }
     document.body.appendChild(form);
     form.submit();
-}
-
-function addNewItem(productID) {
-    const quantity = document.getElementById('quantity').value
-    post('/book-shop/add-to-cart', { id: productID, qty: quantity });
-}
-
-function addOneItem(productID) {
-    console.log('hihi');
-    post('/book-shop/add-to-cart', { id: productID });
 }
 
 function filterPrice() {
