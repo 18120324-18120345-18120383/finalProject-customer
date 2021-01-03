@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
 const cartSchema = new mongoose.Schema({
   status: Number,
   total: Number,
-  orderDate: String,
+  orderDate: Date,
   quantity: Number,
   fullAddress: String,
   products: [productSchema]
@@ -157,8 +157,7 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
 
 module.exports.payShopCart = async (cartID, userID, address) => {
   let dateObj = new Date();
-  let myDate = (dateObj.getDate()) + "/" + (dateObj.getMonth() + 1) + "/" + (dateObj.getUTCFullYear());
-  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: myDate, fullAddress: address });
+  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: dateObj, fullAddress: address });
   await listUserModel.addOrderID(userID, cartID);
 }
 
