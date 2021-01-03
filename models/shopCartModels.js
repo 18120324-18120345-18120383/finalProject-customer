@@ -196,3 +196,12 @@ module.exports.listProductOrdered = async (userID) => {
   }
   return false;
 }
+
+module.exports.recommendProducts = async(productID) => {
+  let listProduct = [];
+  const listProductOrderd = await ShopCart.find({status: 1});
+  for(let index = 0; index < listProductOrderd.length; index++) {
+    
+  }
+  console.log('list product ordered: ', listProductOrderd);
+}

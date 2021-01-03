@@ -15,7 +15,6 @@ const bookSchema = new Schema({
 
 bookSchema.plugin(mongoosePaginate);
 const Book = mongoose.model('list-books', bookSchema);
-
 module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
     if (sort) {
         let books = await Book.paginate(filter, {

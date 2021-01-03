@@ -104,6 +104,5 @@ module.exports.myOrder = async (req, res, next) => {
     } else {
       res.render('book-shop/my-order');
     }
-    
   }
 }
