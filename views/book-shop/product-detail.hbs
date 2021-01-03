@@ -34,13 +34,13 @@
                 <div class="Gallery swiper-container img-magnifier-container" id="gallery">
                   <div class="swiper-wrapper myimgs">
                     <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[0]}}" data-fancybox="1"
-                        title="Zoom In"><img class="myimage" src="/book-shop/{{book.cover.[0]}}" alt="gallery"></a>
+                        title="Zoom In"><img class="myimage" src="data:{{book.coverTypes.[0]}};charset=utf-8;base64,{{book.coversString.[0]}}" alt="gallery"></a>
                     </div>
                     <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[1]}}" data-fancybox="2"
-                        title="Zoom In"><img class="myimage" src="/book-shop/{{book.cover.[1]}}" alt="thumnails"></a>
+                        title="Zoom In"><img class="myimage" src="data:{{book.coverTypes.[1]}};charset=utf-8;base64,{{book.coversString.[1]}}" alt="thumnails"></a>
                     </div>
                     <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[2]}}" data-fancybox="3"
-                        title="Zoom In"><img class="myimage" src="/book-shop/{{book.cover.[2]}}" alt="thumnails"></a>
+                        title="Zoom In"><img class="myimage" src="data:{{book.coverTypes.[2]}};charset=utf-8;base64,{{book.coversString.[2]}}" alt="thumnails"></a>
                     </div>
                   </div>
                 </div>
@@ -155,8 +155,13 @@
                         <div class="col-12 col-lg-2">
                           <div class="row">
                             <div class="col-12 d-flex justify-content-center">
-                              <img src="{{avatar}}" alt="Generic placeholder image" width="70px"
+                              {{#if avatar}}
+                                <img src='data:{{avatarType}};charset=utf-8;base64,{{avatar}}' alt="Generic placeholder image" width="70px"
                                 style="border-radius: 50%;">
+                              {{else}}
+                                <img src='/book-shop/img/userAvatar/user.png' alt="Generic placeholder image" width="70px"
+                                style="border-radius: 50%;">
+                              {{/if}}
                             </div>
                             <div class="col-12 d-flex mt-2 justify-content-center">
                               <ul class="user-rating">

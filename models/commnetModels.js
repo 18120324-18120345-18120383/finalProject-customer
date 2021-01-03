@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const commnetShema = new Schema({
   productID: String,
   date: String,
-  avatar: String,
+  avatar: Buffer,
+  avatarType: String,
   name: String,
   content: String,
   rating: [Boolean]
@@ -19,17 +20,20 @@ module.exports.addCommnet = async(data, user) => {
   const content = data.content;
   const rating = data.rating;
   const productID = data.productID;
-  let avatar = '/book-shop/img/userAvatar/user.png';
+  let avatar = null;
+  let avatarType = null;
   let dateObj = new Date();
   let myDate = (dateObj.getDate()) + "/" + (dateObj.getMonth() + 1) + "/" + (dateObj.getUTCFullYear());
   if (user) {
-    avatar = user.avatar;
+    avatar = user.avatar.toString('base64');
+    avatarType = user.avatarType
     name = user.username;
   }
   const comment = new Comment();
   comment.productID = productID;
   comment.content = content;
   comment.avatar = avatar;
+  comment.avatarType = avatarType;
   comment.date = myDate;
   let rate = []
   for(let i = 0; i < 5; i++) {
