@@ -19,6 +19,7 @@ const cartSchema = new mongoose.Schema({
   total: Number,
   orderDate: String,
   quantity: Number,
+  fullAddress: String,
   products: [productSchema]
 })
 const ShopCart = mongoose.model('carts', cartSchema);
@@ -152,10 +153,10 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
   return true;
 }
 
-module.exports.payShopCart = async (cartID, userID) => {
+module.exports.payShopCart = async (cartID, userID, address) => {
   let dateObj = new Date();
   let myDate = (dateObj.getDate()) + "/" + (dateObj.getMonth() + 1) + "/" + (dateObj.getUTCFullYear());
-  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: myDate});
+  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: myDate, fullAddress: address});
   await listUserModel.addOrderID(userID, cartID);
 }
 

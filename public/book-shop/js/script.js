@@ -16,9 +16,25 @@
 $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
-
-function checkCheckOut() {
-    
+function checkout() {
+    const fullAddress = document.getElementById('value-full-address').innerHTML;
+    if (fullAddress == "") {
+        alert('Please chose your address to ship!')
+        return false;
+    }
+    post('pay-shop-cart', {fullAddress: fullAddress});
+}
+function checkAddress() {
+    const province = document.getElementById('provinces').value;
+    const district = document.getElementById('districts').value;
+    const ward = document.getElementById('wards').value;
+    const address = document.getElementById('address').value;
+    if (province == "" || district == "" || ward == "" || address == "") {
+        alert('Please enter you address!')
+        return false;
+    }
+    document.getElementById('full-address').hidden = false;
+    document.getElementById('value-full-address').innerHTML = address + ', ' + ward + ', ' + district + ', ' + province;
 }
 function pagingComment(page) {
     const id = document.getElementById('idOfBook').value;
