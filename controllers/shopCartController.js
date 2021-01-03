@@ -8,7 +8,8 @@ module.exports.checkOut = async (req, res, next) => {
   if (req.user) {
     const userCartID = req.user.cartID;
     const userID = req.user._id;
-    await shopCart.payShopCart(userCartID, userID);
+    const address = req.body.fullAddress
+    await shopCart.payShopCart(userCartID, userID, address);
     res.redirect('shop-cart');
   }
 }

@@ -24,7 +24,6 @@ exports.productDetail = async (req, res, next) => {
     for (const element of comments.docs) {
         console.log('element: ' + element.name)
     }
-    
     res.render('book-shop/product-detail', {
         book, orginalPrice: book.basePrice * 2,
         title: 'Product detail',
