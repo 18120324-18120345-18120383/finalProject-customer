@@ -21,8 +21,10 @@ exports.productDetail = async (req, res, next) => {
     const id = req.params.id;
     const book = await bookModels.getOneBook(id);
     const comments = await commentModel.listComment(id, page, 5);
+    const recommendBooks = await shopCartMoels.recommendBooks(id);
     res.render('book-shop/product-detail', {
-        book, orginalPrice: book.basePrice * 2,
+        book, 
+        orginalPrice: book.basePrice * 2,
         title: 'Product detail',
         comments : comments.docs,
         page: comments.page,
@@ -30,6 +32,7 @@ exports.productDetail = async (req, res, next) => {
         prevPage: comments.prevPage,
         hasNextPage: comments.hasNextPage,
         hasPrevPage: comments.hasPrevPage,
+        recommendBooks
     });
 }
 

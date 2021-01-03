@@ -56,19 +56,19 @@ module.exports.deleteItem = async (req, res, next) => {
   }
 }
 module.exports.listItem = async (req, res, next) => {
-  const province = await countries.province();
-  const currentProvince = req.query.province;
-  let districts;
-  if (currentProvince) {
-    console.log('current province ' + currentProvince);
-    districts = await countries.district(currentProvince);
-  }
+  // const province = await countries.province();
+  // const currentProvince = req.query.province;
+  // let districts;
+  // if (currentProvince) {
+  //   console.log('current province ' + currentProvince);
+  //   districts = await countries.district(currentProvince);
+  // }
   if (req.user) {
     const userCartID = req.user.cartID
     const cart = await shopCart.cart(userCartID);
     // console.log(province)
     if (cart) {
-      res.render('book-shop/shop-cart', {listItem: cart.products, total: cart.total, province, currentProvince, districts});
+      res.render('book-shop/shop-cart', {listItem: cart.products, total: cart.total});
     }
     else {
       res.render('book-shop/shop-cart')
@@ -76,7 +76,7 @@ module.exports.listItem = async (req, res, next) => {
   } else {
     const cart = await shopCart.cart(cartID);
     if (cart) {
-      res.render('book-shop/shop-cart', { listItem: cart.products, total: cart.total, province, currentProvince, districts});
+      res.render('book-shop/shop-cart', { listItem: cart.products, total: cart.total});
     }
     else {
       res.render('book-shop/shop-cart')

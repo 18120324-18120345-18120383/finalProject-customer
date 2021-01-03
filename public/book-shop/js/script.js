@@ -79,23 +79,23 @@ function addOneItem(productID) {
 }
 
 function paging(page) {
-    $.getJSON('/api/product-listing', { page }, (data) => {
-        var template = Handlebars.compile($('#list-book').html());
-        console.log(page);
-        console.log(data);
-        var booksHTML = template({
-            books: data.docs,
-            page: data.page,
-            nextPage: data.nextPage,
-            prevPage: data.prevPage,
-            hasNextPage: data.hasNextPage,
-            hasPrevPage: data.hasPrevPage
-        });
-        console.log(booksHTML)
-        $('#books').html(booksHTML);
-    })
-
-}
+    // $.getJSON('/api/product-listing', { page }, (data) => {
+    //     var template = Handlebars.compile($('#list-book').html());
+    //     console.log(page);
+    //     console.log(data);
+    //     var booksHTML = template({
+    //         books: data.docs,
+    //         page: data.page,
+    //         nextPage: data.nextPage,
+    //         prevPage: data.prevPage,
+    //         hasNextPage: data.hasNextPage,
+    //         hasPrevPage: data.hasPrevPage
+    //     });
+    //     console.log(booksHTML)
+    //     $('#books').html(booksHTML);
+    // })
+    insertParam('page', page);
+}   
 function selectProvince() {
     const province = document.getElementById('provinces').value
     $.getJSON('/api/province', {province}, (districts) => {

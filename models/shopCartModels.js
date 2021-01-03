@@ -10,7 +10,8 @@ const productSchema = new mongoose.Schema({
   price: Number,
   quantity: Number,
   total: Number,
-  cover: String,
+  coversString: [String],
+  coverTypes: [String],
   description: String
 })
 
@@ -37,7 +38,7 @@ module.exports.addOneItem = async (cartID, productID, quantity) => {
   const book = await listBookModel.getOneBook(productID)
   if (!book) {
     return false;
-  } 
+  }
   let cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID));
   if (cart && cart.status == 0) {
     const products = cart.products;
@@ -55,7 +56,8 @@ module.exports.addOneItem = async (cartID, productID, quantity) => {
         price: book.basePrice,
         quantity: Number(quantity),
         total: book.basePrice * Number(quantity),
-        cover: book.cover[0],
+        cover: book.coversString[0],
+        coverTypes: book.coverTypes[0],
         description: book.description
       });
       totalPriceItem = book.basePrice * Number(quantity);
@@ -156,7 +158,7 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
 module.exports.payShopCart = async (cartID, userID, address) => {
   let dateObj = new Date();
   let myDate = (dateObj.getDate()) + "/" + (dateObj.getMonth() + 1) + "/" + (dateObj.getUTCFullYear());
-  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: myDate, fullAddress: address});
+  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: myDate, fullAddress: address });
   await listUserModel.addOrderID(userID, cartID);
 }
 
@@ -165,31 +167,18 @@ module.exports.listProductOrdered = async (userID) => {
   const listOrderd = user.orderID;
   if (listOrderd) {
     let listProduct = [];
-    if (listOrderd.length == 1) {
-      console.log('cartID: ' + listOrderd);
-      const cart = await ShopCart.findById(listOrderd);
-      if (!cart) {
-        return false;
-      } 
-      const productInCart = cart.products;
-      for (let index = 0; index < productInCart.length; index++) {
-        let product = { checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total, status: cart.status };
-        listProduct.push(product);
-      }
-      console.log(listProduct);
-      return listProduct;
-    }
     for (let index = 0; index < listOrderd.length; index++) {
       const cart = await ShopCart.findById(listOrderd[index]);
-      if (!cart) {
-        return false;
-      } 
-      const productInCart = cart.products;
-      for (let index = 0; index < productInCart.length; index++) {
-        let product = { checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total, 
-          status: cart.status, cover: productInCart[index].cover, _id: productInCart[index]._id };
-        listProduct.push(product);
-      }     
+      if (cart) {
+        const productInCart = cart.products;
+        for (let index = 0; index < productInCart.length; index++) {
+          let product = {
+            checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total,
+            status: cart.status, cover: productInCart[index].cover, _id: productInCart[index]._id
+          };
+          listProduct.push(product);
+        }
+      }
     }
     console.log(listProduct);
     return listProduct;
@@ -197,11 +186,23 @@ module.exports.listProductOrdered = async (userID) => {
   return false;
 }
 
-module.exports.recommendProducts = async(productID) => {
-  let listProduct = [];
-  const listProductOrderd = await ShopCart.find({status: 1});
-  for(let index = 0; index < listProductOrderd.length; index++) {
-    
+module.exports.recommendBooks = async (productID) => {
+  let listCartID = [];
+  const listProductOrderd = await ShopCart.find({ status: 1 });
+  for (let value of listProductOrderd) {
+    for (let item of value.products) {
+      if(productID == item.productID) {
+        listCartID.push(value._id);
+        break;
+      }
+    }
   }
-  console.log('list product ordered: ', listProductOrderd);
+  let listBook = []
+  for(let id of listCartID) {
+    const cart = await ShopCart.findById(id);
+    for(let item of cart.products) {
+      listBook.push(item);
+    }
+  }
+  return listBook;
 }
