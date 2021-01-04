@@ -5,7 +5,7 @@ const shopCart = require('../models/shopCartModels');
 const countries = require('../models/countryModels');
 const bcrypt = require('bcrypt')
 
-const cartID = '5fe453a22329a4349fda3be2' // cartID cho nguoi dung khong dang nhap
+const cartID = '5ff277c26dd1e0231ca9bc69' // cartID cho nguoi dung khong dang nhap
 
 exports.authenPassword = async (req, res, next) => {
     const isValidPass = await bcrypt.compare(req.query.password, req.user.password)

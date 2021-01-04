@@ -47,7 +47,7 @@ app.use(async function (req, res, next) {
     if (!req.user.cartID) { // Nếu không có CartID
       const cartInit = await shopCart.initCart();
       await listUser.addCartID(req.user._id, cartInit._id)
-    } 
+    }
     let cart = await shopCart.cart(req.user.cartID);
     if (!cart) {
       const cartInit = await shopCart.initCart();
@@ -57,7 +57,8 @@ app.use(async function (req, res, next) {
     res.locals.cart = cart;
   }
   else {
-    const cart = await shopCart.cart('5fe453a22329a4349fda3be2');
+    const cart = await shopCart.cart('5ff277c26dd1e0231ca9bc69');
+    console.log(cart._id);
     res.locals.cart = cart;
   }
   next()

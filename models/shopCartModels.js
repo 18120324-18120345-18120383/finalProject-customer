@@ -93,7 +93,7 @@ module.exports.deleteItem = async (cartID, productID) => {
   cart.save();
 }
 module.exports.cart = async (cartID) => {
-  // console.log('Cart ID: ' + cartID);
+  console.log('Cart ID: ' + cartID);
   // await ShopCart.updateMany({}, {total: 0});
   const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID)).exec();
   if (cart) {

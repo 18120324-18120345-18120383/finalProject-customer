@@ -3,7 +3,7 @@ const listUser = require('../models/listUserModels');
 const shopCart = require('../models/shopCartModels')
 const countries = require('../models/countryModels');
 
-const cartID = '5fe453a22329a4349fda3be2' // cartID cho nguoi dung khong dang nhap
+const cartID = '5ff277c26dd1e0231ca9bc69';
 module.exports.checkOut = async (req, res, next) => {
   if (req.user) {
     const userCartID = req.user.cartID;
