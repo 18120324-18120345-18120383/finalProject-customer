@@ -33,28 +33,31 @@
               <div class="wrapper">
                 <div class="Gallery swiper-container img-magnifier-container" id="gallery">
                   <div class="swiper-wrapper myimgs">
-                    <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[0]}}" data-fancybox="1"
-                        title="Zoom In"><img class="myimage"
-                          src="data:{{book.coverTypes.[0]}};charset=utf-8;base64,{{book.coversString.[0]}}"
-                          alt="gallery"></a>
+                    <div class="swiper-slide"> <img class="myimage"
+                        src="data:{{book.coverTypes.[0]}};charset=utf-8;base64,{{book.coversString.[0]}}" alt="gallery">
                     </div>
-                    <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[1]}}" data-fancybox="2"
-                        title="Zoom In"><img class="myimage"
-                          src="data:{{book.coverTypes.[1]}};charset=utf-8;base64,{{book.coversString.[1]}}"
-                          alt="thumnails"></a>
+                    <div class="swiper-slide">
+                      <img class="myimage"
+                        src="data:{{book.coverTypes.[1]}};charset=utf-8;base64,{{book.coversString.[1]}}"
+                        alt="thumnails">
                     </div>
-                    <div class="swiper-slide"> <a href="/book-shop/{{book.cover.[2]}}" data-fancybox="3"
-                        title="Zoom In"><img class="myimage"
-                          src="data:{{book.coverTypes.[2]}};charset=utf-8;base64,{{book.coversString.[2]}}"
-                          alt="thumnails"></a>
+                    <div class="swiper-slide"><img class="myimage"
+                        src="data:{{book.coverTypes.[2]}};charset=utf-8;base64,{{book.coversString.[2]}}"
+                        alt="thumnails">
                     </div>
                   </div>
                 </div>
                 <div class="Thumbs swiper-container" id="thumbs">
                   <div class="swiper-wrapper">
-                    <div class="swiper-slide"> <img src="/book-shop/{{book.cover.[0]}}" alt="thumnails"></div>
-                    <div class="swiper-slide"> <img src="/book-shop/{{book.cover.[1]}}" alt="thumnails"></div>
-                    <div class="swiper-slide"> <img src="/book-shop/{{book.cover.[2]}}" alt="thumnails"></div>
+                    <div class="swiper-slide"> <img
+                        src="data:{{book.coverTypes.[0]}};charset=utf-8;base64,{{book.coversString.[0]}}"
+                        alt="thumnails"></div>
+                    <div class="swiper-slide"> <img
+                        src="data:{{book.coverTypes.[1]}};charset=utf-8;base64,{{book.coversString.[1]}}"
+                        alt="thumnails"></div>
+                    <div class="swiper-slide"> <img
+                        src="data:{{book.coverTypes.[2]}};charset=utf-8;base64,{{book.coversString.[2]}}"
+                        alt="thumnails"></div>
                   </div>
                 </div>
               </div>
@@ -62,7 +65,7 @@
 
             <div class="col-12 col-lg-6 text-center text-lg-left">
               <div class="product-single-price">
-                <h4><span class="real-price">{{book.basePrice}} $</span> <span><del>{{orginalPrice}} $</del></span></h4>
+                <h4><span class="real-price">{{book.basePrice}} VNĐ</span></h4>
                 <p class="pro-description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur,
                   adipisci velit.</p>
               </div>
@@ -317,7 +320,8 @@
                 <span class="product-type">NEW</span>
                 <div class="image-holder">
                   <a data-fancybox="lastest_product" data-title="Shirt Name">
-                    <img src="data:{{coverTypes}};charset=utf-8;base64,{{coversString}}" class="card-img-top" alt="Lastest Arrivals 1">
+                    <img src="data:{{coverTypes}};charset=utf-8;base64,{{coversString}}" class="card-img-top"
+                      alt="Lastest Arrivals 1">
                   </a>
                 </div>
                 <div class="card-body">
