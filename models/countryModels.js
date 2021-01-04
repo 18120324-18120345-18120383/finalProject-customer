@@ -1,21 +1,21 @@
-// const { MongoClient } = require("mongodb");
+const { MongoClient } = require("mongodb");
 
-// // Replace the following with your Atlas connection string                                                                                                                                        
-// const url = "mongodb+srv://team-web:i031Onxb3JsJ0Gj9@cluster0.nhzle.mongodb.net/book-store?retryWrites=true&w=majority";
-// const client = new MongoClient(url, { useUnifiedTopology: true });
+// Replace the following with your Atlas connection string                                                                                                                                        
+const url = "mongodb+srv://team-web:i031Onxb3JsJ0Gj9@cluster0.nhzle.mongodb.net/book-store?retryWrites=true&w=majority";
+const client = new MongoClient(url, { useUnifiedTopology: true });
 
-// // The database to use
-// const dbName = "book-store";
+// The database to use
+const dbName = "book-store";
 
-// async function run() {
-//   try {
-//     await client.connect();
-//     console.log("Connected correctly to server");
-//   } catch (err) {
-//     console.log(err.stack);
-//   }
-// }
-// run().catch(console.dir);
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+  } catch (err) {
+    console.log(err.stack);
+  }
+}
+run().catch(console.dir);
 module.exports.province = async () => {
   const db = client.db(dbName);
   // Use the collection "people"

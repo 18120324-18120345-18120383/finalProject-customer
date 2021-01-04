@@ -49,7 +49,7 @@
                           <div class="row no-gutters">
 
                             <div class="col-12 col-lg-2 product-detail-cart-image">
-                              <a class="shopping-product" href="javascript:void(0)"><img src="data:{{avatarType}};charset=utf-8;base64,{{avatar}}"
+                              <a class="shopping-product" href="javascript:void(0)"><img src="data:{{coverTypes}};charset=utf-8;base64,{{coversString}}"
                                   alt="image"></a>
                             </div>
 
@@ -64,7 +64,7 @@
                       </div>
                     </td>
                     <td>
-                      <h4 class="text-center amount">${{price}}</h4>
+                      <p class="text-center amount">{{price}} VNĐ</p>
                     </td>
                     <td class="text-center">
                       <div class="quote text-center mt-1">
@@ -74,7 +74,7 @@
                       </div>
                     </td>
                     <td>
-                      <h4 class="text-center amount">${{total}}</h4>
+                      <p class="text-center amount">{{total}} VNĐ</p>
                     </td>
                     <td class="text-center"><button type="submit" formaction="delete-item?id={{_id}}" class="btn-close"
                         href="javascript:void(0)"><i class="lni-trash"></i></button>
@@ -153,7 +153,7 @@
             <table>
               <tr>
                 <td>Subtotal</td>
-                <td>${{total}}</td>
+                <td>{{total}} VNĐ</td>
               </tr>
               <tr id="full-address" hidden>
                 <td>Full Address</td>
@@ -166,19 +166,19 @@
                     <li>
                       <div class="custom-control custom-radio">
                         <input type="radio" id="flat-rate" name="shipping" class="custom-control-input" checked="">
-                        <label class="custom-control-label" for="flat-rate">Flat Rate : $49.00</label>
+                        <label class="custom-control-label" for="flat-rate">Giao hàng trong ngày : 30000 VNĐ</label>
                       </div>
                     </li>
                     <li>
                       <div class="custom-control custom-radio">
                         <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
-                        <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                        <label class="custom-control-label" for="free-shipping">Miễn phí ship</label>
                       </div>
                     </li>
                     <li>
                       <div class="custom-control custom-radio">
                         <input type="radio" id="cod-shipping" name="shipping" class="custom-control-input">
-                        <label class="custom-control-label" for="cod-shipping">Cash on Delivery</label>
+                        <label class="custom-control-label" for="cod-shipping">Thanh toán bằng tiền mặt</label>
                       </div>
                     </li>
                   </ul>
@@ -186,7 +186,7 @@
               </tr>
               <tr>
                 <td>Total</td>
-                <td>$300.00</td>
+                <td>{{total}} VNĐ</td>
               </tr>
               <tr>
                 <td>

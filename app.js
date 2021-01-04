@@ -58,7 +58,7 @@ app.use(async function (req, res, next) {
   }
   else {
     const cart = await shopCart.cart('5ff277c26dd1e0231ca9bc69');
-    console.log(cart._id);
+    // console.log(cart._id);
     res.locals.cart = cart;
   }
   next()

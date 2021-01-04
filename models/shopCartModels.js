@@ -56,7 +56,7 @@ module.exports.addOneItem = async (cartID, productID, quantity) => {
         price: book.basePrice,
         quantity: Number(quantity),
         total: book.basePrice * Number(quantity),
-        cover: book.coversString[0],
+        coversString: book.coversString[0],
         coverTypes: book.coverTypes[0],
         description: book.description
       });
@@ -93,7 +93,7 @@ module.exports.deleteItem = async (cartID, productID) => {
   cart.save();
 }
 module.exports.cart = async (cartID) => {
-  console.log('Cart ID: ' + cartID);
+  // console.log('Cart ID: ' + cartID);
   // await ShopCart.updateMany({}, {total: 0});
   const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID)).exec();
   if (cart) {
@@ -112,13 +112,17 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
   console.log('Cart ID: ' + cartID);
   const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID)).exec();
   if (cart) {
-    console.log(cart.products);
+    // console.log(cart.products);
   }
   else {
     console.log('Not exists');
+    return false;
   }
   const products = cart.products;
   let count = 0;
+  if (!listQuantity || !listID) {
+    return false;
+  }
   if (listQuantity.length > 1 && listID.length > 1) { // Trường hợp vỏ hàng có 1 sản phẩm 
     count = listQuantity.length;
   }
@@ -133,6 +137,7 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
         totalPriceItem = products[index].total
       }
     }
+    cart.quantity = cart.products.length;
     cart.total = totalPriceItem
     cart.save();
     return true;
@@ -149,6 +154,7 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
         totalPriceItem += products[index].total;
       }
     }
+    cart.quantity = cart.products.length;
     cart.total = totalPriceItem;
   }
   await cart.save();
