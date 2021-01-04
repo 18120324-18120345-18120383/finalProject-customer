@@ -22,7 +22,7 @@ function checkout() {
         alert('Please chose your address to ship!')
         return false;
     }
-    post('pay-shop-cart', {fullAddress: fullAddress});
+    post('pay-shop-cart', { fullAddress: fullAddress });
 }
 function checkAddress() {
     const province = document.getElementById('provinces').value;
@@ -79,26 +79,46 @@ function addOneItem(productID) {
 }
 
 function paging(page) {
-    // $.getJSON('/api/product-listing', { page }, (data) => {
-    //     var template = Handlebars.compile($('#list-book').html());
-    //     console.log(page);
-    //     console.log(data);
-    //     var booksHTML = template({
-    //         books: data.docs,
-    //         page: data.page,
-    //         nextPage: data.nextPage,
-    //         prevPage: data.prevPage,
-    //         hasNextPage: data.hasNextPage,
-    //         hasPrevPage: data.hasPrevPage
-    //     });
-    //     console.log(booksHTML)
-    //     $('#books').html(booksHTML);
-    // })
-    insertParam('page', page);
-}   
+    $.getJSON('/api/product-listing', { page }, (data) => {
+        var template = Handlebars.compile($('#list-book').html());
+        console.log(page);
+        console.log(data);
+        var booksHTML = template({
+            books: data.docs,
+            page: data.page,
+            nextPage: data.nextPage,
+            prevPage: data.prevPage,
+            hasNextPage: data.hasNextPage,
+            hasPrevPage: data.hasPrevPage
+        });
+        console.log(booksHTML)
+        $('#books').html(booksHTML);
+        
+        $('.product-listing-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 1
+                }
+            }
+        });
+        $(".owl-prev").html('<div class="navigation-link-prev"><a class="prev-btn"><i class="lni-chevron-left"></i> </a></div>');
+        $(".owl-next").html('<div class="navigation-link-next"><a class="next-btn"><i class="lni-chevron-right"></i> </a></div>');
+    })
+    // insertParam('page', page);
+}
 function selectProvince() {
     const province = document.getElementById('provinces').value
-    $.getJSON('/api/province', {province}, (districts) => {
+    $.getJSON('/api/province', { province }, (districts) => {
         var template = Handlebars.compile($('#districts-template').html());
         var newHTML = template({
             districts
@@ -110,7 +130,7 @@ function selectProvince() {
 function selectDistrict() {
     const province = document.getElementById('provinces').value;
     const district = document.getElementById('districts').value;
-    $.getJSON('/api/district', {province, district}, (wards) => {
+    $.getJSON('/api/district', { province, district }, (wards) => {
         var template = Handlebars.compile($('#wards-template').html());
         var newHTML = template({
             wards

@@ -185,16 +185,24 @@ module.exports.listProductOrdered = async (userID) => {
       if (cart) {
         const productInCart = cart.products;
         for (let index = 0; index < productInCart.length; index++) {
+          let delivering = false;
+          let complete = false;
+          if (cart.status == 1) {
+            delivering = true;
+          }
+          else if (cart.status == 2) {
+            complete = true;
+          }
           let product = {
             checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total,
-            status: cart.status, coversString: productInCart[index].coversString, 
+            delivering: delivering, complete: complete, coversString: productInCart[index].coversString, 
             coverTypes: productInCart[index].coverTypes, _id: productInCart[index]._id
           };
           listProduct.push(product);
         }
       }
     }
-    console.log(listProduct);
+    // console.log(listProduct);
     return listProduct;
   }
   return false;
@@ -215,7 +223,13 @@ module.exports.recommendBooks = async (productID) => {
   for(let id of listCartID) {
     const cart = await ShopCart.findById(id);
     for(let item of cart.products) {
-      listBook.push(item);
+      if(listBook.includes(item)) {
+        // nothing
+      }
+      else {
+        listBook.push(item);
+      }
+      if(listBook.length > 10) break;
     }
   }
   return listBook;

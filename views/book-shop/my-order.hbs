@@ -65,8 +65,11 @@
                       <h4 class="text-center amount">${{total}}</h4>
                     </td>
                     <td>
-                      {{#if status}}
+                      {{#if delivering}}
                       <h4 class="text-center amount">Delivering</h4>
+                      {{/if}}
+                      {{#if complete}}
+                      <h4 class="text-center amount">Complete</h4>
                       {{/if}}
                     </td>
                   </tr>

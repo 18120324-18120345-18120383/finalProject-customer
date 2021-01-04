@@ -315,7 +315,7 @@
           <div class="lastest_featured_products owl-carousel owl-theme">
             {{#each recommendBooks}}
             <div class="lastest_arrival_items item">
-              <a href="product-detail/{{productID}}" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
+              <a onclick="addOneItem('{{productID}}')" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
               <div class="card">
                 <span class="product-type">NEW</span>
                 <div class="image-holder">
@@ -327,10 +327,12 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-12 text-center">
-                      <h5 class="card-title">{{name}}</h5>
+                      <h5 class="card-title">
+                        <a href="/book-shop/product-detail/{{productID}}"> {{name}} </a>
+                      </h5>
                     </div>
                     <div class="col-12 text-center">
-                      <p class="card-text"> ${{price}}</p>
+                      <p class="card-text">{{price}} VND</p>
                     </div>
                   </div>
                 </div>
