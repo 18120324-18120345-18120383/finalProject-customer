@@ -82,8 +82,6 @@ exports.getDistricts = async (req, res, next) => {
 exports.getWards = async (req, res, next) => {
     const province = req.query.province;
     const district = req.query.district;
-    console.log('tinh ', province);
-    console.log('huyen ', district)
     const wards = await countries.wards(province, district);
     res.json(wards);
 }

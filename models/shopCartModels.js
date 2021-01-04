@@ -163,8 +163,16 @@ module.exports.updateQuantity = async (cartID, listQuantity, listID) => {
 
 module.exports.payShopCart = async (cartID, userID, address) => {
   let dateObj = new Date();
-  await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: dateObj, fullAddress: address });
+  // await ShopCart.findByIdAndUpdate(cartID, { status: 1, orderDate: dateObj, fullAddress: address });
+  let cart = await ShopCart.findById(cartID);
+  cart.status = 1;
+  cart.orderDate = dateObj;
+  cart.fullAddress = address;
+  for(let product of cart.products) {
+    listBookModel.addBuyCount(product.productID);
+  }
   await listUserModel.addOrderID(userID, cartID);
+  await cart.save();
 }
 
 module.exports.listProductOrdered = async (userID) => {
@@ -179,7 +187,8 @@ module.exports.listProductOrdered = async (userID) => {
         for (let index = 0; index < productInCart.length; index++) {
           let product = {
             checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total,
-            status: cart.status, cover: productInCart[index].cover, _id: productInCart[index]._id
+            status: cart.status, coversString: productInCart[index].coversString, 
+            coverTypes: productInCart[index].coverTypes, _id: productInCart[index]._id
           };
           listProduct.push(product);
         }

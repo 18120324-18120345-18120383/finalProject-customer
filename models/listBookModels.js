@@ -32,7 +32,16 @@ module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
     });
     return books;
 }
-
+module.exports.addBuyCount = async(id) => {
+    let book = await Book.findOne({_id : id});
+    if (book.buyCount) {
+        book.buyCount = book.buyCount + Number(1);
+    }
+    else {
+        book.buyCount = 1;
+    }
+    await book.save();
+}
 module.exports.getOneBook = async (id) => {
     let book = await Book.findById(id);
     let views = 0;
