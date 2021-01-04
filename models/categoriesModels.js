@@ -6,64 +6,27 @@ const categorySchema = new mongoose.Schema ({
 })
 
 const Categories = mongoose.model('Categories', categorySchema);
-module.exports.categories = async () => {
-    const categories = await Categories.find()
+
+module.exports.findCategories = async (filter = null) => {
+    const categories = await Categories.find(filter)
     return categories;
 }
-module.exports.addManyCategory = async () => {
-    const categories = await Categories.insertMany([
-        {
-            name: "Art",
-            numberOfBook: 5
-        },
-        {
-            name: "Autobiography",
-            numberOfBook: 4
-        },
-        {
-            name: "Biography",
-            numberOfBook: 9
-        },
-        {
-            name: "Chick Lit",
-            numberOfBook: 11
-        },
-        {
-            name: "Comming-Of-Age",
-            numberOfBook: 3
-        },
-        {
-            name: "Anthology",
-            numberOfBook: 7
-        },
-        {
-            name: "Drama",
-            numberOfBook: 10
-        },
-        {
-            name: "Crime",
-            numberOfBook: 8
-        },
-        {
-            name: "Dictionary",
-            numberOfBook: 4
-        },
-        {
-            name: "Health",
-            numberOfBook: 7
-        },
-        {
-            name: "History",
-            numberOfBook: 10
-        },
-        {
-            name: "Hornor",
-            numberOfBook: 5
-        },
-        {
-            name: "Poetry",
-            numberOfBook: 15
-        },
-    ]);
-    return categories;
+
+module.exports.updateCategory = async (filter, update) => {
+    const category = await Categories.findOneAndUpdate(filter, update)
+    return category
+}
+
+module.exports.addOneBookToCategory = async (filter) => {
+    //find the category of the book
+    let category = await Categories.find(filter)
+    
+    //increase number of books
+    let newNumOfBooks = category.numberOfBook + 1;
+    
+    //update number of books
+    const update = { numberOfBook: newNumOfBooks }
+    category = await Categories.findOneAndUpdate(filter, update)
+
+    return category
 }

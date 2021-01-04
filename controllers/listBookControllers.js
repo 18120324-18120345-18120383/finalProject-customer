@@ -56,7 +56,7 @@ exports.productListing = async (req, res, next) => {
         filter.basePrice = { $gt: minPrice, $lt: maxPrice }
     }
     const paginate = await bookModels.listBook(filter, sort, page, 9);
-    const categories = await categoryModels.categories();
+    const categories = await categoryModels.findCategories();
     res.render('book-shop/product-listing', {
         books: paginate.docs,
         page: paginate.page,
