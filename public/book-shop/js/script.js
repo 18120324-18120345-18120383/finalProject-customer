@@ -78,44 +78,7 @@ function addOneItem(productID) {
     })
 }
 
-function paging(page) {
-    $.getJSON('/api/product-listing', { page }, (data) => {
-        var template = Handlebars.compile($('#list-book').html());
-        console.log(page);
-        console.log(data);
-        var booksHTML = template({
-            books: data.docs,
-            page: data.page,
-            nextPage: data.nextPage,
-            prevPage: data.prevPage,
-            hasNextPage: data.hasNextPage,
-            hasPrevPage: data.hasPrevPage
-        });
-        console.log(booksHTML)
-        $('#books').html(booksHTML);
-        
-        $('.product-listing-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: true,
-            dots: false,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 1
-                },
-                1000: {
-                    items: 1
-                }
-            }
-        });
-        $(".owl-prev").html('<div class="navigation-link-prev"><a class="prev-btn"><i class="lni-chevron-left"></i> </a></div>');
-        $(".owl-next").html('<div class="navigation-link-next"><a class="next-btn"><i class="lni-chevron-right"></i> </a></div>');
-    })
-    // insertParam('page', page);
-}
+
 function selectProvince() {
     const province = document.getElementById('provinces').value
     $.getJSON('/api/province', { province }, (districts) => {
@@ -138,7 +101,97 @@ function selectDistrict() {
         $('#wards').html(newHTML);
     })
 }
+let maxPrice = false;
+let minPrice = false;
+let nameBook = false;
+let currentPage = false;
+let styleSort = false;
+function filterListingPage() {
+    let obj = {};
+    if (maxPrice) {
+        obj.maxPrice = maxPrice;
+    }
+    if (minPrice) {
+        obj.minPrice = minPrice;
+    }
+    if (nameBook) {
+        obj.search = nameBook;
+    }
+    if (currentPage) {
+        obj.page = currentPage;
+    }
+    if (styleSort) {
+        obj.sort = styleSort;
+    }
+    console.log(obj);
+    $.getJSON('/api/product-listing', obj, (data) => {
+        var template = Handlebars.compile($('#list-book').html());
+        var booksHTML = template({
+            books: data.docs,
+            page: data.page,
+            nextPage: data.nextPage,
+            prevPage: data.prevPage,
+            hasNextPage: data.hasNextPage,
+            hasPrevPage: data.hasPrevPage
+        });
+        $('#books').html(booksHTML);
+        $('.product-listing-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 1
+                }
+            }
+        });
+        $(".owl-prev").html('<div class="navigation-link-prev"><a class="prev-btn"><i class="lni-chevron-left"></i> </a></div>');
+        $(".owl-next").html('<div class="navigation-link-next"><a class="next-btn"><i class="lni-chevron-right"></i> </a></div>');
+    });
+    return obj;
+}
+function searchBook(value) {
+    const name = document.getElementById('nameBook').value;
+    nameBook = name;
+    currentPage = false;
+    filterListingPage();
+    return false;
+}
+function filterPrice() {
+    const strMaxPrice = document.getElementById('max-p').innerHTML;
+    const strMinPRice = document.getElementById('min-p').innerHTML;
+    maxPrice = Number(strMaxPrice.split('VNĐ')[0]);
+    minPrice = Number(strMinPRice.split('VNĐ')[0]);
+    // alert('max price: ' + maxPrice + 'min price: ' + minPrice);
+    const isDefault = document.getElementById('default-sort').checked;
+    const isIncrease = document.getElementById('increase-sort').checked;
+    const isDecrease = document.getElementById('decrease-sort').checked;
+    currentPage = false;
+    if (isDefault) {
+    }
+    else if (isIncrease) {
+        styleSort = 1;
+    }
+    else if (isDecrease) {
+        styleSort = -1;
+    }
+    else {
 
+    }
+    filterListingPage();
+}
+
+function paging(page) {
+    currentPage = page;
+    filterListingPage();
+}
 function checkComment() {
     if (document.getElementById("rating").value == "") {
         document.getElementById("noneRate").hidden = false;
@@ -213,50 +266,6 @@ function post(path, params, method = 'post') {
     }
     document.body.appendChild(form);
     form.submit();
-}
-
-function filterPrice() {
-    const strMaxPrice = document.getElementById('max-p').innerHTML;
-    const strMinPRice = document.getElementById('min-p').innerHTML;
-    const maxPrice = Number(strMaxPrice.split('$')[1]);
-    const minPrice = Number(strMinPRice.split('$')[1].split(' ')[0]);
-    // alert('max price: ' + maxPrice + 'min price: ' + minPrice);
-    const isDefault = document.getElementById('default-sort').checked;
-    const isIncrease = document.getElementById('increase-sort').checked;
-    const isDecrease = document.getElementById('decrease-sort').checked;
-    let sort = 0
-    if (isDefault) {
-        sort = 0;
-    }
-    else if (isIncrease) {
-        sort = 1;
-    }
-    else if (isDecrease) {
-        sort = -1;
-    }
-    else {
-
-    }
-    let url = new URL(window.location.href);
-    if (url.searchParams.has('minPrice')) {
-        url.searchParams.set('minPrice', minPrice);
-    }
-    else {
-        url.searchParams.append('minPrice', minPrice);
-    }
-    if (url.searchParams.has('maxPrice')) {
-        url.searchParams.set('maxPrice', maxPrice);
-    }
-    else {
-        url.searchParams.append('maxPrice', maxPrice);
-    }
-    if (url.searchParams.has('sort')) {
-        url.searchParams.set('sort', sort);
-    }
-    else {
-        url.searchParams.append('sort', sort);
-    }
-    document.location.href = url;
 }
 
 function insertParam(key, value) {
@@ -567,13 +576,13 @@ jQuery(function ($) {
         var marginSlider = document.getElementById('slider-range');
 
         noUiSlider.create(marginSlider, {
-            start: [0, 800],
+            start: [1, 100000],
             margin: 30,
             step: 1,
             connect: true,
             range: {
-                'min': 0,
-                'max': 1000
+                'min': 1,
+                'max': 1000000
             },
 
         });
@@ -585,11 +594,11 @@ jQuery(function ($) {
             if (handle) {
                 var str = values[handle]
                 var res = str.split(".");
-                marginMax.innerHTML = "$" + res[0];
+                marginMax.innerHTML = res[0] + "VNĐ";
             } else {
                 var str = values[handle]
                 var res = str.split(".");
-                marginMin.innerHTML = "$" + res[0] + " - ";
+                marginMin.innerHTML = res[0] + "VNĐ" + " - ";
             }
         });
     }

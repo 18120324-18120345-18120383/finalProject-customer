@@ -13,10 +13,25 @@ exports.authenPassword = async (req, res, next) => {
 }
 
 exports.productsListing = async (req, res, next) => {
-    const page = req.query.page || 1;
-    // console.log('page: ', page);
+    const page = req.query.page || 1
+    const categoryID = req.query.categoryID;
+    // console.log("categoryID" + categoryID)
+    const nameBook = req.query.search;
+    const maxPrice = req.query.maxPrice;
+    const minPrice = req.query.minPrice;
+    const sort = req.query.sort;
+    // console.log(nameBook);
     let filter = {};
-    const paginate = await books.listBook(filter, 0, page, 9);
+    if (categoryID) {
+        filter.categoryID = mongoose.Types.ObjectId(categoryID);
+    }
+    if (nameBook) {
+        filter.name = { "$regex": nameBook, "$options": "i" };
+    }
+    if (minPrice >=0 && maxPrice >= 0) {
+        filter.basePrice = { $gt: minPrice, $lt: maxPrice }
+    }
+    const paginate = await books.listBook(filter, sort, page, 9);
     // console.log('data ', paginate);
     res.json(paginate)
 }
