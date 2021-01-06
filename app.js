@@ -20,7 +20,7 @@ const shopCart = require('./models/shopCartModels')
 const app = express();
 
 
-const url = "mongodb+srv://team-web:i031Onxb3JsJ0Gj9@cluster0.nhzle.mongodb.net/book-store?retryWrites=true&w=majority";
+const url = "mongodb+srv://team-web:i031Onxb3JsJ0Gj9@cluster0.nhzle.mongodb.net/book-shop?retryWrites=true&w=majority";
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
   .then((result) => console.log('connected to db'))
   .catch((err) => console.log(err))
@@ -43,24 +43,24 @@ app.use(passport.session());
 // user
 app.use(async function (req, res, next) {
   res.locals.user = req.user;
-  if (req.user) { // Nếu có đăng nhập 
-    if (!req.user.cartID) { // Nếu không có CartID
-      const cartInit = await shopCart.initCart();
-      await listUser.addCartID(req.user._id, cartInit._id)
-    }
-    let cart = await shopCart.cart(req.user.cartID);
-    if (!cart) {
-      const cartInit = await shopCart.initCart();
-      await listUser.addCartID(req.user._id, cartInit._id)
-      cart = await shopCart.cart(req.user.cartID);
-    }
-    res.locals.cart = cart;
-  }
-  else {
-    const cart = await shopCart.cart('5ff277c26dd1e0231ca9bc69');
-    // console.log(cart._id);
-    res.locals.cart = cart;
-  }
+  // if (req.user) { // Nếu có đăng nhập 
+  //   if (!req.user.cartID) { // Nếu không có CartID
+  //     const cartInit = await shopCart.initCart();
+  //     await listUser.addCartID(req.user._id, cartInit._id)
+  //   }
+  //   let cart = await shopCart.cart(req.user.cartID);
+  //   if (!cart) {
+  //     const cartInit = await shopCart.initCart();
+  //     await listUser.addCartID(req.user._id, cartInit._id)
+  //     cart = await shopCart.cart(req.user.cartID);
+  //   }
+  //   res.locals.cart = cart;
+  // }
+  // else {
+  //   const cart = await shopCart.cart('5ff277c26dd1e0231ca9bc69');
+  //   // console.log(cart._id);
+  //   res.locals.cart = cart;
+  // }
   next()
 });
 // Router
