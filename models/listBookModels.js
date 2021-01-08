@@ -18,7 +18,8 @@ const bookSchema = new Schema({
 bookSchema.plugin(mongoosePaginate);
 const Book = mongoose.model('list-books', bookSchema);
 module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
-    if (sort != 0) {
+    console.log('1');
+    if (sort) {
         let books = await Book.paginate(filter, {
             page: pageNumber,
             limit: itemPerPage,
@@ -30,6 +31,7 @@ module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
         page: pageNumber,
         limit: itemPerPage,
     });
+    console.log(books.name);
     return books;
 }
 module.exports.addBuyCount = async(id) => {

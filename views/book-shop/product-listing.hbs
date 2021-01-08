@@ -21,7 +21,7 @@
             <div id="sideNavPages2" class="collapse sideNavPages">
               <ul class="navbar-nav">
                 {{#each categories}}
-                <li><a onclick="insertParam('categoryID', '{{_id}}')">{{this.name}}</a><span>({{numberOfBook}})</span>
+                <li><a onclick="filterCategory('{{_id}}')">{{this.name}}</a><span>({{numberOfBook}})</span>
                 </li>
                 {{/each}}
               </ul>

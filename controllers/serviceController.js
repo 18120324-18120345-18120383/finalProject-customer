@@ -12,6 +12,12 @@ exports.authenPassword = async (req, res, next) => {
     res.send(isValidPass)
 }
 
+exports.changeQuantity = async (req,res, next) => {
+    const productID = req.query.productID;
+    const quantity = req.query.value;
+    const result = await shopCart.changeQuantity(cartID, productID, quantity);
+    res.json(result);
+}
 exports.productsListing = async (req, res, next) => {
     const page = req.query.page || 1
     const categoryID = req.query.categoryID;
@@ -20,15 +26,15 @@ exports.productsListing = async (req, res, next) => {
     const maxPrice = req.query.maxPrice;
     const minPrice = req.query.minPrice;
     const sort = req.query.sort;
-    // console.log(nameBook);
+    // console.log(categoryID);
     let filter = {};
     if (categoryID) {
-        filter.categoryID = mongoose.Types.ObjectId(categoryID);
+        filter.categoryID = categoryID;
     }
     if (nameBook) {
         filter.name = { "$regex": nameBook, "$options": "i" };
     }
-    if (minPrice >=0 && maxPrice >= 0) {
+    if (minPrice >= 0 && maxPrice >= 0) {
         filter.basePrice = { $gt: minPrice, $lt: maxPrice }
     }
     const paginate = await books.listBook(filter, sort, page, 9);
@@ -46,7 +52,7 @@ exports.productDetail = async (req, res, next) => {
 exports.addOneItem = async (req, res, next) => {
     const bookID = req.query.id;
     const quantity = req.query.qty || 1;
-    console.log('quantity: ' + quantity);
+    // console.log('quantity: ' + quantity);
     if (req.user) {
         let myCart;
         if (!req.user.cartID) {
@@ -77,17 +83,27 @@ exports.addOneItem = async (req, res, next) => {
         let myCart;
         if (cart) {
             console.log("Adding");
-            const x = await shopCart.addOneItem(cartID, bookID, quantity);
+            myCart = await shopCart.addOneItem(cartID, bookID, quantity);
             console.log("Added");
-            myCart = await shopCart.cart(cartID);
-            
         }
-        myCart = await shopCart.cart(cartID);
         req.cart = myCart;
         res.json(myCart);
     }
 }
 
+exports.deleteCartItem = async (req, res, next) => {
+    let myCart
+    if (req.user) {
+        const userCartID = req.user.cartID
+        await shopCart.deleteItem(userCartID, req.query.id);
+        myCart = await shopCart.cart(cartID);
+        res.json(myCart);
+    } else {
+        console.log('hihihihi');
+        myCart = await shopCart.deleteItem(cartID, req.query.id);
+        res.json(myCart);
+    }
+}
 exports.getDistricts = async (req, res, next) => {
     const province = req.query.province;
     const districts = await countries.district(province);

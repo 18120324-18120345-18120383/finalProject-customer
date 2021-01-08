@@ -10,4 +10,6 @@ router.get('/product-detail', controllerService.productDetail);
 router.get('/add-to-cart', controllerService.addOneItem);
 router.get('/province', controllerService.getDistricts);
 router.get('/district', controllerService.getWards);
+router.get('/delete-cart-item', controllerService.deleteCartItem);
+router.get('/change-quantity', controllerService.changeQuantity);
 module.exports = router;

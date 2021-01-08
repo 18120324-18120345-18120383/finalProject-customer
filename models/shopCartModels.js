@@ -33,7 +33,29 @@ module.exports.initCart = async () => {
   cart.save();
   return cart;
 }
-
+module.exports.changeQuantity = async (cartID, productID, newQuantity) => {
+  const cart = await ShopCart.findById(cartID);
+  const products = cart.products;
+  // console.log('product: ', products);
+  console.log('id: ', productID)
+  const index = products.findIndex(x => x._id.toString() == productID);
+  console.log('index: ', index);
+  let sumPrice = 0;
+  let subTotal = 0;
+  console.time("hihi");
+  if (index >= 0) {
+    const oldQuantity = products[index].quantity;
+    products[index].quantity = newQuantity;
+    products[index].total = products[index].price * newQuantity;
+    cart.total +=(Number(newQuantity) - oldQuantity) * products[index].price;
+    console.log(oldQuantity, 'jjooo', newQuantity);
+    sumPrice = products[index].total;
+    subTotal = cart.total;
+  }
+  cart.save();
+  console.timeEnd("hihi");
+  return {sumPrice, subTotal};
+}
 module.exports.addOneItem = async (cartID, productID, quantity) => {
   const book = await listBookModel.getOneBook(productID)
   if (!book) {
@@ -90,11 +112,11 @@ module.exports.deleteItem = async (cartID, productID) => {
   }
   cart.total -= totalPriceItem;
   cart.quantity -= 1;
+  console.log('deleted');
   cart.save();
+  return cart;
 }
 module.exports.cart = async (cartID) => {
-  // console.log('Cart ID: ' + cartID);
-  // await ShopCart.updateMany({}, {total: 0});
   const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID)).exec();
   if (cart) {
     // console.log('product: ' + cart.products);

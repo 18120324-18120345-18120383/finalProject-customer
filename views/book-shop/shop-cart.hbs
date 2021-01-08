@@ -27,8 +27,7 @@
       <div class="row pt-5">
         <div class="col-12 col-md-12  cart_table wow fadeInUp animated" data-wow-delay="300ms"
           style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
-          <form method="POST">
-            <div class="table-responsive">
+            <div class="table-responsive" id="table-shopcart">
               <table class="table table-bordered border-radius">
                 <thead>
                   <tr>
@@ -68,15 +67,14 @@
                     </td>
                     <td class="text-center">
                       <div class="quote text-center mt-1">
-                        <input name="newID" value={{_id}} hidden>
-                        <input type="number" placeholder="1" class="quote" min="1" max="100" name="quantity"
+                        <input type="number" placeholder="1" class="quote" min="1" max="100" onchange="changeQuantity(this.value, '{{_id}}', '{{@index}}')" id="newQuantity"
                           value={{quantity}}>
                       </div>
                     </td>
                     <td>
-                      <p class="text-center amount">{{total}} VNĐ</p>
+                      <p class="text-center amount" id="total{{@index}}" >{{total}} VNĐ</p>
                     </td>
-                    <td class="text-center"><button type="submit" formaction="delete-item?id={{_id}}" class="btn-close"
+                    <td class="text-center"><button type="submit" onclick="deleteCarItem('{{_id}}')" class="btn-close"
                         href="javascript:void(0)"><i class="lni-trash"></i></button>
                     </td>
                   </tr>
@@ -84,16 +82,14 @@
                 </tbody>
               </table>
             </div>
-
             <div class="apply_coupon">
               <div class="row">
                 <div class="col-12 text-left">
-                  <button type="submit" formaction="update-shop-cart"
-                    class="btn yellow-color-green-gradient-btn">UPDATE</button>
+                  <a href="/book-shop/product-listing"
+                    class="btn yellow-color-green-gradient-btn">Add new book</a>
                 </div>
               </div>
             </div>
-          </form>
         </div>
       </div>
       <!-- END SHOP CART TABLE -->
@@ -153,7 +149,7 @@
             <table>
               <tr>
                 <td>Subtotal</td>
-                <td>{{total}} VNĐ</td>
+                <td id="subTotal">{{total}} VNĐ</td>
               </tr>
               <tr id="full-address" hidden>
                 <td>Full Address</td>
@@ -186,7 +182,7 @@
               </tr>
               <tr>
                 <td>Total</td>
-                <td>{{total}} VNĐ</td>
+                <td id="sutTotal1">{{total}} VNĐ</td>
               </tr>
               <tr>
                 <td>
@@ -218,4 +214,60 @@
   <option>\{{name}}</option>
   \{{/each}}
   \{{/if}}
+</script>
+<script type="text/x-handlebars-template" id="table-shopcart-template">
+<table class="table table-bordered border-radius">
+  <thead>
+    <tr>
+      <th class="darkcolor">Product</th>
+      <th class="darkcolor">Price</th>
+      <th class="darkcolor">Quantity</th>
+      <th class="darkcolor">Total</th>
+      <th></th>
+    </tr>
+  </thead>
+  \{{#each listItem}}
+  <tbody>
+    <tr>
+      <td>
+        <div class="d-table product-detail-cart">
+
+          <div class="media">
+            <div class="row no-gutters">
+
+              <div class="col-12 col-lg-2 product-detail-cart-image">
+                <a class="shopping-product" href="javascript:void(0)"><img src="data:\{{coverTypes}};charset=utf-8;base64,\{{coversString}}"
+                    alt="image"></a>
+              </div>
+
+              <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
+                <div class="media-body ml-lg-3">
+                  <h4 class="product-name"><a href="product-detail">\{{name}}</a></h4>
+                  <p class="product-des">We offer the most complete in the country</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p class="text-center amount">\{{price}} VNĐ</p>
+      </td>
+      <td class="text-center">
+        <div class="quote text-center mt-1">
+          <input name="newID" value=\{{_id}} hidden>
+          <input type="number" placeholder="1" class="quote" min="1" max="100" onchange="changeQuantity(this.value)" id="newQuantity"
+            value=\{{quantity}}>
+        </div>
+      </td>
+      <td>
+        <p class="text-center amount">\{{total}} VNĐ</p>
+      </td>
+      <td class="text-center"><button type="submit" formaction="delete-item?id=\{{_id}}" class="btn-close"
+          href="javascript:void(0)"><i class="lni-trash"></i></button>
+      </td>
+    </tr>
+    \{{/each}}
+  </tbody>
+</table>
 </script>

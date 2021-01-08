@@ -16,6 +16,28 @@
 $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
+function changeQuantity(value, productID, index) {
+    $.getJSON('/api/change-quantity', {productID, value}, (data) => {
+        console.log('data: ',data);
+        $('#total' + index).html(data.sumPrice + ' VNĐ');
+        $('#subTotal').html(data.subTotal + ' VNĐ');
+        $('#sutTotal1').html(data.subTotal + ' VNĐ');
+    })
+}
+function deleteCarItem(id) {
+    alert(id);
+    $.getJSON('/api/delete-cart-item', {id}, (cart) => {
+        var template = Handlebars.compile($('#table-shopcart-template').html());
+        console.log(cart);
+        var newHTML = template({
+            listItem: cart.products
+        })
+        $('#table-shopcart').html(newHTML);
+        $('#subTotal').html(cart.total + ' VNĐ');
+        $('#sutTotal1').html(cart.total + ' VNĐ');
+    })
+    return false;
+}
 function checkout() {
     const fullAddress = document.getElementById('value-full-address').innerHTML;
     if (fullAddress == "") {
@@ -106,6 +128,7 @@ let minPrice = false;
 let nameBook = false;
 let currentPage = false;
 let styleSort = false;
+let categoryID = false;
 function filterListingPage() {
     let obj = {};
     if (maxPrice) {
@@ -122,6 +145,9 @@ function filterListingPage() {
     }
     if (styleSort) {
         obj.sort = styleSort;
+    }
+    if (categoryID) {
+        obj.categoryID = categoryID;
     }
     console.log(obj);
     $.getJSON('/api/product-listing', obj, (data) => {
@@ -190,6 +216,10 @@ function filterPrice() {
 
 function paging(page) {
     currentPage = page;
+    filterListingPage();
+}
+function filterCategory(id) {
+    categoryID = id;
     filterListingPage();
 }
 function checkComment() {
