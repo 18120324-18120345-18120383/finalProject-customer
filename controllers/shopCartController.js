@@ -62,18 +62,31 @@ module.exports.listItem = async (req, res, next) => {
     const cart = await shopCart.cart(userCartID);
     // console.log(province)
     if (cart) {
-      res.render('book-shop/shop-cart', {listItem: cart.products, total: cart.total, province});
+      res.render('book-shop/shop-cart', {
+        listItem: cart.products,
+        total: cart.total, 
+        province,
+        title: "Shop cart"
+      });
     }
     else {
-      res.render('book-shop/shop-cart')
+      res.render('book-shop/shop-cart', {
+        title: "Shop cart"
+      })
     }
   } else {
     const cart = await shopCart.cart(cartID);
     if (cart) {
-      res.render('book-shop/shop-cart', { listItem: cart.products, total: cart.total});
+      res.render('book-shop/shop-cart', {
+        listItem: cart.products, 
+        total: cart.total,
+        title: "Shop cart"
+      });
     }
     else {
-      res.render('book-shop/shop-cart')
+      res.render('book-shop/shop-cart', {
+        title: "Shop cart"
+      })
     }
   }
 }
