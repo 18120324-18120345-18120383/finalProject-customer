@@ -72,7 +72,7 @@ const saveAvatar = (avatarEncoded) => {
 
     const avatarJSON = JSON.parse(avatarEncoded)
     if (avatarJSON != null) {
-        let avatar = new Buffer.from(avatarJSON.data, 'base64');
+        let avatar = avatarJSON.data;
         let avatarType = avatarJSON.type;
         return [
             avatar,

@@ -53,10 +53,8 @@ exports.addComment = async (req, res, next) => {
     const page = 1;
     const data = { name: req.query.name, content: req.query.content, rating: req.query.rating, productID: req.query.productID };
     const id = req.query.productID;
-    console.log(data);
     await comments.addCommnet(data, req.user);
     const listComment = await comments.listComment(id, page, 5);
-    console.log('comment: ', listComment);
     res.json(listComment);
 }
 exports.addOneItem = async (req, res, next) => {

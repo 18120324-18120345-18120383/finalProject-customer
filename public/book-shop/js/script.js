@@ -64,13 +64,7 @@ function addComment() {
     const content = $('#content').val();
     const name = $('#username').val();
     $.getJSON('/api/add-comment', {productID, rating, content, name}, (comments) => {
-        console.log(comments.docs);
-        comments.docs.forEach(comment => {
-            if (comment.avatar != null) {
-                comment.avatar = comment.avatar.toString('base64');
-                console.log(comment.avatar.toString('base64'));
-            }
-        });
+        
         var template = Handlebars.compile($('#new-comments-template').html());
         var commentsHTML = template({
             comments: comments.docs,

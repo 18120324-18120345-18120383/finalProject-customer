@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const commnetShema = new Schema({
   productID: String,
   date: String,
-  avatar: Buffer,
+  avatar: String,
   avatarType: String,
   name: String,
   content: String,
@@ -25,8 +25,7 @@ module.exports.addCommnet = async(data, user) => {
   let dateObj = new Date();
   let myDate = (dateObj.getDate()) + "/" + (dateObj.getMonth() + 1) + "/" + (dateObj.getUTCFullYear());
   if (user) {
-    console.log("ahihi");
-    avatar = user.avatar.toString('base64');
+    avatar = user.avatar;
     avatarType = user.avatarType
     name = user.username;
   }
