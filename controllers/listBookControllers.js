@@ -22,6 +22,7 @@ exports.productDetail = async (req, res, next) => {
     const book = await bookModels.getOneBook(id);
     const comments = await commentModel.listComment(id, page, 5);
     const recommendBooks = await shopCartMoels.recommendBooks(id);
+    console.log('comment ', comments);
     res.render('book-shop/product-detail', {
         book, 
         orginalPrice: book.basePrice * 2,

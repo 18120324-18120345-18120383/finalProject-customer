@@ -64,8 +64,14 @@ function addComment() {
     const content = $('#content').val();
     const name = $('#username').val();
     $.getJSON('/api/add-comment', {productID, rating, content, name}, (comments) => {
+        console.log(comments.docs);
+        comments.docs.forEach(comment => {
+            if (comment.avatar != null) {
+                comment.avatar = comment.avatar.toString('base64');
+                console.log(comment.avatar.toString('base64'));
+            }
+        });
         var template = Handlebars.compile($('#new-comments-template').html());
-        console.log(template);
         var commentsHTML = template({
             comments: comments.docs,
             page: comments.page,
@@ -74,7 +80,6 @@ function addComment() {
             hasNextPage: comments.hasNextPage,
             hasPrevPage: comments.hasPrevPage
         })
-        console.log(commentsHTML);
         $('#list-comment').html(commentsHTML);
     })
     return false;

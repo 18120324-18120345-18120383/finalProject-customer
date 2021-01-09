@@ -25,6 +25,7 @@ module.exports.addCommnet = async(data, user) => {
   let dateObj = new Date();
   let myDate = (dateObj.getDate()) + "/" + (dateObj.getMonth() + 1) + "/" + (dateObj.getUTCFullYear());
   if (user) {
+    console.log("ahihi");
     avatar = user.avatar.toString('base64');
     avatarType = user.avatarType
     name = user.username;

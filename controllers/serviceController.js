@@ -56,6 +56,7 @@ exports.addComment = async (req, res, next) => {
     console.log(data);
     await comments.addCommnet(data, req.user);
     const listComment = await comments.listComment(id, page, 5);
+    console.log('comment: ', listComment);
     res.json(listComment);
 }
 exports.addOneItem = async (req, res, next) => {
