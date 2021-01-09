@@ -18,9 +18,10 @@ const bookSchema = new Schema({
 bookSchema.plugin(mongoosePaginate);
 const Book = mongoose.model('list-books', bookSchema);
 module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
-    console.log('1');
+    // console.time("runtime product listing");
     if (sort) {
         let books = await Book.paginate(filter, {
+            select: { name: 1, basePrice: 1, coversString: 1, coverTypes: 1 },
             page: pageNumber,
             limit: itemPerPage,
             sort: { basePrice: sort }
@@ -28,14 +29,15 @@ module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
         return books;
     }
     let books = await Book.paginate(filter, {
+        select: { name: 1, basePrice: 1, coversString: 1, coverTypes: 1 },
         page: pageNumber,
         limit: itemPerPage,
     });
-    console.log(books.name);
+    // console.timeEnd("runtime product listing");
     return books;
 }
-module.exports.addBuyCount = async(id) => {
-    let book = await Book.findOne({_id : id});
+module.exports.addBuyCount = async (id) => {    
+    let book = await Book.findOne({ _id: id });
     if (book.buyCount) {
         book.buyCount = book.buyCount + Number(1);
     }
@@ -45,7 +47,9 @@ module.exports.addBuyCount = async(id) => {
     await book.save();
 }
 module.exports.getOneBook = async (id) => {
+    console.time("detail");
     let book = await Book.findById(id);
+    console.timeEnd('detail');
     let views = 0;
     if (book) {
         if (book.views) {
@@ -56,7 +60,7 @@ module.exports.getOneBook = async (id) => {
         console.log("book not exists");
         return false;
     }
-
-    book = await Book.findByIdAndUpdate(id, { views: views + 1 })
+    book.views += 1;
+    book.save();
     return book;
 }

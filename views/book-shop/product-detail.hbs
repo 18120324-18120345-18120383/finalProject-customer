@@ -239,12 +239,12 @@
                         <hr class="w-100 ml-5">
                       </div>
                       <div class="col-12">
-                        <form class="getin_form border-form" method="POST" action="addComment">
+                        <form class="getin_form border-form" onsubmit="return addComment()">
                           <div class="row">
                             {{#unless user}}
                             <div class="col-md-12 col-sm-12">
                               <div class="form-group bottom35">
-                                <input type="text" class="form-control" placeholder="Name*" required="" name="name"
+                                <input type="text" class="form-control" placeholder="Name*" required="" name="name" id="username"
                                   id="registerName">
                               </div>
                             </div>
@@ -271,7 +271,7 @@
                             </div>
                             <div class="col-12">
                               <div class="form-group">
-                                <textarea class="form-control textareaclass" rows="5" id="comment" name="content"
+                                <textarea class="form-control textareaclass" rows="5" id="content" name="content"
                                   placeholder="Your Review"></textarea>
                               </div>
                             </div>
@@ -282,7 +282,6 @@
                                   onclick="return checkComment()">Add Review</button>
                               </div>
                             </div>
-
                           </div>
                         </form>
                       </div>
@@ -356,8 +355,13 @@
   <div class="col-12 col-lg-2">
     <div class="row">
       <div class="col-12 d-flex justify-content-center">
-        <img src="\{{avatar}}" alt="Generic placeholder image" width="70px"
+        \{{#if avatar}}
+        <img src='data:\{{avatarType}};charset=utf-8;base64,\{{avatar}}'
+          alt="Generic placeholder image" width="70px" style="border-radius: 50%;">
+        \{{else}}
+        <img src='/book-shop/img/userAvatar/user.png' alt="Generic placeholder image" width="70px"
           style="border-radius: 50%;">
+        \{{/if}}
       </div>
       <div class="col-12 d-flex mt-2 justify-content-center">
         <ul class="user-rating">
@@ -381,7 +385,6 @@
       <p style="display: inline;">\{{content}}</p>
     </div>
   </div>
-
 </div>
 \{{/each}}
 {{!-- PAGINATE --}}

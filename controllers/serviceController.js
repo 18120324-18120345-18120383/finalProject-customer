@@ -12,7 +12,7 @@ exports.authenPassword = async (req, res, next) => {
     res.send(isValidPass)
 }
 
-exports.changeQuantity = async (req,res, next) => {
+exports.changeQuantity = async (req, res, next) => {
     const productID = req.query.productID;
     const quantity = req.query.value;
     const result = await shopCart.changeQuantity(cartID, productID, quantity);
@@ -49,6 +49,15 @@ exports.productDetail = async (req, res, next) => {
     res.json(listComment);
 }
 
+exports.addComment = async (req, res, next) => {
+    const page = 1;
+    const data = { name: req.query.name, content: req.query.content, rating: req.query.rating, productID: req.query.productID };
+    const id = req.query.productID;
+    console.log(data);
+    await comments.addCommnet(data, req.user);
+    const listComment = await comments.listComment(id, page, 5);
+    res.json(listComment);
+}
 exports.addOneItem = async (req, res, next) => {
     const bookID = req.query.id;
     const quantity = req.query.qty || 1;
@@ -97,10 +106,12 @@ exports.deleteCartItem = async (req, res, next) => {
         const userCartID = req.user.cartID
         await shopCart.deleteItem(userCartID, req.query.id);
         myCart = await shopCart.cart(cartID);
+        req.cart = myCart;
         res.json(myCart);
     } else {
         console.log('hihihihi');
         myCart = await shopCart.deleteItem(cartID, req.query.id);
+        req.cart = myCart;
         res.json(myCart);
     }
 }

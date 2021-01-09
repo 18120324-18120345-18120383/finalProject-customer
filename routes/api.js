@@ -12,4 +12,5 @@ router.get('/province', controllerService.getDistricts);
 router.get('/district', controllerService.getWards);
 router.get('/delete-cart-item', controllerService.deleteCartItem);
 router.get('/change-quantity', controllerService.changeQuantity);
+router.get('/add-comment', controllerService.addComment);
 module.exports = router;

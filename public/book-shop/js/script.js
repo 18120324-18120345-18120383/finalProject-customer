@@ -58,6 +58,27 @@ function checkAddress() {
     document.getElementById('full-address').hidden = false;
     document.getElementById('value-full-address').innerHTML = address + ', ' + ward + ', ' + district + ', ' + province;
 }
+function addComment() {
+    const productID = $('#idOfBook').val();
+    const rating = $('#rating').val();
+    const content = $('#content').val();
+    const name = $('#username').val();
+    $.getJSON('/api/add-comment', {productID, rating, content, name}, (comments) => {
+        var template = Handlebars.compile($('#new-comments-template').html());
+        console.log(template);
+        var commentsHTML = template({
+            comments: comments.docs,
+            page: comments.page,
+            nextPage: comments.nextPage,
+            prevPage: comments.prevPage,
+            hasNextPage: comments.hasNextPage,
+            hasPrevPage: comments.hasPrevPage
+        })
+        console.log(commentsHTML);
+        $('#list-comment').html(commentsHTML);
+    })
+    return false;
+}
 function pagingComment(page) {
     const id = document.getElementById('idOfBook').value;
     $.getJSON('/api/product-detail', { page, id }, (comments) => {
