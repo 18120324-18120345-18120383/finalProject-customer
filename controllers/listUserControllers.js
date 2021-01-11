@@ -50,7 +50,6 @@ exports.updateAccountInfo = async (req, res, next) => {
             return;
         }
         if (files.avatar.size > 0) {
-            console.log('hihi');
             const img = await cloudinary.uploader.upload(files.avatar.path);
             avatar = img.url;
         }

@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const commnetShema = new Schema({
   productID: String,
   date: String,
-  avatar: Buffer,
-  avatarType: String,
+  avatar: String,
   name: String,
   content: String,
   rating: [Boolean]
@@ -21,7 +20,6 @@ module.exports.addCommnet = async(data, user) => {
   const rating = data.rating;
   const productID = data.productID;
   let avatar = null;
-  let avatarType = null;
   let dateObj = new Date();
   let myDate = (dateObj.getDate()) + "/" + (dateObj.getMonth() + 1) + "/" + (dateObj.getUTCFullYear());
   if (user) {
@@ -33,7 +31,6 @@ module.exports.addCommnet = async(data, user) => {
   comment.productID = productID;
   comment.content = content;
   comment.avatar = avatar;
-  comment.avatarType = avatarType;
   comment.date = myDate;
   let rate = []
   for(let i = 0; i < 5; i++) {
