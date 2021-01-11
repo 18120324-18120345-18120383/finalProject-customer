@@ -10,8 +10,7 @@ const userSchema = new Schema({
     password: String,
     firstName : String,
     lastName: String,
-    avatar: Buffer,
-    avatarType: String,
+    avatar: String,
     email: String,
     phoneNumber: String,
     more: String,
@@ -39,14 +38,14 @@ module.exports.addCartID = async (id, CartID) => {
 }
 module.exports.updateOneAccount = async (id, fields) => {
     const filter = {_id: id};
-    
+    // console.log(fields);
+    console.log(filter);
     let update = {
         firstName: fields.firstName, 
         lastName: fields.lastName, 
         phoneNumber: fields.phoneNumber,
         more: fields.more,
-        avatar: fields.avatar,
-        avatarType: fields.avatarType
+        avatar: fields.avatar
     };
 
     const user = await User.findOneAndUpdate(filter, update);

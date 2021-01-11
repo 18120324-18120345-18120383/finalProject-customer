@@ -268,7 +268,7 @@
               {{#each cart.products}}
               <div class="media row">
                 <div class="img-holder ml-1 mr-2 col-4">
-                  <a href="javascript:void(0)"><img src="data:{{coverTypes}};charset=utf-8;base64,{{coversString}}" align-self-center alt="cartitem"></a>
+                  <a href="javascript:void(0)"><img src={{coversString}} align-self-center alt="cartitem"></a>
                 </div>
                 <div class="media-body mt-auto mb-auto col-8">
                   <h5 class="name"><a href="javascript:void(0)">{{name}}</a></h5>
@@ -307,7 +307,7 @@
             \{{#each listItem}}
             <div class="media row">
               <div class="img-holder ml-1 mr-2 col-4">
-                <a href="javascript:void(0)"><img src="data:\{{coverTypes}};charset=utf-8;base64,\{{coversString}}" align-self-center alt="cartitem"></a>
+                <a href="javascript:void(0)"><img src=\{{coversString}} align-self-center alt="cartitem"></a>
               </div>
               <div class="media-body mt-auto mb-auto col-8">
                 <h5 class="name"><a href="javascript:void(0)">\{{name}}</a></h5>

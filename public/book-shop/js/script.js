@@ -17,8 +17,8 @@ $('#my-editIcon').click(function () {
     $('#my-file').click();
 });
 function changeQuantity(value, productID, index) {
-    $.getJSON('/api/change-quantity', {productID, value}, (data) => {
-        console.log('data: ',data);
+    $.getJSON('/api/change-quantity', { productID, value }, (data) => {
+        console.log('data: ', data);
         $('#total' + index).html(data.sumPrice + ' VNĐ');
         $('#subTotal').html(data.subTotal + ' VNĐ');
         $('#sutTotal1').html(data.subTotal + ' VNĐ');
@@ -26,7 +26,7 @@ function changeQuantity(value, productID, index) {
 }
 function deleteCarItem(id) {
     alert(id);
-    $.getJSON('/api/delete-cart-item', {id}, (cart) => {
+    $.getJSON('/api/delete-cart-item', { id }, (cart) => {
         var template = Handlebars.compile($('#table-shopcart-template').html());
         console.log(cart);
         var newHTML = template({
@@ -63,7 +63,7 @@ function addComment() {
     const rating = $('#rating').val();
     const content = $('#content').val();
     const name = $('#username').val();
-    $.getJSON('/api/add-comment', {productID, rating, content, name}, (comments) => {
+    $.getJSON('/api/add-comment', { productID, rating, content, name }, (comments) => {
         var template = Handlebars.compile($('#new-comments-template').html());
         console.log(template);
         var commentsHTML = template({
@@ -347,13 +347,12 @@ function insertParam(key, value) {
 }
 
 var loadFile = function (event) {
-    // alert('hihi');
-    var output = document.getElementById('myImg');
+    alert('hihi');
+    var output = document.getElementById('userImage');  
     output.src = URL.createObjectURL(event.target.files[0]);
     output.onload = function () {
         URL.revokeObjectURL(output.src) // free memory
     }
-    $('#myModal').modal('show');
 };
 //PAGE LOADER
 $(window).on("load", function () {

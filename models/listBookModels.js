@@ -6,7 +6,6 @@ const Schema = mongoose.Schema;
 const bookSchema = new Schema({
     name: String,
     coversString: [String],
-    coverTypes: [String],
     category: String,
     categoryID: ObjectID,
     basePrice: Number,
@@ -16,12 +15,11 @@ const bookSchema = new Schema({
 })
 
 bookSchema.plugin(mongoosePaginate);
-const Book = mongoose.model('list-books', bookSchema);
+const Book = mongoose.model('books', bookSchema);
 module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
     // console.time("runtime product listing");
     if (sort) {
         let books = await Book.paginate(filter, {
-            select: { name: 1, basePrice: 1, coversString: 1, coverTypes: 1 },
             page: pageNumber,
             limit: itemPerPage,
             sort: { basePrice: sort }
@@ -29,7 +27,6 @@ module.exports.listBook = async (filter, sort, pageNumber, itemPerPage) => {
         return books;
     }
     let books = await Book.paginate(filter, {
-        select: { name: 1, basePrice: 1, coversString: 1, coverTypes: 1 },
         page: pageNumber,
         limit: itemPerPage,
     });
@@ -47,9 +44,7 @@ module.exports.addBuyCount = async (id) => {
     await book.save();
 }
 module.exports.getOneBook = async (id) => {
-    console.time("detail");
     let book = await Book.findById(id);
-    console.timeEnd('detail');
     let views = 0;
     if (book) {
         if (book.views) {
@@ -60,7 +55,7 @@ module.exports.getOneBook = async (id) => {
         console.log("book not exists");
         return false;
     }
-    book.views += 1;
+    book.views = views + 1;
     book.save();
     return book;
 }

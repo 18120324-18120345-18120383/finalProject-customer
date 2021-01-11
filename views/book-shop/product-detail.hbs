@@ -33,31 +33,19 @@
               <div class="wrapper">
                 <div class="Gallery swiper-container img-magnifier-container" id="gallery">
                   <div class="swiper-wrapper myimgs">
-                    <div class="swiper-slide"> <img class="myimage"
-                        src="data:{{book.coverTypes.[0]}};charset=utf-8;base64,{{book.coversString.[0]}}" alt="gallery">
-                    </div>
-                    <div class="swiper-slide">
-                      <img class="myimage"
-                        src="data:{{book.coverTypes.[1]}};charset=utf-8;base64,{{book.coversString.[1]}}"
-                        alt="thumnails">
-                    </div>
-                    <div class="swiper-slide"><img class="myimage"
-                        src="data:{{book.coverTypes.[2]}};charset=utf-8;base64,{{book.coversString.[2]}}"
-                        alt="thumnails">
-                    </div>
+                    <div class="swiper-slide"> <a href={{book.coversString.[0]}} data-fancybox="1" title="Zoom In"><img
+                          class="myimage" src={{book.coversString.[0]}} alt="gallery"></a></div>
+                    <div class="swiper-slide"> <a href={{book.coversString.[1]}} data-fancybox="2" title="Zoom In"><img
+                          class="myimage" src={{book.coversString.[1]}} alt="thumnails"></a></div>
+                    <div class="swiper-slide"> <a href={{book.coversString.[2]}} data-fancybox="3" title="Zoom In"><img
+                          class="myimage" src={{book.coversString.[2]}} alt="thumnails"></a></div>
                   </div>
                 </div>
                 <div class="Thumbs swiper-container" id="thumbs">
                   <div class="swiper-wrapper">
-                    <div class="swiper-slide"> <img
-                        src="data:{{book.coverTypes.[0]}};charset=utf-8;base64,{{book.coversString.[0]}}"
-                        alt="thumnails"></div>
-                    <div class="swiper-slide"> <img
-                        src="data:{{book.coverTypes.[1]}};charset=utf-8;base64,{{book.coversString.[1]}}"
-                        alt="thumnails"></div>
-                    <div class="swiper-slide"> <img
-                        src="data:{{book.coverTypes.[2]}};charset=utf-8;base64,{{book.coversString.[2]}}"
-                        alt="thumnails"></div>
+                    <div class="swiper-slide"> <img src={{book.coversString.[0]}} alt="thumnails"></div>
+                    <div class="swiper-slide"> <img src={{book.coversString.[1]}} alt="thumnails"></div>
+                    <div class="swiper-slide"> <img src={{book.coversString.[2]}} alt="thumnails"></div>
                   </div>
                 </div>
               </div>
@@ -90,8 +78,6 @@
                 </div>
 
               </div>
-
-
               <div class="dropdown-divider"></div>
 
               <div class="product-tags-list">
@@ -165,8 +151,8 @@
                           <div class="row">
                             <div class="col-12 d-flex justify-content-center">
                               {{#if avatar}}
-                              <img src='data:{{avatarType}};charset=utf-8;base64,{{avatar}}'
-                                alt="Generic placeholder image" width="70px" style="border-radius: 50%;">
+                              <img src={{avatar}} alt="Generic placeholder image" width="70px"
+                                style="border-radius: 50%;">
                               {{else}}
                               <img src='/book-shop/img/userAvatar/user.png' alt="Generic placeholder image" width="70px"
                                 style="border-radius: 50%;">
@@ -244,8 +230,8 @@
                             {{#unless user}}
                             <div class="col-md-12 col-sm-12">
                               <div class="form-group bottom35">
-                                <input type="text" class="form-control" placeholder="Name*" required="" name="name" id="username"
-                                  id="registerName">
+                                <input type="text" class="form-control" placeholder="Name*" required="" name="name"
+                                  id="username" id="registerName">
                               </div>
                             </div>
                             {{/unless}}
@@ -314,7 +300,8 @@
           <div class="lastest_featured_products owl-carousel owl-theme">
             {{#each recommendBooks}}
             <div class="lastest_arrival_items item">
-              <a onclick="addOneItem('{{productID}}')" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
+              <a onclick="addOneItem('{{productID}}')" class="lastest-addto-cart"><i
+                  class="fa fa-shopping-cart"></i></a>
               <div class="card">
                 <span class="product-type">NEW</span>
                 <div class="image-holder">
@@ -356,7 +343,7 @@
     <div class="row">
       <div class="col-12 d-flex justify-content-center">
         \{{#if avatar}}
-        <img src='data:\{{avatarType}};charset=utf-8;base64,\{{avatar}}'
+        <img src=\{{avatar}}
           alt="Generic placeholder image" width="70px" style="border-radius: 50%;">
         \{{else}}
         <img src='/book-shop/img/userAvatar/user.png' alt="Generic placeholder image" width="70px"

@@ -13,12 +13,12 @@
         <div class="c-box wow fadeInRight product-listing-products">
           <h4 class="small-heading">Account Infomation</h4>
           <!--<p class="small-text">Lorem ipsum is simply dummy text of the printing and typesetting industry. </p>-->
-          <form action="/book-shop/account-info" onsubmit="return validateForm()" method="POST">
+          <form action="/book-shop/account-info" enctype="multipart/form-data" onsubmit="return validateForm()" method="POST">
             <div class="d-flex justify-content-center mb-4">
-              <img src='data:{{user.avatarType}};charset=utf-8;base64,{{user.avatar}}' id="myImg" alt="Avatar" class="avatar">
+              <img src="{{user.avatar}}" id="userImage" alt="Avatar" class="avatar">
             </div>
             <div style="width: 150px; height: 150px; margin: auto;">
-              <input type="file" class="filepond" name="avatar" id="fileAvatar">      
+              <input type="file" class="form-control" multiple="multiple" name="avatar" accept="image/*" onchange="loadFile(event)">      
             </div>
             <div class="contact-form" id="contact-form-data">
               <div class="row my-form">

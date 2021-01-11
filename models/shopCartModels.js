@@ -10,8 +10,7 @@ const productSchema = new mongoose.Schema({
   price: Number,
   quantity: Number,
   total: Number,
-  coversString: [String],
-  coverTypes: [String],
+  coversString: String,
   description: String
 })
 
@@ -79,7 +78,6 @@ module.exports.addOneItem = async (cartID, productID, quantity) => {
         quantity: Number(quantity),
         total: book.basePrice * Number(quantity),
         coversString: book.coversString[0],
-        coverTypes: book.coverTypes[0],
         description: book.description
       });
       totalPriceItem = book.basePrice * Number(quantity);
@@ -217,8 +215,8 @@ module.exports.listProductOrdered = async (userID) => {
           }
           let product = {
             checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total,
-            delivering: delivering, complete: complete, coversString: productInCart[index].coversString, 
-            coverTypes: productInCart[index].coverTypes, _id: productInCart[index]._id
+            delivering: delivering, complete: complete, coversString: productInCart.coversString, 
+            _id: productInCart[index]._id
           };
           listProduct.push(product);
         }

@@ -3,8 +3,15 @@ const path = require('path');
 const { ExpectationFailed } = require('http-errors');
 const randomstring = require('randomstring')
 const bcrybt = require('bcrypt')
+const formidable = require('formidable');
+const cloudinary = require('cloudinary').v2;
 
 require("dotenv").config();
+cloudinary.config({
+    cloud_name: 'dvhhz53rr',
+    api_key: '272966692333936',
+    api_secret: '0Tz28aal-cHCjr0K5bYF4V00XYo'
+});
 const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -19,7 +26,7 @@ exports.getAccountInfo = async (req, res, next) => {
     const user = await listUser.getUserByID(req.user.id);
 
     //decoded avatar
-    if (user.avatar){
+    if (user.avatar) {
         user.avatar = user.avatar.toString('base64')
     }
 
@@ -34,62 +41,55 @@ exports.getListAccount = async (req, res, next) => {
     res.send(users);
 }
 exports.updateAccountInfo = async (req, res, next) => {
-    let user = await listUser.getUserByID(req.user.id)
+    const form = formidable({ multiples: true });
+    form.parse(req, async (err, fields, files) => {
+        let avatar = req.user.avatar;
+        console.log(avatar.toString());
+        if (err) {
+            next(err);
+            return;
+        }
+        if (files.avatar.size > 0) {
+            console.log('hihi');
+            const img = await cloudinary.uploader.upload(files.avatar.path);
+            avatar = img.url;
+        }
+        const data = {
+            firstName: fields.firstName,
+            lastName: fields.lastName,
+            phoneNumber: fields.phoneNumber,
+            more: fields.more,
+            avatar: avatar
+        };
+        const user = await listUser.updateOneAccount(req.user.id, data)
 
-    //update avatar
-    let avatar
-    let avatarType
-    let temp = saveAvatar(req.body.avatar)
-    if (temp == false) {
-        avatar = user.avatar
-        avatarType = user.avatarType
-    } else {
-        avatar = temp[0]
-        avatarType = temp[1]
-    }
-
-
-    //fields contain data need to be updated
-    const fields = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        phoneNumber: req.body.phoneNumber,
-        more: req.body.more,
-        avatar: avatar,
-        avatarType: avatarType
-    }
-
-    user = await listUser.updateOneAccount(req.user.id, fields)
-
-    if (user) {
-        res.redirect('/book-shop/account-info')
-    } else {
-        showNotif(res, "Error", "Sorry, some error happen while we trying to update your account!")
-    }
+        if (user) {
+            res.redirect('/book-shop/account-info')
+        } else {
+            showNotif(res, "Error", "Sorry, some error happen while we trying to update your account!")
+        }
+    });
 }
-const saveAvatar = (avatarEncoded) => {
-    if (!avatarEncoded) return false;
 
-    const avatarJSON = JSON.parse(avatarEncoded)
-    if (avatarJSON != null) {
-        let avatar = new Buffer.from(avatarJSON.data, 'base64');
-        let avatarType = avatarJSON.type;
-        return [
-            avatar,
-            avatarType
-        ]
-    }
-
-}
 exports.addOneAccount = async (req, res, next) => {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const avatar = req.body.avatar[0];
-    const email = req.body.email;
-    const numberPhone = req.body.numberPhone;
-    const more = req.body.more;
-    const user = listUser.addOneAccount(firstName, lastName, avatar, email, numberPhone, more);
-    res.send(user);
+    const form = formidable({ multiples: true });
+
+    form.parse(req, async(err, fields, files) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        const firstName = fields.firstName;
+        const lastName = fields.lastName;
+        const img = await cloudinary.uploader.upload(files.avatar.path);
+        const avatar = img.url;
+        const email = fields.email;
+        const numberPhone = fields.numberPhone;
+        const more = fields.more;
+        const user = listUser.addOneAccount(firstName, lastName, avatar, email, numberPhone, more);
+        res.send(user);
+    });
+
 }
 
 exports.index = (req, res, next) => {
@@ -186,7 +186,7 @@ exports.postRegister = async (req, res, next) => {
         const hashedPassword = await bcrybt.hash(password[0], 10);
 
         const token = jwt.sign({ username, email, hashedPassword }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '1m' })
-
+        console.log(data.email);
         const emailData = {
             from: 'My Book Store <noreply@mybookstore.com>',
             to: data.email,
