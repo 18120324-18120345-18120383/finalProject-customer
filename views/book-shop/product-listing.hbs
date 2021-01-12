@@ -21,7 +21,7 @@
             <div id="sideNavPages2" class="collapse sideNavPages">
               <ul class="navbar-nav">
                 {{#each categories}}
-                <li><a onclick="filterCategory('{{_id}}')">{{this.name}}</a><span>({{numberOfBook}})</span>
+                <li id="list{{_id}}"><a onclick="filterCategory('{{_id}}')" id="list-a-{{_id}}">{{this.name}}</a><span>({{numberOfBook}})</span>
                 </li>
                 {{/each}}
               </ul>
@@ -70,7 +70,7 @@
       <!-- END STICKY NAV -->
 
       <!-- START PRODUCT COL 8 -->
-      <div class="col-md-12 col-lg-8 order-1 order-lg-2" id="books">
+      <div class="col-md-12 col-lg-8 order-1 order-lg-2">
         <div class="row">
 
           <!-- START LISTING HEADING -->
@@ -96,7 +96,7 @@
           <!-- END LISTING HEADING -->
 
           <!-- START PRODUCT LISTING SECTION -->
-          <div class="col-12 product-listing-products">
+          <div class="col-12 product-listing-products" id="books">
             <!-- START DISPLAY PRODUCT -->
             <div class="product-list row">
               {{#each books}}
@@ -181,106 +181,78 @@
   </div>
 </div>
 <!--Product Line Up End-->
-<script type="text/x-handlebars-template" id="list-book">
-<div class="row">
-  <!-- START LISTING HEADING -->
-  <div class="pr-0 col-12 row product-listing-heading">
-    <h1 class="p-0 col-6 heading text-left">Product Listing</h1>
-    <div class="p-0 col-6">
-      <form onsubmit="return searchBook()">
-        <div class="m-0 input-group search-box-form">
-          <input type="text" class="form-control" placeholder="Search Here" aria-label="Search Here" id="nameBook"
-            name="search">
-          <div class="input-group-prepend">
-            <button class="btn input-group-text" type="submit" id="basic-addon2"><i
-                class="fas fa-search"></i></button>
-          </div>
+<script type="text/x-handlebars-template" id="books-template">
+<!-- START DISPLAY PRODUCT -->
+<div class="product-list row">
+  \{{#each books}}
+  <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
+    <div class="product-item owl-theme product-listing-carousel owl-carousel">
+      <div class="item p-item-img">
+        <img src=\{{coversString.[0]}} alt="images">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
         </div>
-      </form>
-
+      </div>
+      <div class="item p-item-img">
+        <img src=\{{coversString.[1]}} alt="images" width="500px" height="500px">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div>
+      <div class="item p-item-img">
+        <img src=\{{coversString.[2]}} alt="images" width="500px" height="500px">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
+            <i class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div>
     </div>
-
-    <p class="para_text text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. tellus
-      lacus faucibus lectus, sed cursused eros ligula non odio.</p>
-  </div>
-  <!-- END LISTING HEADING -->
-
-  <!-- START PRODUCT LISTING SECTION -->
-  <div class="col-12 product-listing-products" id="books">
-    <!-- START DISPLAY PRODUCT -->
-    <div class="product-list row">
-      \{{#each books}}
-      <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp" data-wow-delay=".2s">
-        <div class="product-item owl-theme product-listing-carousel owl-carousel">
-          <div class="item p-item-img">
-            <img src=\{{coversString.[0]}} alt="images">
-            <div class="text-center d-flex justify-content-center align-items-center">
-              <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
-                <i class="fa fa-shopping-cart"></i>
-              </a>
-            </div>
-          </div>
-          <div class="item p-item-img">
-            <img src=\{{coversString.[1]}} alt="images" width="500px" height="500px">
-            <div class="text-center d-flex justify-content-center align-items-center">
-              <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
-                <i class="fa fa-shopping-cart"></i>
-              </a>
-            </div>
-          </div>
-          <div class="item p-item-img">
-            <img src=\{{coversString.[2]}} alt="images" width="500px" height="500px">
-            <div class="text-center d-flex justify-content-center align-items-center">
-              <a class="listing-cart-icon" onclick="addOneItem('\{{_id}}')">
-                <i class="fa fa-shopping-cart"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="p-item-detail">
-          <h4 class="text-center p-item-name"><a href="product-detail/\{{_id}}"> \{{name}} </a>
-          </h4>
-          <p class="text-center p-item-price">\{{basePrice}} VNĐ</p>
-        </div>
-      </div>
-      \{{/each}}
-    </div>
-    <!-- END DISPLAY PRODUCT -->
-    {{!-- Pagination --}}
-    <div class="center">
-      \{{#unless hasPrevPage}}
-      \{{#unless hasNextPage}}
-      <div class="pagination">
-        <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
-      </div>
-      \{{else}}
-      <div class="pagination">
-        {{!-- <a href="#">&laquo;</a> --}}
-        <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
-        <a onclick="paging('\{{nextPage}}')" class="btn">\{{nextPage}}</a>
-        <a onclick="paging('\{{nextPage}}')">&raquo;</a>
-      </div>
-      \{{/unless}}
-      \{{else}}
-      \{{#unless hasNextPage}}
-      <div class="pagination">
-        <a onclick="paging('\{{prevPage}}')">&laquo;</a>
-        <a onclick="paging('\{{prevPage}}')" class="btn">\{{prevPage}}</a>
-        <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
-        {{!-- <a href="#">&raquo;</a> --}}
-      </div>
-      \{{else}}
-      <div class="pagination">
-        <a onclick="paging('\{{prevPage}}')">&laquo;</a>
-        <a onclick="paging('\{{prevPage}}')" class="btn">\{{prevPage}}</a>
-        <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
-        <a onclick="paging('\{{nextPage}}')" class="btn">\{{nextPage}}</a>
-        <a onclick="paging('\{{nextPage}}')">&raquo;</a>
-      </div>
-      \{{/unless}}
-      \{{/unless}}
+    <div class="p-item-detail">
+      <h4 class="text-center p-item-name"><a href="product-detail/\{{_id}}"> \{{name}} </a>
+      </h4>
+      <p class="text-center p-item-price">\{{basePrice}} VNĐ</p>
     </div>
   </div>
-  <!-- END PRODUCT LISTING SECTION -->
+  \{{/each}}
+</div>
+<!-- END DISPLAY PRODUCT -->
+{{!-- Pagination --}}
+<div class="center">
+  \{{#unless hasPrevPage}}
+  \{{#unless hasNextPage}}
+  <div class="pagination">
+    <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
+  </div>
+  \{{else}}
+  <div class="pagination">
+    {{!-- <a href="#">&laquo;</a> --}}
+    <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
+    <a onclick="paging('\{{nextPage}}')" class="btn">\{{nextPage}}</a>
+    <a onclick="paging('\{{nextPage}}')">&raquo;</a>
+  </div>
+  \{{/unless}}
+  \{{else}}
+  \{{#unless hasNextPage}}
+  <div class="pagination">
+    <a onclick="paging('\{{prevPage}}')">&laquo;</a>
+    <a onclick="paging('\{{prevPage}}')" class="btn">\{{prevPage}}</a>
+    <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
+    {{!-- <a href="#">&raquo;</a> --}}
+  </div>
+  \{{else}}
+  <div class="pagination">
+    <a onclick="paging('\{{prevPage}}')">&laquo;</a>
+    <a onclick="paging('\{{prevPage}}')" class="btn">\{{prevPage}}</a>
+    <a onclick="paging('\{{page}}')" class="btn active">\{{page}}</a>
+    <a onclick="paging('\{{nextPage}}')" class="btn">\{{nextPage}}</a>
+    <a onclick="paging('\{{nextPage}}')">&raquo;</a>
+  </div>
+  \{{/unless}}
+  \{{/unless}}
 </div>
 </script>

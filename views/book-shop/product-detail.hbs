@@ -158,17 +158,6 @@
                                 style="border-radius: 50%;">
                               {{/if}}
                             </div>
-                            <div class="col-12 d-flex mt-2 justify-content-center">
-                              <ul class="user-rating">
-                                {{#each rating}}
-                                {{#if this}}
-                                <li><a href="#" style="color: #f5c136;"><i class="lni-star-filled"></i></a></li>
-                                {{else}}
-                                <li><a href="#" style="color: #f5c136;"><i class="lni-star"></i></a></li>
-                                {{/if}}
-                                {{/each}}
-                              </ul>
-                            </div>
                           </div>
                         </div>
                         <div class="col-12 col-lg-10">
@@ -238,16 +227,6 @@
                             <div class="col-12 col-lg-2 text-center text-lg-left">
                               <h5 class="text-nowrap">Your Rating</h5>
                             </div>
-                            <div class="col-12 col-lg-10 text-center text-lg-left">
-                              <ul class="user-rating">
-                                <li><a onclick="clickOneStar()"><i class="lni-star" id="one-star"></i></a></li>
-                                <li><a onclick="clickTwoStar()"><i class="lni-star" id="two-star"></i></a></li>
-                                <li><a onclick="clickThreeStar()"><i class="lni-star" id="three-star"></i></a></li>
-                                <li><a onclick="clickFourStar()"><i class="lni-star" id="four-star"></i></a></li>
-                                <li><a onclick="clickFiveStar()"><i class="lni-star" id="five-star"></i></a></li>
-                              </ul>
-                            </div>
-                            <input type="text" class="form-control" required="" id="rating" name="rating" hidden>
                             <input type="text" class="form-control" name="productID" id="idOfBook" value="{{book._id}}"
                               hidden>
                             <div class="col-md-6 col-sm-12" id="noneRate" hidden>
@@ -264,8 +243,7 @@
 
                             <div class="col-12 mt-3">
                               <div class="form-group d-flex justify-content-center d-lg-block">
-                                <button class="text-center btn green-color-yellow-gradient-btn"
-                                  onclick="return checkComment()">Add Review</button>
+                                <button class="text-center btn green-color-yellow-gradient-btn">Add Review</button>
                               </div>
                             </div>
                           </div>
@@ -349,17 +327,6 @@
         <img src='/book-shop/img/userAvatar/user.png' alt="Generic placeholder image" width="70px"
           style="border-radius: 50%;">
         \{{/if}}
-      </div>
-      <div class="col-12 d-flex mt-2 justify-content-center">
-        <ul class="user-rating">
-          \{{#each rating}}
-          \{{#if this}}
-          <li><a href="#" style="color: #f5c136;"><i class="lni-star-filled"></i></a></li>
-          \{{else}}
-          <li><a href="#" style="color: #f5c136;"><i class="lni-star"></i></a></li>
-          \{{/if}}
-          \{{/each}}
-        </ul>
       </div>
     </div>
   </div>

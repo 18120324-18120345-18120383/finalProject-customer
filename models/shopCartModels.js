@@ -215,7 +215,7 @@ module.exports.listProductOrdered = async (userID) => {
           }
           let product = {
             checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total,
-            delivering: delivering, complete: complete, coversString: productInCart.coversString, 
+            delivering: delivering, complete: complete, coversString: productInCart[index].coversString, 
             _id: productInCart[index]._id
           };
           listProduct.push(product);

@@ -160,6 +160,7 @@ function filterListingPage() {
     }
     if (nameBook) {
         obj.search = nameBook;
+        $('#nameBook').val(nameBook)
     }
     if (currentPage) {
         obj.page = currentPage;
@@ -172,7 +173,7 @@ function filterListingPage() {
     }
     console.log(obj);
     $.getJSON('/api/product-listing', obj, (data) => {
-        var template = Handlebars.compile($('#list-book').html());
+        var template = Handlebars.compile($('#books-template').html());
         var booksHTML = template({
             books: data.docs,
             page: data.page,
@@ -222,6 +223,7 @@ function filterPrice() {
     const isDecrease = document.getElementById('decrease-sort').checked;
     currentPage = false;
     if (isDefault) {
+        styleSort = false;
     }
     else if (isIncrease) {
         styleSort = 1;
@@ -240,7 +242,16 @@ function paging(page) {
     filterListingPage();
 }
 function filterCategory(id) {
-    categoryID = id;
+    if (categoryID == id) {
+        categoryID = false;
+        $('#list' + id).css("font-weight", "normal");
+        $('#list-a-' + id).css("font-weight", "normal")
+    } else {
+        categoryID = id;
+        $('#list' + id).css("font-weight", "bold");
+        $('#list-a-' + id).css("font-weight", "bold")
+    }
+    currentPage = false;
     filterListingPage();
 }
 function checkComment() {
