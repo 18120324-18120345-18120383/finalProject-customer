@@ -46,14 +46,14 @@ module.exports.changeQuantity = async (cartID, productID, newQuantity) => {
     const oldQuantity = products[index].quantity;
     products[index].quantity = newQuantity;
     products[index].total = products[index].price * newQuantity;
-    cart.total +=(Number(newQuantity) - oldQuantity) * products[index].price;
+    cart.total += (Number(newQuantity) - oldQuantity) * products[index].price;
     console.log(oldQuantity, 'jjooo', newQuantity);
     sumPrice = products[index].total;
     subTotal = cart.total;
   }
   cart.save();
   console.timeEnd("hihi");
-  return {sumPrice, subTotal};
+  return { sumPrice, subTotal };
 }
 module.exports.addOneItem = async (cartID, productID, quantity) => {
   const book = await listBookModel.getOneBook(productID)
@@ -99,7 +99,7 @@ module.exports.addOneItem = async (cartID, productID, quantity) => {
 
 module.exports.deleteItem = async (cartID, productID) => {
   const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID));
-  if(!cart) return false;
+  if (!cart) return false;
   let totalPriceItem = 0;
   if (cart) {
     const products = cart.products;
@@ -189,7 +189,7 @@ module.exports.payShopCart = async (cartID, userID, address) => {
   cart.status = 1;
   cart.orderDate = dateObj;
   cart.fullAddress = address;
-  for(let product of cart.products) {
+  for (let product of cart.products) {
     listBookModel.addBuyCount(product.productID);
   }
   await listUserModel.addOrderID(userID, cartID);
@@ -216,7 +216,7 @@ module.exports.listProductOrdered = async (userID) => {
           }
           let product = {
             checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total,
-            delivering: delivering, complete: complete, coversString: productInCart[index].coversString, 
+            delivering: delivering, complete: complete, coversString: productInCart[index].coversString,
             _id: productInCart[index]._id
           };
           listProduct.push(product);
@@ -231,27 +231,30 @@ module.exports.listProductOrdered = async (userID) => {
 
 module.exports.recommendBooks = async (productID) => {
   let listCartID = [];
-  const listProductOrderd = await ShopCart.find({ status: 1 });
+  const listProductOrderd = await ShopCart.find({ status: { $ne: 0 } });
   for (let value of listProductOrderd) {
     for (let item of value.products) {
-      if(productID == item.productID) {
+      if (productID == item.productID) {
         listCartID.push(value._id);
         break;
       }
     }
   }
-  let listBook = []
-  for(let id of listCartID) {
+  let listBook = [];
+  let listNameBook = [];
+  for (let id of listCartID) {
     const cart = await ShopCart.findById(id);
-    for(let item of cart.products) {
-      if(listBook.includes(item)) {
-        // nothing
+    for (let item of cart.products) {
+      if (listNameBook.includes(item.name)) {
+        console.log("same!");
       }
       else {
         listBook.push(item);
+        listNameBook.push(item.name);
       }
-      if(listBook.length > 10) break;
+      if (listBook.length > 10) break;
     }
+    if (listBook.length > 10) break;
   }
   return listBook;
 }
