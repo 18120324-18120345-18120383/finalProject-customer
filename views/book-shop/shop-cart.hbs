@@ -38,12 +38,11 @@
                     <th></th>
                   </tr>
                 </thead>
-                {{#each listItem}}
                 <tbody>
+                  {{#each listItem}}
                   <tr>
                     <td>
                       <div class="d-table product-detail-cart">
-
                         <div class="media">
                           <div class="row no-gutters">
 
@@ -226,17 +225,16 @@
       <th></th>
     </tr>
   </thead>
-  \{{#each listItem}}
   <tbody>
+    \{{#each listItem}}
     <tr>
       <td>
         <div class="d-table product-detail-cart">
-
           <div class="media">
             <div class="row no-gutters">
 
               <div class="col-12 col-lg-2 product-detail-cart-image">
-                <a class="shopping-product" href={{coversString}}
+                <a class="shopping-product" href="javascript:void(0)"><img src=\{{coversString}}
                     alt="image"></a>
               </div>
 
@@ -255,15 +253,14 @@
       </td>
       <td class="text-center">
         <div class="quote text-center mt-1">
-          <input name="newID" value=\{{_id}} hidden>
-          <input type="number" placeholder="1" class="quote" min="1" max="100" onchange="changeQuantity(this.value)" id="newQuantity"
+          <input type="number" placeholder="1" class="quote" min="1" max="100" onchange="changeQuantity(this.value, '\{{_id}}', '\{{@index}}')" id="newQuantity"
             value=\{{quantity}}>
         </div>
       </td>
       <td>
-        <p class="text-center amount">\{{total}} VNĐ</p>
+        <p class="text-center amount" id="total\{{@index}}" >\{{total}} VNĐ</p>
       </td>
-      <td class="text-center"><button type="submit" formaction="delete-item?id=\{{_id}}" class="btn-close"
+      <td class="text-center"><button type="submit" onclick="deleteCarItem('\{{_id}}')" class="btn-close"
           href="javascript:void(0)"><i class="lni-trash"></i></button>
       </td>
     </tr>

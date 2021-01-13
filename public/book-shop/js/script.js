@@ -25,16 +25,21 @@ function changeQuantity(value, productID, index) {
     })
 }
 function deleteCarItem(id) {
-    alert(id);
     $.getJSON('/api/delete-cart-item', { id }, (cart) => {
         var template = Handlebars.compile($('#table-shopcart-template').html());
-        console.log(cart);
+        console.log(cart.products);
         var newHTML = template({
             listItem: cart.products
         })
         $('#table-shopcart').html(newHTML);
         $('#subTotal').html(cart.total + ' VNĐ');
         $('#sutTotal1').html(cart.total + ' VNĐ');
+        var template1 = Handlebars.compile($('#item-side-menu-template').html());
+        var itemSideMenu = template1({
+            listItem: cart.products, total: cart.total
+        })
+        $('#item-side-menu').html(itemSideMenu);
+        $('#count-item-cart').text(cart.quantity.toString());
     })
     return false;
 }

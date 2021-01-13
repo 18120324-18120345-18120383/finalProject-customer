@@ -103,14 +103,15 @@ exports.deleteCartItem = async (req, res, next) => {
     let myCart
     if (req.user) {
         const userCartID = req.user.cartID
-        await shopCart.deleteItem(userCartID, req.query.id);
-        myCart = await shopCart.cart(cartID);
+        myCart = await shopCart.deleteItem(userCartID, req.query.id);
+        console.log(req.cart);
         req.cart = myCart;
         res.json(myCart);
     } else {
-        console.log('hihihihi');
         myCart = await shopCart.deleteItem(cartID, req.query.id);
+        console.log(req.cart);
         req.cart = myCart;
+        console.log(req.cart);
         res.json(myCart);
     }
 }

@@ -99,6 +99,7 @@ module.exports.addOneItem = async (cartID, productID, quantity) => {
 
 module.exports.deleteItem = async (cartID, productID) => {
   const cart = await ShopCart.findById(mongoose.Types.ObjectId(cartID));
+  if(!cart) return false;
   let totalPriceItem = 0;
   if (cart) {
     const products = cart.products;

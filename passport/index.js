@@ -8,6 +8,7 @@ passport.use(new LocalStrategy(
     if (!user.username) {
       return done(null, false, { message: user });
     }
+    
     return done(null, user);
   }
 ));

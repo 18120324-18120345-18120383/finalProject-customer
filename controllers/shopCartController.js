@@ -10,7 +10,7 @@ module.exports.checkOut = async (req, res, next) => {
     const userID = req.user._id;
     const address = req.body.fullAddress
     await shopCart.payShopCart(userCartID, userID, address);
-    res.redirect('shop-cart');
+    res.redirect('/book-shop/shop-cart');
   }
 }
 module.exports.addItem = async (req, res, next) => {
@@ -49,10 +49,10 @@ module.exports.deleteItem = async (req, res, next) => {
   if (req.user) {
     const userCartID = req.user.cartID
     await shopCart.deleteItem(userCartID, req.query.id);
-    res.redirect('shop-cart');
+    res.redirect('/book-shop/shop-cart');
   } else {
     await shopCart.deleteItem(cartID, req.query.id);
-    res.redirect('shop-cart');
+    res.redirect('/book-shop/shop-cart');
   }
 }
 module.exports.listItem = async (req, res, next) => {
@@ -96,10 +96,10 @@ module.exports.updateQuantity = async (req, res, next) => {
   if (req.user) {
     const userCartID = req.user.cartID;
     await shopCart.updateQuantity(userCartID, listQuantity, listID);
-    res.redirect('shop-cart');
+    res.redirect('/book-shop/shop-cart');
   } else {
     await shopCart.updateQuantity(cartID, listQuantity, listID);
-    res.redirect('shop-cart');
+    res.redirect('/book-shop/shop-cart');
   }
 }
 
