@@ -1,4 +1,4 @@
-const { ObjectID } = require('mongodb');
+const { ObjectID, ResumeToken } = require('mongodb');
 const mongoose = require('mongoose');
 const bcrybt = require('bcrypt')
 const shopCart = require('../models/shopCartModels')
@@ -127,8 +127,14 @@ module.exports.authenticateUser = async (username, password) => {
     if (!user.isActive) {
         return "Your account is blocked!!!";
     }
-    const cartID = user.cartID;
+    let cartID = user.cartID;
+    if (!cartID) { // Nếu không có CartID
+        const result = await shopCart.initCart();
+        cartID = result._id;
+        await User.findByIdAndUpdate(user._id, { cartID: cartID });
+    }
     const cart = await shopCart.cart(cartID);
+    console.log(cart);
     const newCart = await shopCart.cart('5ff277c26dd1e0231ca9bc69');
     if (newCart.products.length > 0) {
         cart.products = newCart.products;

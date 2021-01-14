@@ -44,10 +44,6 @@ app.use(passport.session());
 app.use(async function (req, res, next) {
   res.locals.user = req.user;
   if (req.user) { // Nếu có đăng nhập 
-    if (!req.user.cartID) { // Nếu không có CartID
-      const cartInit = await shopCart.initCart();
-      await listUser.addCartID(req.user._id, cartInit._id)
-    }
     let cart = await shopCart.cart(req.user.cartID);
     if (!cart) {
       const cartInit = await shopCart.initCart();
