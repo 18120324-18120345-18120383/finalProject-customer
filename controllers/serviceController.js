@@ -127,3 +127,22 @@ exports.getWards = async (req, res, next) => {
     const wards = await countries.wards(province, district);
     res.json(wards);
 }
+
+exports.checkExistUsername = async (req, res, next) => {
+    const username = req.query.username;
+    const user = await users.findUserByUsername(username)
+    if (user) {
+        res.send(true);
+    } else {
+        res.send(false);
+    }
+}
+exports.checkExistEmail = async (req, res, next) => {
+    const email = req.query.email;
+    const user = await users.findUserByEmail(email)
+    if (user) {
+        res.send(true);
+    } else {
+        res.send(false);
+    }
+}

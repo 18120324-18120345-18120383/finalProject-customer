@@ -38,8 +38,6 @@ module.exports.addCartID = async (id, CartID) => {
 }
 module.exports.updateOneAccount = async (id, fields) => {
     const filter = { _id: id };
-    // console.log(fields);
-    console.log(filter);
     let update = {
         firstName: fields.firstName,
         lastName: fields.lastName,
@@ -149,6 +147,10 @@ module.exports.authenticateUser = async (username, password) => {
 }
 module.exports.findUserByEmail = async (email) => {
     const user = await User.findOne({ email: email }).exec();
+    return user;
+}
+module.exports.findUserByUsername = async (username) => {
+    const user = await User.findOne({ username: username }).exec();
     return user;
 }
 module.exports.setPasswordByEmail = async (email, newPassword) => {

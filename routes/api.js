@@ -13,4 +13,6 @@ router.get('/district', controllerService.getWards);
 router.get('/delete-cart-item', controllerService.deleteCartItem);
 router.get('/change-quantity', controllerService.changeQuantity);
 router.get('/add-comment', controllerService.addComment);
+router.get('/check-exist-username', controllerService.checkExistUsername);
+router.get('/check-exist-email', controllerService.checkExistEmail);
 module.exports = router;

@@ -4,6 +4,8 @@ const password = document.getElementById('password')
 const retype = document.getElementById('retype')
 const errUsername = document.getElementById('errUsername')
 const errPassword = document.getElementById('errPassword')
+const errUsernameExist = document.getElementById('errUsernameExist') 
+const errEmailExist = document.getElementById('errEmailExist') 
 
 const validateForm = () => {
     if (retype.value !== password.value){
@@ -38,6 +40,24 @@ username.onchange = () => {
     } else {
         errUsername.hidden = true
     }
+    $.getJSON('/api/check-exist-username', {username: usernameVal}, (data) => {
+        if (data == true){
+            errUsernameExist.hidden = false;
+        } else {
+            errUsernameExist.hidden = true;
+        }
+    });
+}
+
+email.onchange = () => {
+    $.getJSON('/api/check-exist-email', {email: email.value}, (data) => {
+        console.log('hihi ', data)
+        if (data == true){
+            errEmailExist.hidden = false;
+        } else {
+            errEmailExist.hidden = true;
+        }
+    });
 }
 
 const checkValidUsername = (usernameVal) => {
