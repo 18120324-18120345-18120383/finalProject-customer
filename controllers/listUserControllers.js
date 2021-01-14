@@ -25,11 +25,6 @@ const jwt = require('jsonwebtoken')
 exports.getAccountInfo = async (req, res, next) => {
     const user = await listUser.getUserByID(req.user.id);
 
-    //decoded avatar
-    if (user.avatar) {
-        user.avatar = user.avatar.toString('base64')
-    }
-
     res.render('book-shop/account-info', {
         user,
         title: 'Account Information'
@@ -44,7 +39,6 @@ exports.updateAccountInfo = async (req, res, next) => {
     const form = formidable({ multiples: true });
     form.parse(req, async (err, fields, files) => {
         let avatar = req.user.avatar;
-        console.log(avatar.toString());
         if (err) {
             next(err);
             return;
