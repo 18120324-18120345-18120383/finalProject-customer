@@ -134,7 +134,6 @@ module.exports.authenticateUser = async (username, password) => {
         await User.findByIdAndUpdate(user._id, { cartID: cartID });
     }
     const cart = await shopCart.cart(cartID);
-    console.log(cart);
     const newCart = await shopCart.cart('5ff277c26dd1e0231ca9bc69');
     if (newCart.products.length > 0) {
         cart.products = newCart.products;
