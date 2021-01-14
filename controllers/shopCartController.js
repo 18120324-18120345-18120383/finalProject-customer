@@ -60,7 +60,6 @@ module.exports.listItem = async (req, res, next) => {
   if (req.user) {
     const userCartID = req.user.cartID
     const cart = await shopCart.cart(userCartID);
-    // console.log(province)
     if (cart) {
       res.render('book-shop/shop-cart', {
         listItem: cart.products,
@@ -80,6 +79,7 @@ module.exports.listItem = async (req, res, next) => {
       res.render('book-shop/shop-cart', {
         listItem: cart.products, 
         total: cart.total,
+        province,
         title: "Shop cart"
       });
     }

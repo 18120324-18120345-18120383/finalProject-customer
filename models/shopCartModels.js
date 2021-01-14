@@ -47,7 +47,6 @@ module.exports.changeQuantity = async (cartID, productID, newQuantity) => {
     products[index].quantity = newQuantity;
     products[index].total = products[index].price * newQuantity;
     cart.total += (Number(newQuantity) - oldQuantity) * products[index].price;
-    console.log(oldQuantity, 'jjooo', newQuantity);
     sumPrice = products[index].total;
     subTotal = cart.total;
   }
@@ -217,7 +216,7 @@ module.exports.listProductOrdered = async (userID) => {
           let product = {
             checkOutDay: cart.orderDate, name: productInCart[index].name, total: productInCart[index].total,
             delivering: delivering, complete: complete, coversString: productInCart[index].coversString,
-            _id: productInCart[index]._id
+            productID: productInCart[index].productID
           };
           listProduct.push(product);
         }

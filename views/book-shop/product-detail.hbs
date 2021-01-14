@@ -130,7 +130,7 @@
                 <ul class="col-12 nav nav-tabs" id="myTab" role="tablist">
                   <li class="col-6 nav-item">
                     <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                      aria-controls="contact" aria-selected="true">Customer Reviews (2)</a>
+                      aria-controls="contact" aria-selected="true">Customer Reviews</a>
                   </li>
                   <li class="col-6 nav-item">
                     <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
@@ -224,16 +224,8 @@
                               </div>
                             </div>
                             {{/unless}}
-                            <div class="col-12 col-lg-2 text-center text-lg-left">
-                              <h5 class="text-nowrap">Your Rating</h5>
-                            </div>
                             <input type="text" class="form-control" name="productID" id="idOfBook" value="{{book._id}}"
                               hidden>
-                            <div class="col-md-6 col-sm-12" id="noneRate" hidden>
-                              <div class="form-group bottom35">
-                                <p class="text-danger">You have not rated yet</p>
-                              </div>
-                            </div>
                             <div class="col-12">
                               <div class="form-group">
                                 <textarea class="form-control textareaclass" rows="5" id="content" name="content"
