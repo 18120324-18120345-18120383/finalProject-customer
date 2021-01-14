@@ -53,7 +53,7 @@ app.use(async function (req, res, next) {
     res.locals.cart = cart;
   }
   else {
-    const cart = await shopCart.cart('5ff277c26dd1e0231ca9bc69');
+    const cart = await shopCart.cart('5fffefcff8c11d2b848a17b4');
     // console.log(cart._id);
     res.locals.cart = cart;
   }

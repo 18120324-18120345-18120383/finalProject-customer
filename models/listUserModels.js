@@ -131,8 +131,12 @@ module.exports.authenticateUser = async (username, password) => {
         cartID = result._id;
         await User.findByIdAndUpdate(user._id, { cartID: cartID });
     }
-    const cart = await shopCart.cart(cartID);
-    const newCart = await shopCart.cart('5ff277c26dd1e0231ca9bc69');
+    let cart = await shopCart.cart(cartID);
+    if (!cart) {
+        cart = await shopCart.initCart();
+        await User.findByIdAndUpdate(user._id, { cartID: cart._id });
+    } 
+    const newCart = await shopCart.cart('5fffefcff8c11d2b848a17b4');
     if (newCart.products.length > 0) {
         cart.products = newCart.products;
         cart.total = newCart.total;
