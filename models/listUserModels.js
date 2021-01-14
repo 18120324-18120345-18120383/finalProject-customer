@@ -98,7 +98,8 @@ module.exports.createAccount = async (username, hashedPassword, email) => {
         username: username,
         password: hashedPassword,
         email: email,
-        isActive: true
+        isActive: true,
+        avatar: '/book-shop/img/userAvatar/user.png'
     })
     return user;
 }
