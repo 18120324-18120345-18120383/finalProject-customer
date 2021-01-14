@@ -363,7 +363,6 @@ function insertParam(key, value) {
 }
 
 var loadFile = function (event) {
-    alert('hihi');
     var output = document.getElementById('userImage');  
     output.src = URL.createObjectURL(event.target.files[0]);
     output.onload = function () {
