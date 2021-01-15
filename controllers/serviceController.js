@@ -15,7 +15,13 @@ exports.authenPassword = async (req, res, next) => {
 exports.changeQuantity = async (req, res, next) => {
     const productID = req.query.productID;
     const quantity = req.query.value;
-    const result = await shopCart.changeQuantity(cartID, productID, quantity);
+    let result;
+    if (req.user) {
+        result = await shopCart.changeQuantity(req.user.cartID, productID, quantity);
+    } else {
+        result = await shopCart.changeQuantity(cartID, productID, quantity);
+    }   
+    
     res.json(result);
 }
 exports.productsListing = async (req, res, next) => {
